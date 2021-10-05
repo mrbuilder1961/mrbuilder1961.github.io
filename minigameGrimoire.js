@@ -494,7 +494,7 @@ M.launch=function()
 	M.draw=function()
 	{
 		//run each draw frame
-		M.magicBarTextL.innerHTML=`${String(mg.magic).replace(/(\d+\.\d{2}).+/, "$1")}/${Beautify(Math.floor(mg.magicM))}`+(mg.magic<mg.magicM?(' (+'+Beautify((mg.magicPS||0)*Game.fps,2)+'/s)'):'');
+		M.magicBarTextL.innerHTML=`${String(M.magic).replace(/(\d+\.\d{2}).+/, "$1")}/${Beautify(Math.floor(M.magicM))}`+(M.magic<M.magicM?(' (+'+Beautify((M.magicPS||0)*Game.fps,2)+'/s)'):'');
 		M.magicBarFullL.style.width=((M.magic/M.magicM)*100)+'%';
 		M.magicBarL.style.width=(M.magicM*3)+'px';
 		M.infoL.innerHTML='Spells cast : '+Beautify(M.spellsCast)+' (total : '+Beautify(M.spellsCastTotal)+')';
