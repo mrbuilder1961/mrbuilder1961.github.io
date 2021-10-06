@@ -2017,7 +2017,7 @@ Game.Launch=function()
 			Game.lastDate=parseInt(Game.time);
 			var str='';
 			if (type==3) str+='\nGame version\n';
-			str+=Game.version+'|';
+			str+=(parseFloat(Game.version)===2.042?"2.042 (2.031)":Game.version)+'|';
 			str+='|';//just in case we need some more stuff here
 			if (type==3) str+='\n\nRun details';
 			str+=//save stats
