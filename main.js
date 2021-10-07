@@ -2017,7 +2017,7 @@ Game.Launch=function()
 			Game.lastDate=parseInt(Game.time);
 			var str='';
 			if (type==3) str+='\nGame version\n';
-			str+=(parseFloat(Game.version)===2.042?"2.042 (2.031)":Game.version)+'|';
+			str+=Game.version+'|';
 			str+='|';//just in case we need some more stuff here
 			if (type==3) str+='\n\nRun details';
 			str+=//save stats
@@ -6037,7 +6037,7 @@ Game.Launch=function()
 				'<div class="listing"><b>Cookie clicks :</b> '+Beautify(Game.cookieClicks)+'</div>'+
 				'<div class="listing"><b>Hand-made cookies :</b> '+Beautify(Game.handmadeCookies)+'</div>'+
 				'<div class="listing"><b>Golden cookie clicks :</b> '+Beautify(Game.goldenClicksLocal)+' <small>(all time : '+Beautify(Game.goldenClicks)+')</small></div>'+//' <span class="hidden">(<b>Missed golden cookies :</b> '+Beautify(Game.missedGoldenClicks)+')</span></div>'+
-				'<br><div class="listing"><b>Running version :</b> '+Game.version+'</div>'+
+				'<br><div class="listing"><b>Running version :</b> '+(parseFloat(Game.version)===2.042?"2.042 (2.031)":Game.version)+'</div>'+
 				
 				((researchStr!='' || wrathStr!='' || pledgeStr!='' || santaStr!='' || dragonStr!='' || Game.season!='' || ascensionModeStr!='' || Game.canLumps())?(
 				'</div><div class="subsection">'+
