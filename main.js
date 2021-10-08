@@ -3728,8 +3728,7 @@ Game.Launch=function()
 		Game.lumpRipeAge=1;
 		Game.lumpOverripeAge=1;
 		Game.lumpCurrentType=0;
-		l('comments').innerHTML=l('comments').innerHTML+
-			'<div id="lumps" onclick="Game.clickLump();" '+Game.getDynamicTooltip('Game.lumpTooltip','bottom')+'><div id="lumpsIcon" class="usesIcon"></div><div id="lumpsIcon2" class="usesIcon"></div><div id="lumpsAmount">0</div></div>';
+		l('comments').innerHTML+='<div id="lumps" onclick="Game.clickLump();" '+Game.getDynamicTooltip('Game.lumpTooltip','bottom')+'><div id="lumpsIcon" class="usesIcon"></div><div id="lumpsIcon2" class="usesIcon"></div><div id="lumpsAmount">0</div></div>';
 		Game.lumpTooltip=function()
 		{
 			var str='<div style="padding:8px;width:400px;font-size:11px;text-align:center;">'+
@@ -4002,6 +4001,7 @@ Game.Launch=function()
 			l('lumpsIcon2').style.backgroundPosition=(-icon2[0]*48)+'px '+(-icon2[1]*48)+'px';
 			l('lumpsIcon2').style.opacity=opacity;
 			l('lumpsAmount').textContent=Beautify(Game.lumps);
+			l("lumpsAmount").style.color = (age<Game.lumpMatureAge)?"#6fcfff":(age<Game.lumpRipeAge)?"#6fffe7":(age<Game.lumpOverripeAge)?"#cfff6f":"#ff6f87";
 		}
 		
 		/*=====================================================================================
