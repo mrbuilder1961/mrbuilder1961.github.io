@@ -1,5 +1,5 @@
 ﻿/*
-All this code is copyright Orteil, 2013-2020.
+All this code is copyright Orteil, 2013-2020; With some editing done by me (OBro1961) and probably more people
 	-with some help, advice and fixes by Nicholas Laux, Debugbro, Opti, and lots of people on reddit, Discord, and the DashNet forums
 	-also includes a bunch of snippets found on stackoverflow.com and others
 	-want to mod the game? scroll down to the "MODDING API" section
@@ -1880,7 +1880,7 @@ Game.Launch=function()
 		
 		Game.GrabData=function()
 		{
-			ajax('/patreon/grab.php',Game.GrabDataResponse);
+			ajax('https://orteil.dashnet.org/patreon/grab.php',Game.GrabDataResponse);
 		}
 		Game.GrabDataResponse=function(response)
 		{
