@@ -1880,7 +1880,6 @@ Game.Launch=function()
 		
 		Game.GrabData=function()
 		{
-			try{
 			ajax('https://orteil.dashnet.org/patreon/grab.php',function(response){
 				/*
 					response should be formatted as
@@ -1904,7 +1903,7 @@ Game.Launch=function()
 					Game.externalDataLoaded=true;
 				}catch(e){}
 			});
-			}catch(e){
+			if(Game.externalDataLoaded!==true) {
 				Game.heralds=Math.min(25, Math.floor(Math.random*100));
 				console.error("Patreon data (heralds and grandmas) failed to load, heralds set to "+Game.heralds+" with error:\n"+e);
 			}
