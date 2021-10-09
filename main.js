@@ -1907,6 +1907,7 @@ Game.Launch=function()
 				const rnd = Math.random()*100;
 				Game.heralds=Math.min(100, Math.floor(rnd<24?25:rnd));
 				console.warn("Patreon data (heralds and grandmas) failed to load, heralds set to "+Game.heralds+".");
+				l('heraldsAmount').textContent=Game.heralds;
 			}
 		}
 		
@@ -1940,7 +1941,7 @@ Game.Launch=function()
 				{
 					str+=(Game.heralds==1?'<b style="color:#bc3aff;text-shadow:0px 1px 0px #6d0096;">1 herald</b> is':'<b style="color:#fff;text-shadow:0px 1px 0px #6d0096,0px 0px 6px #bc3aff;">'+Game.heralds+' heralds</b> are')+' selflessly inspiring a boost in production for everyone, resulting in<br><b style="color:#cdaa89;text-shadow:0px 1px 0px #7c4532,0px 0px 6px #7c4532;"><div style="width:16px;height:16px;display:inline-block;vertical-align:middle;background:url(img/money.png);"></div> +'+Game.heralds+'% cookies per second</b>.';
 					str+='<div class="line"></div>';
-					if (Game.ascensionMode==1) str+='You are a <b>Born again</b>, and are not currently benefiting from heralds.';
+					if (Game.ascensionMode==1) str+='You are currently <b>Born again</b>, and therefore cannot benefit from heralds.';
 					else if (Game.Has('Heralds')) str+='You own the <b>Heralds</b> upgrade, and therefore benefit from the production boost.';
 					else str+='To benefit from the herald bonus, you need a special upgrade you do not yet own. You will permanently unlock it later in the game.';
 				}
