@@ -1880,33 +1880,33 @@ Game.Launch=function()
 		
 		Game.GrabData=function()
 		{
-			ajax('https://orteil.dashnet.org/patreon/grab.php',Game.GrabDataResponse);
-		}
-		Game.GrabDataResponse=function(response)
-		{
-			/*
-				response should be formatted as
-				{"herald":3,"grandma":"a|b|c|...}
-			*/
-			var r={};
-			try{
-				r=JSON.parse(response);
-				if (typeof r['herald']!=='undefined')
-				{
-					Game.heralds=parseInt(r['herald']);
-					Game.heralds=Math.max(0,Math.min(100,Game.heralds));
+			ajax('https://orteil.dashnet.org/patreon/grab.php',function(response){
+				/*
+					response should be formatted as
+					{"herald":3,"grandma":"a|b|c|...}
+				*/
+				var r={};
+				try{
+					r=JSON.parse(response);
+					if (typeof r['herald']!=='undefined')
+					{
+						Game.heralds=parseInt(r['herald']);
+						Game.heralds=Math.max(0,Math.min(100,Game.heralds));
+					}
+					if (typeof r['grandma']!=='undefined' && r['grandma']!='')
+					{
+						Game.customGrandmaNames=r['grandma'].split('|');
+						Game.customGrandmaNames=Game.customGrandmaNames.filter(function(el){return el!='';});
+					}
+
+					l('heraldsAmount').textContent=Game.heralds;
+					Game.externalDataLoaded=true;
+				}catch(e){
+					console.error("Patreon data (heralds and grandmas) failed to load, with error:\n"+e);
+					Game.heralds=Math.min(25, Math.floor(Math.random*100));
 				}
-				if (typeof r['grandma']!=='undefined' && r['grandma']!='')
-				{
-					Game.customGrandmaNames=r['grandma'].split('|');
-					Game.customGrandmaNames=Game.customGrandmaNames.filter(function(el){return el!='';});
-				}
-				
-				l('heraldsAmount').textContent=Game.heralds;
-				Game.externalDataLoaded=true;
-			}catch(e){}
+			});
 		}
-		
 		
 		
 		Game.attachTooltip(l('httpsSwitch'),'<div style="padding:8px;width:350px;text-align:center;font-size:11px;">You are currently playing Cookie Clicker on the <b>'+(Game.https?'HTTPS':'HTTP')+'</b> protocol.<br>The <b>'+(Game.https?'HTTP':'HTTPS')+'</b> version uses a different save slot than this one.<br>Click this lock to reload the page and switch to the <b>'+(Game.https?'HTTP':'HTTPS')+'</b> version!</div>','this');
