@@ -1905,7 +1905,7 @@ Game.Launch=function()
 			});
 			if(Game.externalDataLoaded!==true) {
 				Game.heralds=Math.min(25, Math.floor(Math.random*100));
-				console.error("Patreon data (heralds and grandmas) failed to load, heralds set to "+Game.heralds+" with error:\n"+e);
+				console.error("Patreon data (heralds and grandmas) failed to load, heralds set to "+Game.heralds+".");
 			}
 		}
 		
