@@ -4004,7 +4004,7 @@ Game.Launch=function()
 			l('lumpsIcon2').style.backgroundPosition=(-icon2[0]*48)+'px '+(-icon2[1]*48)+'px';
 			l('lumpsIcon2').style.opacity=opacity;
 			l('lumpsAmount').textContent=Beautify(Game.lumps);
-			l("lumpsAmount").style.color = (age<Game.lumpMatureAge)?"#6fcfff":(age<Game.lumpRipeAge)?"#6fffe7":(age<Game.lumpOverripeAge)?"#cfff6f":"#ff6f87";
+			l("lumpsAmount").style.color = age<Game.lumpMatureAge?"#6fcfff":age<Game.lumpRipeAge?"#ffd966":age<Game.lumpOverripeAge?"#43eb95":"#6fcfff";
 		}
 		
 		/*=====================================================================================
