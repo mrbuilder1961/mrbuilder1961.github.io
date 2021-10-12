@@ -318,7 +318,7 @@ a.option:active, .info a:active
 }
 .warning, a.option.warning
 {
-	color:#c00;
+	color:#dd4949;
 	border-color:#c00;
 }
 a.option.warning:hover
