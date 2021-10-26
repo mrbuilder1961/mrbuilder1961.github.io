@@ -1,9 +1,11 @@
 ﻿/*
 All this code is copyright Orteil, 2013-2020; With some editing done by me (OBro1961) and probably more people
-	-with some help, advice and fixes by Nicholas Laux, Debugbro, Opti, and lots of people on reddit, Discord, and the DashNet forums
+	-with some help, advice and fixes by Nicholas Laux, Debugbro, Opti, and lots of people on reddit, Discord, and the DashNet forums (+OBro1961 of course)
 	-also includes a bunch of snippets found on stackoverflow.com and others
 	-want to mod the game? scroll down to the "MODDING API" section
-Hello, and welcome to the joyous mess that is main.js. Code contained herein is not guaranteed to be good, consistent, or sane. Most of this is years old at this point and harkens back to simpler, cruder times. In particular I've tried to maintain compatibility with fairly old versions of javascript, which means luxuries such as 'let', arrow functions and string literals are unavailable. Have a nice trip.
+Hello, and welcome to the joyous mess that is main.js. Code contained herein is not guaranteed to be good, consistent, or sane. 
+Most of this is years old at this point and harkens back to simpler, cruder times. In particular I've tried to maintain compatibility with fairly old versions of javascript, which means luxuries such as 'let', arrow functions and string literals are unavailable. Have a nice trip.
+/!\ JavaScript code might be inconsistent with old AND new features, so old devices may not function properly or have parts not function right. /!\
 Spoilers ahead.
 http://orteil.dashnet.org
 */
@@ -36,6 +38,18 @@ if(!Array.prototype.indexOf) {
         return -1;
     };
 }
+
+// new golden cookie data
+let shimmerClockNum;
+try {
+    shimmerClockNum = setInterval(function() {
+    	l("shimmerInfo").textContent = "Min spawn time: "+Game.shimmerTypes['golden'].minTime+"s";
+	l("shimmerInfo").textContent = "Max spawn time: "+Game.shimmerTypes['golden'].maxTime+"s";
+    }, 15*60*1000);
+} catch (e) {
+    clearInterval(shimmerClockNum);
+}
+// end of new golden cookie data
 
 function randomFloor(x) {if ((x%1)<Math.random()) return Math.floor(x); else return Math.ceil(x);}
 
