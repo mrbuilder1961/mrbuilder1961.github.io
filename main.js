@@ -40,12 +40,12 @@ if(!Array.prototype.indexOf) {
 }
 
 // new golden cookie data
-let shimmerClockNum;
+var shimmerClockNum;
 try {
     shimmerClockNum = setInterval(function() {
-    	l("shimmerInfo").textContent = "Min spawn time: "+Game.shimmerTypes['golden'].minTime+"s";
-	l("shimmerInfo").textContent = "Max spawn time: "+Game.shimmerTypes['golden'].maxTime+"s";
-    }, 15*60*1000);
+    	l("minShimmerSpawn").textContent = "Min spawn time: "+Game.shimmerTypes['golden'].minTime+"s";
+	l("maxShimmerSpawn").textContent = "Max spawn time: "+Game.shimmerTypes['golden'].maxTime+"s";
+    }, 60*1000*15);
 } catch (e) {
     clearInterval(shimmerClockNum);
 }
