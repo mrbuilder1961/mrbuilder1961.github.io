@@ -39,17 +39,20 @@ if(!Array.prototype.indexOf) {
     };
 }
 
-// new golden cookie data
+// new golden cookie data //
 var shimmerClockNum;
 try {
-    shimmerClockNum = setInterval(function() {
-    	l("minShimmerSpawn").textContent = "Min spawn time: "+Game.shimmerTypes['golden'].minTime+"s";
-	l("maxShimmerSpawn").textContent = "Max spawn time: "+Game.shimmerTypes['golden'].maxTime+"s";
-    }, 60*1000*15);
+    var updateInfoTimes = function() {
+    	l("shimmerInfo").textContent = l("shimmerInfo").textContent
+	.replace(/(Golden Cookie Min: )\d+/, "$1"+Game.shimmerTypes['golden'].minTime)
+	.replace(/(Golden Cookie Max: )\d+/, "$1"+Game.shimmerTypes['golden'].maxTime);
+    }
+    shimmerClockNum = setInterval(updateInfoTimes, 60*1000*15);
 } catch (e) {
     clearInterval(shimmerClockNum);
+    alert(e);
 }
-// end of new golden cookie data
+// end of new golden cookie data //
 
 function randomFloor(x) {if ((x%1)<Math.random()) return Math.floor(x); else return Math.ceil(x);}
 
@@ -1943,8 +1946,10 @@ Game.Launch=function()
 		Game.attachTooltip(l('topbarMobileCC'),'<div style="padding:8px;width:250px;text-align:center;">Play Cookie Clicker on your phone!<br>(Android only; iOS version will be released later)</div>','this');
 		Game.attachTooltip(l('topbarRandomgen'),'<div style="padding:8px;width:250px;text-align:center;">A thing we made that lets you write random generators.</div>','this');
 		Game.attachTooltip(l('topbarIGM'),'<div style="padding:8px;width:250px;text-align:center;">A thing we made that lets you create your own idle games using a simple scripting language.</div>','this');
+		try {
 		Game.attachTooltip(l('shimmerInfo'),'<div style="padding:8px;width:250px;text-align:center;">&bull; This lets you see your min and max golden cookie spawn times! This may be considered cheating by some, but know that this is read-only (you cannot alter the values through this).<br>&bull; Anyways, here are the values:<br>&bull; Golden Cookie Min: '+Game.shimmerTypes['golden'].minTime+'s<br>&bull; Golden Cookie Max: '+Game.shimmerTypes['golden'].maxTime+'s</div>','this');
-		
+		} catch(e) {alert(e)};
+			
 		Game.attachTooltip(l('heralds'),function(){
 			var str='';
 			
