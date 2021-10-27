@@ -1946,9 +1946,9 @@ Game.Launch=function()
 		Game.attachTooltip(l('topbarMobileCC'),'<div style="padding:8px;width:250px;text-align:center;">Play Cookie Clicker on your phone!<br>(Android only; iOS version will be released later)</div>','this');
 		Game.attachTooltip(l('topbarRandomgen'),'<div style="padding:8px;width:250px;text-align:center;">A thing we made that lets you write random generators.</div>','this');
 		Game.attachTooltip(l('topbarIGM'),'<div style="padding:8px;width:250px;text-align:center;">A thing we made that lets you create your own idle games using a simple scripting language.</div>','this');
-		try {
-		Game.attachTooltip(l('shimmerInfo'),'<div style="padding:8px;width:250px;text-align:center;">&bull; This lets you see your min and max golden cookie spawn times! This may be considered cheating by some, but know that this is read-only (you cannot alter the values through this).<br>&bull; Anyways, here are the values:<br>&bull; Golden Cookie Min: '+Game.shimmerTypes['golden'].minTime+'s<br>&bull; Golden Cookie Max: '+Game.shimmerTypes['golden'].maxTime+'s</div>','this');
-		} catch(e) {alert(e)};
+		//try {
+		//Game.attachTooltip(l('shimmerInfo'),'<div style="padding:8px;width:250px;text-align:center;">&bull; This lets you see your min and max golden cookie spawn times! This may be considered cheating by some, but know that this is read-only (you cannot alter the values through this).&bull; Golden Cookie Min: '+Game.shimmerTypes['golden'].minTime+'s&bull; Golden Cookie Max: '+Game.shimmerTypes['golden'].maxTime+'s</div>','this');
+		//} catch(e) {alert(e)};
 			
 		Game.attachTooltip(l('heralds'),function(){
 			var str='';
