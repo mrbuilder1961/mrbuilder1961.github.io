@@ -1943,6 +1943,7 @@ Game.Launch=function()
 		Game.attachTooltip(l('topbarMobileCC'),'<div style="padding:8px;width:250px;text-align:center;">Play Cookie Clicker on your phone!<br>(Android only; iOS version will be released later)</div>','this');
 		Game.attachTooltip(l('topbarRandomgen'),'<div style="padding:8px;width:250px;text-align:center;">A thing we made that lets you write random generators.</div>','this');
 		Game.attachTooltip(l('topbarIGM'),'<div style="padding:8px;width:250px;text-align:center;">A thing we made that lets you create your own idle games using a simple scripting language.</div>','this');
+		Game.attachTooltip(l('shimmerInfo'),'<div style="padding:8px;width:250px;text-align:center;">&bull; This lets you see your min and max golden cookie spawn times! This may be considered cheating by some, but know that this is read-only (you cannot alter the values through this).<br>&bull; Anyways, here are the values:<br>&bull; Golden Cookie Min: '+Game.shimmerTypes['golden'].minTime+'s<br>&bull; Golden Cookie Max: '+Game.shimmerTypes['golden'].maxTime+'s</div>','this');
 		
 		Game.attachTooltip(l('heralds'),function(){
 			var str='';
@@ -3765,7 +3766,7 @@ Game.Launch=function()
 			{
 				if (Game.lumpCurrentType!=0) str+='<div class="line"></div>';
 				if (Game.lumpCurrentType==1) str+='This sugar lump grew to be <b>bifurcated</b>; harvesting it has a 50% chance of yielding two lumps.';
-				else if (Game.lumpCurrentType==2) str+='This sugar lump grew to be <b>golden</b>; harvesting it will yield 2 to 7 lumps, your current cookies will be doubled (capped to a gain of 24 hours of your CpS), and you will find 10% more golden cookies for the next 24 hours.';
+				else if (Game.lumpCurrentType==2) str+='This sugar lump grew to be <b>golden</b>; harvesting it will yield 2 to 7 lumps, your current cookies will be doubled (capped to a gain of 24 hours of your CpS), and you will find 10% more golden cookies for the next 24 hours. This is SUPER rare (0.075%), so if you haven\'t cheated then WOW! Buy a lottery ticket or something!';
 				else if (Game.lumpCurrentType==3) str+='This sugar lump was affected by the elders and grew to be <b>meaty</b>; harvesting it will yield between 0 and 2 lumps.';
 				else if (Game.lumpCurrentType==4) str+='This sugar lump is <b>caramelized</b>, its stickiness binding it to unexpected things; harvesting it will yield between 1 and 3 lumps and will refill your sugar lump cooldowns.';
 			}
