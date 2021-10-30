@@ -42,26 +42,26 @@ if(!Array.prototype.indexOf) {
 var updateShimmerInfo = function() {
 	var str = '&bull; This lets you see your min and max shimmer spawn times! A shimmer is a golden cookie or a reindeer, if you didn\'t know.<br><br>';
 	try {
-	var g = Game.shimmerTypes.golden;
-	var r = Game.shimmerTypes.reindeer;
+		var g = Game.shimmerTypes.golden;
+		var r = Game.shimmerTypes.reindeer;
 			
-	var showGs = Game.goldenClicks.toString().includes("7")||Game.HasAchiev("Fortune")===1||Game.Has("Lucky day");
-	var reindeer = false;
+		var showGs = Game.goldenClicks.toString().includes("7")||Game.HasAchiev("Fortune")===1||Game.Has("Lucky day");
+		var reindeer = false;
 
-	if(!reindeer && !showGs) str = "&bull; Sadly, you don't have enough upgrades/experience yet to view this data. Come back soon with more upgrades!";
-	if(showGs) {
-		str += '&bull; Golden Cookie Min : <b>'+g.minTime/30+'</b>s<br>';
-		str += '&bull; Golden Cookie Max : <b>'+g.maxTime/30+'</b>s<br>';
-		str += '&bull; Golden Cookie avg. : <b>'+Math.floor((g.minTime/30+g.maxTime/30)/2)+'</b>s<br>';
-		// str += '&bull; Affecting factors : tbd';
-	}
-	if(reindeer) {
-		str += '&bull; Reindeer Min : <b>'+r.minTime/30+'</b>s<br>';
-		str += '&bull; Reindeer Max : <b>'+r.maxTime/30+'</b>s<br>';
-		str += '&bull; Reindeer avg. : <b>'+Math.floor((r.minTime/30+r.maxTime/30)/2)+'</b>s<br>';
-		// str += '&bull; Affecting factors : tbd';
-	}
-	} catch (e) {console.error(e);};
+		if(!reindeer && !showGs) str = "&bull; Sadly, you don't have enough upgrades/experience yet to view this data. Come back soon with more upgrades!";
+		if(showGs) {
+			str += '&bull; Golden Cookie Min : <b>'+g.minTime/30+'</b>s<br>';
+			str += '&bull; Golden Cookie Max : <b>'+g.maxTime/30+'</b>s<br>';
+			str += '&bull; Golden Cookie avg. : <b>'+Math.floor((g.minTime/30+g.maxTime/30)/2)+'</b>s<br>';
+			// str += '&bull; Affecting factors : tbd';
+		}
+		if(reindeer) {
+			str += '&bull; Reindeer Min : <b>'+r.minTime/30+'</b>s<br>';
+			str += '&bull; Reindeer Max : <b>'+r.maxTime/30+'</b>s<br>';
+			str += '&bull; Reindeer avg. : <b>'+Math.floor((r.minTime/30+r.maxTime/30)/2)+'</b>s<br>';
+			// str += '&bull; Affecting factors : tbd';
+		}
+	} catch (e) {}
 	str = 'An error occured while loading this, check back later or just wait for a little bit.';
 		
 	return '<div style="padding:8px;width:250px;text-align:center;">'+str+'</div>';
