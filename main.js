@@ -1959,7 +1959,7 @@ Game.Launch=function()
 		Game.attachTooltip(l('topbarIGM'),'<div style="padding:8px;width:250px;text-align:center;">A thing we made that lets you create your own idle games using a simple scripting language.</div>','this');
 		
 		// Golden cookie info tooltip registration
-		Game.attachTooltip(l('shimmerInfo'),updateShimmerInfo,'this');
+		Game.attachTooltip(l('shimmerInfo'),updateShimmerInfo(),'this');
 			
 		Game.attachTooltip(l('heralds'),function(){
 			var str='';
