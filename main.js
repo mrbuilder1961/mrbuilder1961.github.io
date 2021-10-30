@@ -4132,7 +4132,7 @@ Game.Launch=function()
 		}
 		
 		Game.shimmerTypes={
-			//in these, "me" refers to the shimmer itself, and "this" to the shimmer's type object
+			//"me" refers to the shimmer itself, and "this" to the shimmer's type object
 			'golden':{
 				reset:function()
 				{
@@ -4707,6 +4707,9 @@ Game.Launch=function()
 			'Javascript console':['Refactoring','Antipattern'],
 			'Idleverse':['Cosmic nursery','Big crunch'],
 		};
+
+		// update golden cookie info tab
+		Game.attachTooltip(l('shimmerInfo', updateShimmerInfo(), 'this'));
 		
 		/*=====================================================================================
 		PARTICLES
@@ -13650,9 +13653,6 @@ Game.Launch=function()
 				
 				if (!Game.HasAchiev('Cookie-dunker') && Game.LeftBackground && Game.milkProgress>0.1 && (Game.LeftBackground.canvas.height*0.4+256/2-16)>((1-Game.milkHd)*Game.LeftBackground.canvas.height)) Game.Win('Cookie-dunker');
 				//&& l('bigCookie').getBoundingClientRect().bottom>l('milk').getBoundingClientRect().top+16 && Game.milkProgress>0.1) Game.Win('Cookie-dunker');
-				
-				// update golden cookie info tab
-				Game.attachTooltip(l('shimmerInfo', updateShimmerInfo(), 'this'))
 
 				Game.runModHook('check');
 			}
@@ -13972,8 +13972,9 @@ LAUNCH THIS THING
 =======================================================================================*/
 try {
 	Game.Launch();
+	Game.attachTooltip(l('shimmerInfo'), updateShimmerInfo(), 'this');
 } catch(e) {
-	try { l('jsErrorText').textContent += e.message; } catch(er) { l('jsErrorText').textContent += 'Error occured trying to display error: '+er.message; };
+	l('jsErrorText').textContent += e.message;
 	console.log(e);
 }
 
