@@ -13967,10 +13967,12 @@ Game.Launch=function()
 /*=====================================================================================
 LAUNCH THIS THING
 =======================================================================================*/
-try {
+try
+{
 	Game.Launch();
 	// Game.attachTooltip(l('shimmerInfo'), updateShimmerInfo(), 'this');
-} catch(e) {
+} catch(e)
+{
 	l('jsErrorText').textContent += e.stack.replace(/\s{2,}| {2,}/g, ' ');
 	console.error(e);
 }
