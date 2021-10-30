@@ -9,6 +9,7 @@ Most of this is years old at this point and harkens back to simpler, cruder time
 Spoilers ahead.
 http://orteil.dashnet.org
 */
+var { updateLog } = require('./updateLog.js');
 
 var VERSION=2.042;
 var BETA=0;
@@ -653,7 +654,7 @@ Game.Launch=function()
 		if (day>=easterDay-7 && day<=easterDay) Game.baseSeason='easter';
 	}
 	
-	Game.updateLog = (typeof require('./updateLog.js').updateLog === 'string'?require('./updateLog.js').updateLog:'Failed to load');
+	Game.updateLog = typeof updateLog === 'string'?updateLog:'Failed to load. ;/';
 	
 	Game.ready=0;
 	
