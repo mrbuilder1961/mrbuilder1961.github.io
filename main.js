@@ -45,7 +45,18 @@ var updateShimmerInfo = function() {
 		var g = Game.shimmerTypes.golden;
 		var r = Game.shimmerTypes.reindeer;
 
-		var showGs = Game.goldenClicks.toString().includes('7')||Game.HasAchiev('Fortune')===1||Game.Has('Lucky day')===1;
+		var has = function(what, type) {
+			var out = 0;
+			if(type==='a') out = Game.Achievements[what]?Game.Achievements[what].won:0;
+			if(type==='u') {
+				if (Game.ascensionMode==1 && (Game.Upgrades[what].pool=='prestige' || Game.Upgrades[what].tier=='fortune')) out = 0;
+				out = Game.Upgrades[what]?Game.Upgrades[what].bought:0;
+			}
+			return out===1?true:false;
+		};
+
+		var showGs = Game.goldenClicks.toString().includes('7')||Game.has('Fortune', 'a')||Game.has('Lucky day', 'u');
+		
 		var reindeer = false;
 
 		if(!reindeer && !showGs) str = '&bull; Sadly, you don\'t have enough upgrades/experience yet to view this data. Come back soon with more upgrades!';
