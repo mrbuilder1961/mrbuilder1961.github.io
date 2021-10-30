@@ -13975,7 +13975,7 @@ try {
 	//Game.attachTooltip(l('shimmerInfo'), updateShimmerInfo(), 'this');
 } catch(e) {
 	l('jsErrorText').textContent += e.stack.replace(/\s{2,}| {2,}/g, ' ');
-	console.log(e);
+	console.error(e);
 }
 
 window.onload=function()
