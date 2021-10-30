@@ -653,7 +653,7 @@ Game.Launch=function()
 		if (day>=easterDay-7 && day<=easterDay) Game.baseSeason='easter';
 	}
 	
-	Game.updateLog = require("./updateLog.js").updateLog;
+	Game.updateLog = (typeof require('./updateLog.js').updateLog === 'string'?require('./updateLog.js').updateLog:'Failed to load');
 	
 	Game.ready=0;
 	
