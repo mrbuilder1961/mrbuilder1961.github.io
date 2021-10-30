@@ -7,7 +7,8 @@ Note that this version has a few minor modifications to the base game:
 - Sugar lump text changes color based on whether the lump is maturing, mature, or ripe
 - Ad section is gone
 - Small text changes (mostly shortenings) here and there
-- Golden cookie info
+- Shimmer info that renders dynamically (when certain critera are met)
+- Error messages will be shown when the game fails to load
 
 
 Useable [here](https://mrbuilder1961.github.io), play responsibly!
