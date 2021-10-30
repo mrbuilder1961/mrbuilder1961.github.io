@@ -74,7 +74,7 @@ var updateShimmerInfo = function() {
 		}
 	} catch (e)	{ str = 'An error occured while loading this, check back later or just wait for a little bit.\n\n'+e.stack; }
 
-	if(!e.message.includes("error")) shimmerTooltip = true;
+	if(!str.includes("error")) shimmerTooltip = true;
 	str = '<div style="padding:8px;width:250px;text-align:center;">'+str+'</div>';
 	return str;
 };
