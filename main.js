@@ -56,7 +56,6 @@ var updateShimmerInfo = function() {
 		};
 
 		var showGs = Game.goldenClicks.toString().includes('7')||has('Fortune', 'a')||has('Lucky day', 'u');
-		
 		var reindeer = false;
 
 		if(!reindeer && !showGs) str = '&bull; Sadly, you don\'t have enough upgrades/experience yet to view this data. Come back soon with more upgrades!';
