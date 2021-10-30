@@ -55,7 +55,7 @@ var updateShimmerInfo = function() {
 			return out===1?true:false;
 		};
 
-		var showGs = Game.goldenClicks.toString().includes('7')||Game.has('Fortune', 'a')||Game.has('Lucky day', 'u');
+		var showGs = Game.goldenClicks.toString().includes('7')||has('Fortune', 'a')||has('Lucky day', 'u');
 		
 		var reindeer = false;
 
