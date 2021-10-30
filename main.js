@@ -41,6 +41,7 @@ if(!Array.prototype.indexOf) {
 // new golden cookie data //
 var updateShimmerInfo = function() {
 	var str = '&bull; This lets you see your min and max shimmer spawn times! A shimmer is a golden cookie or a reindeer, if you didn\'t know.<br><br>';
+	try {
 	var g = Game.shimmerTypes.golden;
 	var r = Game.shimmerTypes.reindeer;
 			
@@ -60,7 +61,9 @@ var updateShimmerInfo = function() {
 		str += '&bull; Reindeer avg. : <b>'+Math.floor((r.minTime/30+r.maxTime/30)/2)+'</b>s<br>';
 		// str += '&bull; Affecting factors : tbd';
 	}
-	
+	} catch (e) {console.error(e);};
+	str = 'An error occured while loading this, check back later or just wait for a little bit.';
+		
 	return '<div style="padding:8px;width:250px;text-align:center;">'+str+'</div>';
 }
 // end of new golden cookie data //
