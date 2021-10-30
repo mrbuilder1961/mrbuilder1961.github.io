@@ -14181,7 +14181,7 @@ Game.Launch=function()
 				//&& l('bigCookie').getBoundingClientRect().bottom>l('milk').getBoundingClientRect().top+16 && Game.milkProgress>0.1) Game.Win('Cookie-dunker');
 				
 				// update golden cookie info tab
-				Game.attachTooltip(l('shimmerInfo', updateShimmerInfo, 'this'))
+				Game.attachTooltip(l('shimmerInfo', updateShimmerInfo(), 'this'))
 
 				Game.runModHook('check');
 			}
