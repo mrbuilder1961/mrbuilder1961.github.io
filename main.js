@@ -75,7 +75,9 @@ var updateShimmerInfo = function() {
 	} catch (e) { console.warn(e); }
 	str = 'An error occured while loading this, check back later or just wait for a little bit.';
 
-	return '<div style="padding:8px;width:250px;text-align:center;">'+str+'</div>';
+	str = '<div style="padding:8px;width:250px;text-align:center;">'+str+'</div>';
+	try { Game.attachTooltip(l('shimmerInfo'), str, 'this'); } catch(e) {};
+	return str;
 };
 // end of new golden cookie data //
 
