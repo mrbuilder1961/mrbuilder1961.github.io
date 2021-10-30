@@ -73,8 +73,8 @@ var updateShimmerInfo = function() {
 			// str += '&bull; Affecting factors : tbd';
 		}
 	} catch (e)	{ str = 'An error occured while loading this, check back later or just wait for a little bit.\n\n'+e.stack; }
-
 	if(!str.includes("error")) shimmerTooltip = true;
+	
 	str = '<div style="padding:8px;width:250px;text-align:center;">'+str+'</div>';
 	return str;
 };
