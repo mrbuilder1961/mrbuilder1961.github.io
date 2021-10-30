@@ -654,8 +654,8 @@ Game.Launch=function()
 		easterDay=Math.floor((easterDay-new Date(easterDay.getFullYear(),0,0))/(1000*60*60*24));
 		if (day>=easterDay-7 && day<=easterDay) Game.baseSeason='easter';
 	}
-	
-	Game.updateLog = //typeof updateLog === 'string'?updateLog:'Failed to load. ;/';
+
+	Game.updateLog = typeof updateLog.html === 'string'?updateLog.html://typeof updateLog === 'string'?updateLog:'Failed to load. ;/';
 	'<div class="selectable">'+
 	'<div class="section">Info</div>'+
 	'<div class="subsection">'+
@@ -674,7 +674,7 @@ Game.Launch=function()
 	'<div class="listing warning">Warning : clearing your browser cache or cookies <small>(what else?)</small> will result in your save being wiped. Export your save and back it up first!</div>'+
 	
 	'</div><div class="subsection">'+
-	'<div class="title">Version history</div>'+
+	'<div class="title">Version history (fallback)</div>'+
 	
 	'</div><div class="subsection update">'+
 	'<div class="title">01/11/2020 - alternate reality</div>'+

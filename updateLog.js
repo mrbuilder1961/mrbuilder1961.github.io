@@ -1,4 +1,5 @@
-var updateLog =
+var updateLog = {
+	html:
     '<div class="selectable">'+
 	'<div class="section">Info</div>'+
 	'<div class="subsection">'+
@@ -532,5 +533,4 @@ var updateLog =
 	'<div class="listing">&bull; ah well</div>'+
 	'</div>'+
 	'</div>'
-;
-module.exports = { updateLog };
+}
