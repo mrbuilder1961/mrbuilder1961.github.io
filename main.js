@@ -44,11 +44,11 @@ var updateShimmerInfo = function() {
 	try {
 		var g = Game.shimmerTypes.golden;
 		var r = Game.shimmerTypes.reindeer;
-			
-		var showGs = Game.goldenClicks.toString().includes("7")||Game.HasAchiev("Fortune")===1||Game.Has("Lucky day");
+
+		var showGs = Game.goldenClicks.toString().includes('7')||Game.HasAchiev('Fortune')===1||Game.Has('Lucky day')===1;
 		var reindeer = false;
 
-		if(!reindeer && !showGs) str = "&bull; Sadly, you don't have enough upgrades/experience yet to view this data. Come back soon with more upgrades!";
+		if(!reindeer && !showGs) str = '&bull; Sadly, you don\'t have enough upgrades/experience yet to view this data. Come back soon with more upgrades!';
 		if(showGs) {
 			str += '&bull; Golden Cookie Min : <b>'+g.minTime/30+'</b>s<br>';
 			str += '&bull; Golden Cookie Max : <b>'+g.maxTime/30+'</b>s<br>';
