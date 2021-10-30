@@ -56,7 +56,7 @@ var updateShimmerInfo = function() {
 			return out===1?true:false;
 		};
 
-		var showGs = Game.goldenClicks.toString().includes('7')||has('Fortune', 'a')||has('Lucky day', 'u');
+		var showGs = Game.goldenClicks.toString().includes('7')||has('Fortune', 'a')/*Game.HasAchiev('Fortune')===1*/||has('Lucky day', 'u')/*Game.Has('Lucky day')===1*/;
 		var reindeer = false;
 
 		if(!reindeer && !showGs) str = '&bull; Sadly, you don\'t have enough upgrades/experience yet to view this data. Come back soon with more upgrades!';
@@ -72,9 +72,7 @@ var updateShimmerInfo = function() {
 			str += '&bull; Reindeer avg. : <b>'+Math.floor((r.minTime/30+r.maxTime/30)/2)+'</b>s<br>';
 			// str += '&bull; Affecting factors : tbd';
 		}
-	} catch (e) {
-		str = 'An error occured while loading this, check back later or just wait for a little bit.\n\n'+e.stack;
-	}
+	} catch (e)	{ str = 'An error occured while loading this, check back later or just wait for a little bit.\n\n'+e.stack; }
 
 	if(!e.message.includes("error")) shimmerTooltip = true;
 	str = '<div style="padding:8px;width:250px;text-align:center;">'+str+'</div>';
