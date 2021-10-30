@@ -65,7 +65,7 @@ var updateShimmerInfo = function() {
 	str = 'An error occured while loading this, check back later or just wait for a little bit.';
 		
 	return '<div style="padding:8px;width:250px;text-align:center;">'+str+'</div>';
-}
+};
 // end of new golden cookie data //
 
 function randomFloor(x) {if ((x%1)<Math.random()) return Math.floor(x); else return Math.ceil(x);}
@@ -13970,9 +13970,12 @@ Game.Launch=function()
 /*=====================================================================================
 LAUNCH THIS THING
 =======================================================================================*/
-Game.Launch();
-//try {Game.Launch();}
-//catch(err) {console.log('ERROR : '+err.message);}
+try {
+	Game.Launch();
+} catch(e) {
+	try { l('jsErrorText').textContent += e.message; } catch(er) { l('jsErrorText').textContent += 'Error occured trying to display error: '+er.message; };
+	console.log(e);
+}
 
 window.onload=function()
 {
