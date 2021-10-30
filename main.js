@@ -72,8 +72,9 @@ var updateShimmerInfo = function() {
 			str += '&bull; Reindeer avg. : <b>'+Math.floor((r.minTime/30+r.maxTime/30)/2)+'</b>s<br>';
 			// str += '&bull; Affecting factors : tbd';
 		}
-	} catch (e) { console.log(e); }
-	str = 'An error occured while loading this, check back later or just wait for a little bit.';
+	} catch (e) {
+		str = 'An error occured while loading this, check back later or just wait for a little bit.\n\n'+e.stack;
+	}
 
 	str = '<div style="padding:8px;width:250px;text-align:center;">'+str+'</div>';
 	return str;
