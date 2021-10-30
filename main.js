@@ -46,17 +46,7 @@ var updateShimmerInfo = function() {
 		var g = Game.shimmerTypes.golden;
 		var r = Game.shimmerTypes.reindeer;
 
-		var has = function(what, type) {
-			var out = 0;
-			if(type==='a') out = Game.Achievements[what]?Game.Achievements[what].won:0;
-			if(type==='u') {
-				if (Game.ascensionMode==1 && (Game.Upgrades[what].pool=='prestige' || Game.Upgrades[what].tier=='fortune')) out = 0;
-				out = Game.Upgrades[what]?Game.Upgrades[what].bought:0;
-			}
-			return out===1?true:false;
-		};
-
-		var showGs = Game.goldenClicks.toString().includes('7')||has('Fortune', 'a')/*Game.HasAchiev('Fortune')===1*/||has('Lucky day', 'u')/*Game.Has('Lucky day')===1*/;
+		var showGs = Game.goldenClicks.toString().includes('7')||Game.HasAchiev('Fortune')===1||Game.Has('Lucky day')===1;
 		var reindeer = false;
 
 		if(!reindeer && !showGs) str = '&bull; Sadly, you don\'t have enough upgrades/experience yet to view this data. Come back soon with more upgrades!';
@@ -74,7 +64,7 @@ var updateShimmerInfo = function() {
 		}
 	} catch (e)	{ str = 'An error occured while loading this, check back later or just wait for a little bit.\n\n'+e.stack; }
 	if(!str.includes("error")) shimmerTooltip = true;
-	
+
 	str = '<div style="padding:8px;width:250px;text-align:center;">'+str+'</div>';
 	return str;
 };
