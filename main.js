@@ -1426,9 +1426,6 @@ Game.Launch=function()
 		Game.attachTooltip(l('topbarMobileCC'),'<div style="padding:8px;width:250px;text-align:center;">Play Cookie Clicker on your phone!<br>(Android only; iOS version will be released later)</div>','this');
 		Game.attachTooltip(l('topbarRandomgen'),'<div style="padding:8px;width:250px;text-align:center;">A thing we made that lets you write random generators.</div>','this');
 		Game.attachTooltip(l('topbarIGM'),'<div style="padding:8px;width:250px;text-align:center;">A thing we made that lets you create your own idle games using a simple scripting language.</div>','this');
-		
-		// Golden cookie info tooltip registration
-		Game.attachTooltip(l('shimmerInfo'),updateShimmerInfo(),'this');
 			
 		Game.attachTooltip(l('heralds'),function(){
 			var str='';
