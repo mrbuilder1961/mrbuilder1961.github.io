@@ -1,11 +1,13 @@
 ﻿/*
-All this code is copyright Orteil, 2013-2020; With some editing done by me (OBro1961) and probably more people
-	-with some help, advice and fixes by Nicholas Laux, Debugbro, Opti, and lots of people on reddit, Discord, and the DashNet forums (+OBro1961 of course)
+All this code is copyright Orteil, 2013-2020;
+	-with some help, advice and fixes by Nicholas Laux, Debugbro, Opti, OBro1961, and lots of people on reddit, Discord, and the DashNet forums
 	-also includes a bunch of snippets found on stackoverflow.com and others
 	-want to mod the game? scroll down to the "MODDING API" section
 Hello, and welcome to the joyous mess that is main.js. Code contained herein is not guaranteed to be good, consistent, or sane. 
 Most of this is years old at this point and harkens back to simpler, cruder times. In particular I've tried to maintain compatibility with fairly old versions of javascript, which means luxuries such as 'let', arrow functions and string literals are unavailable. Have a nice trip.
 /!\ JavaScript code might be inconsistent with old AND new features, so old devices may not function properly or have parts not function right. /!\
+For this GitHub repository, any suggestions you have should be submitted as a bug or as a pull request, I may or may not consider it.
+
 Spoilers ahead.
 http://orteil.dashnet.org
 */
@@ -50,7 +52,7 @@ var updateShimmerInfo = function() {
 
 		if(!showRs && !showGs) str = '&bull; Sadly, you don\'t have enough upgrades/experience yet to view this data. Come back soon with more upgrades!';
 		
-		if(showRs || showGs) str += '&bull; <em>Type</em> : <b>min</b>, <b>max</b>, <b>avg</b><br>';
+		if(showRs || showGs) str += '&bull; <i>Type</i> : <b>min</b>, <b>max</b>, <b>avg</b><br>';
 		if(showGs) {
 			str += '&bull; Golden Cookie : <b>'
 			    + Math.floor(g.minTime/30)+'s</b>, <b>'
@@ -69,8 +71,7 @@ var updateShimmerInfo = function() {
 	} catch (e)	{ str = 'An error occured while loading this, check back later or just wait for a little bit.\n\n'+e.stack; }
 	if(!str.includes("error")) shimmerTooltip = true;
 
-	str = '<div style="padding:8px;width:250px;text-align:center;">'+str+'</div>';
-	return str;
+	return '<div style="padding:8px;width:250px;text-align:center;">'+str+'</div>';
 };
 // end of new golden cookie data //
 
@@ -13975,13 +13976,9 @@ Game.Launch=function()
 /*=====================================================================================
 LAUNCH THIS THING
 =======================================================================================*/
-try
-{
-	Game.Launch();
-} catch(e)
-{
-	l('jsErrorText').textContent += e.stack.replace(/\s{2,}| {2,}/g, ' ');
-	console.error(e);
+try {  Game.Launch();  } catch(e) {
+    l('jsErrorText').textContent += e.stack.replace(/\s{2,}| {2,}/g, ' ');
+    console.error(e);
 }
 
 window.onload=function()
