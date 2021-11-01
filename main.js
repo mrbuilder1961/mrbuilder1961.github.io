@@ -11,7 +11,7 @@ For this GitHub repository, any suggestions you have should be submitted as a bu
 Spoilers ahead.
 http://orteil.dashnet.org
 */
-var VERSION=2.042;
+var VERSION=2.042; // actually 2.032 heeheeheehee...
 var BETA=0;
 
 
@@ -41,7 +41,7 @@ if(!Array.prototype.indexOf) {
 }
 
 // new golden cookie data //
-var shimmerTooltip = false;
+var shimmerTtData = [false, ''];
 var updateShimmerInfo = function() {
 	var str = '&bull; This lets you see your min and max shimmer spawn times! (A shimmer is a golden cookie or a reindeer!)<br><br>';
 	try {
@@ -69,9 +69,10 @@ var updateShimmerInfo = function() {
 			// str += '&bull; Affecting factors : tbd';
 		}
 	} catch (e)	{ str = 'An error occured while loading this, check back later or just wait for a little bit.\n\n'+e.stack; }
-	if(!str.includes("error")) shimmerTooltip = true;
-
-	return '<div style="padding:8px;width:250px;text-align:center;">'+str+'</div>';
+	if(!str.includes("error")) shimmerTtData[0] = true;
+	
+	str = '<div style="padding:8px;width:250px;text-align:center;">'+str+'</div>';
+	shimmerTtData[1] = str; return str;
 };
 // end of new golden cookie data //
 
@@ -13966,8 +13967,8 @@ Game.Launch=function()
 		setTimeout(Game.Loop,1000/Game.fps);
 
 		// register golden cookie tooltip
-		if(new Date(time).getMinutes()%15===0 || !shimmerTooltip) {
-			Game.attachTooltip(l('shimmerInfo'), updateShimmerInfo(), 'this');
+		if(new Date(time).getMinutes()%15===0 || !shimmerTtData[0]) {
+			Game.attachTooltip(l('shimmerInfo'), shimmerTtData[1]===updateShimmerInfo()?shimmerTtData[1]:updateShimmerInfo(), 'this');
 		};
 	}
 }
