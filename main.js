@@ -41,25 +41,28 @@ if(!Array.prototype.indexOf) {
 // new golden cookie data //
 var shimmerTooltip = false;
 var updateShimmerInfo = function() {
-	var str = '&bull; This lets you see your min and max shimmer spawn times! A shimmer is a golden cookie or a reindeer, if you didn\'t know.<br><br>';
+	var str = '&bull; This lets you see your min and max shimmer spawn times! (A shimmer is a golden cookie or a reindeer!)<br><br>';
 	try {
 		var g = Game.shimmerTypes.golden;
 		var r = Game.shimmerTypes.reindeer;
-
 		var showGs = Game.goldenClicks.toString().includes('7')||Game.HasAchiev('Fortune')===1||Game.Has('Lucky day')===1;
 		var showRs = false;
 
 		if(!showRs && !showGs) str = '&bull; Sadly, you don\'t have enough upgrades/experience yet to view this data. Come back soon with more upgrades!';
+		
+		if(showRs || showGs) str += '&bull; <i>Type</i> : <b>min</b>, <b>max</b>, <b>avg</b>';
 		if(showGs) {
-			str += '&bull; Golden Cookie Min : <b>'+g.minTime/30+'</b>s<br>';
-			str += '&bull; Golden Cookie Max : <b>'+g.maxTime/30+'</b>s<br>';
-			str += '&bull; Golden Cookie avg. : <b>'+Math.floor((g.minTime/30+g.maxTime/30)/2)+'</b>s<br>';
+			str += '&bull; Golden Cookie : <b>'
+			    + Math.floor(g.minTime/30)+'</b>, <b>'
+			    + Math.floor(g.maxTime/30)+'</b>, <b>'
+			    + Math.floor((g.minTime/30+g.maxTime/30)/2)+'</b>';
 			// str += '&bull; Affecting factors : tbd';
 		}
 		if(showRs) {
-			str += '&bull; Reindeer Min : <b>'+r.minTime/30+'</b>s<br>';
-			str += '&bull; Reindeer Max : <b>'+r.maxTime/30+'</b>s<br>';
-			str += '&bull; Reindeer avg. : <b>'+Math.floor((r.minTime/30+r.maxTime/30)/2)+'</b>s<br>';
+			str += '&bull; Reindeer : <b>'
+			    + Math.floor(r.minTime/30)+'</b>, <b>'
+			    + Math.floor(r.maxTime/30)+'</b>, <b>'
+			    + Math.floor((r.minTime/30+r.maxTime/30)/2)+'</b>';
 			// str += '&bull; Affecting factors : tbd';
 		}
 	} catch (e)	{ str = 'An error occured while loading this, check back later or just wait for a little bit.\n\n'+e.stack; }
