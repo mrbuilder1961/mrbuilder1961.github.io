@@ -50,12 +50,13 @@ var updateShimmerInfo = function() {
 
 		if(!showRs && !showGs) str = '&bull; Sadly, you don\'t have enough upgrades/experience yet to view this data. Come back soon with more upgrades!';
 		
-		if(showRs || showGs) str += '&bull; <i>Type</i> : <b>min</b>, <b>max</b>, <b>avg</b>';
+		if(showRs || showGs) str += '&bull; <em>Type</em> : <b>min</b>, <b>max</b>, <b>avg</b><br>';
 		if(showGs) {
 			str += '&bull; Golden Cookie : <b>'
-			    + Math.floor(g.minTime/30)+'</b>, <b>'
-			    + Math.floor(g.maxTime/30)+'</b>, <b>'
-			    + Math.floor((g.minTime/30+g.maxTime/30)/2)+'</b>';
+			    + Math.floor(g.minTime/30)+'s</b>, <b>'
+			    + Math.floor(g.maxTime/30)+'s</b>, <b>'
+			    + Math.floor((g.minTime/30+g.maxTime/30)/2)+'s</b>'
+			    + showRs?'<br>':'';
 			// str += '&bull; Affecting factors : tbd';
 		}
 		if(showRs) {
