@@ -80,6 +80,7 @@ var updateShimmerInfo = function() {
 	} catch (e)	{ str = 'An error occured while loading this, check back later or just wait for a little bit.\n\n'+e.stack; }
 	if(!str.includes("error")) shimmerTtData = true;
 	
+	console.info('(Hopefully) updated tooltip!');
 	return '<div style="padding:8px;width:250px;text-align:center;">'+str+'</div>';
 };
 // end of new golden cookie data //
@@ -13976,9 +13977,10 @@ Game.Launch=function()
 
 		// register golden cookie tooltip
 		if((new Date(time).getMinutes()%15===0 && new Date(time).getSeconds()===0) || !shimmerTtData) {
+			if(!shimmerTtData) l('shimmerInfo').onclick = function(e) {  Game.attachTooltip(l('shimmerInfo'), updateShimmerInfo(), 'this');  };
 			// reindeer is not supported yet, so nothing is checked for it
-			if(!Game.goldenClicks.toString().includes('7')||Game.HasAchiev('Fortune')!==1||Game.Has('Lucky day')!==1) l('shimmerInfo').hidden = true;
-			else if(l('shimmerInfo').hidden) l('shimmerInfo').hidden = false;
+			if(!Game.goldenClicks.toString().includes('7')&&Game.HasAchiev('Fortune')!==1&&Game.Has('Lucky day')!==1) l('shimmerInfo').style.visibility="hidden";
+			else if(l('shimmerInfo').style.visibility==="hidden") l('shimmerInfo').style.visibility="visible";
 			Game.attachTooltip(l('shimmerInfo'), updateShimmerInfo(), 'this');
 		};
 	}
@@ -13989,9 +13991,9 @@ Game.Launch=function()
 LAUNCH THIS THING
 =======================================================================================*/
 try {  Game.Launch();  } catch(e) {
-    l('jsErrorText').textContent += e.stack.replace(/\s{2,}| {2,}/g, ' ');
     console.error(e);
     alert(e);
+    l('jsErrorText').textContent = e.stack.replace(/\s{2,}| {2,}/g, ' ');
 }
 
 window.onload=function()
