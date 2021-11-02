@@ -52,7 +52,6 @@ var updateShimmerInfo = function() {
 		var Gs = Game.goldenClicks.toString().includes('7')||Game.HasAchiev('Fortune')===1||Game.Has('Lucky day')===1;
 		var Rs = false;
 
-		if(!Rs && !Gs) str = '&bull; Sadly, you don\'t have enough upgrades/experience yet to view this data. Come back soon with more upgrades!';
 		if(Rs || Gs) str += '&bull; <span style="font-style:italic;">Type</span> : <b>min</b>, <b>max</b>, <b>avg</b><br><br>';
 
 		if(Gs) {
@@ -13977,6 +13976,9 @@ Game.Launch=function()
 
 		// register golden cookie tooltip
 		if((new Date(time).getMinutes()%15===0 && new Date(time).getSeconds()===0) || !shimmerTtData) {
+			// reindeer is not supported yet, so nothing is checked for it
+			if(!Game.goldenClicks.toString().includes('7')||Game.HasAchiev('Fortune')!==1||Game.Has('Lucky day')!==1)) l('shimmerInfo').hidden = true;
+			else if(l('shimmerInfo').hidden) l('shimmerInfo').hidden = false;
 			Game.attachTooltip(l('shimmerInfo'), updateShimmerInfo(), 'this');
 		};
 	}
