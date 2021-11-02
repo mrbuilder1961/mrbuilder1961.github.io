@@ -45,8 +45,10 @@ var shimmerTtData = false;
 var updateShimmerInfo = function() {
 	var str = '&bull; This lets you see your min and max shimmer spawn times! (A shimmer is a golden cookie or a reindeer!)<br><br>';
 	try {
-		var g = Game.shimmerTypes.golden;
-		var r = Game.shimmerTypes.reindeer;
+		var g = Game.shimmerTypes.golden, r = Game.shimmerTypes.reindeer;                // easter,      halloween,    valentines, buisness
+		var gAffectors = ['Lucky day', 'Serendipity', 'Golden goose egg', 'Heavenly luck', 'Starspawn', 'Starterror', 'Starlove', 'Startrade'];
+		var rAffectors = [];
+		
 		var Gs = Game.goldenClicks.toString().includes('7')||Game.HasAchiev('Fortune')===1||Game.Has('Lucky day')===1;
 		var Rs = false;
 
@@ -59,7 +61,15 @@ var updateShimmerInfo = function() {
 				.replace('$2', Math.floor(g.maxTime/30))
 				.replace('$3', Math.floor((g.minTime/30+g.maxTime/30)/2))
 				.concat(Rs?'<br>':'');
-			// str += '&bull; Affecting factors : tbd';
+			
+			var iconStr = '';
+			for(const affector of gAffectors) {
+				if(Game.Has[affector]) {
+					if(gAffectors.indexOf(affector)+1===gAffectors.length) {};
+					// get icon and add it to the str
+				} 
+			}
+			//str += '&bull; Affecting factors : '+iconStr;
 		}
 		if(Rs) {
 			str += '&bull; Reindeer Data : <b>$1s</b>, <b>$2s</b>, <b>$3s</b>'
