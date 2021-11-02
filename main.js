@@ -62,7 +62,7 @@ var updateShimmerInfo = function() {
 				.concat(Rs?'<br>':'');
 			
 			var iconStr = '';
-			for(const affector of gAffectors) {
+			for(var affector of gAffectors) {
 				if(Game.Has[affector]) {
 					if(gAffectors.indexOf(affector)+1===gAffectors.length) {};
 					// get icon and add it to the str
@@ -13977,7 +13977,7 @@ Game.Launch=function()
 		// register golden cookie tooltip
 		if((new Date(time).getMinutes()%15===0 && new Date(time).getSeconds()===0) || !shimmerTtData) {
 			// reindeer is not supported yet, so nothing is checked for it
-			if(!Game.goldenClicks.toString().includes('7')||Game.HasAchiev('Fortune')!==1||Game.Has('Lucky day')!==1)) l('shimmerInfo').hidden = true;
+			if(!Game.goldenClicks.toString().includes('7')||Game.HasAchiev('Fortune')!==1||Game.Has('Lucky day')!==1) l('shimmerInfo').hidden = true;
 			else if(l('shimmerInfo').hidden) l('shimmerInfo').hidden = false;
 			Game.attachTooltip(l('shimmerInfo'), updateShimmerInfo(), 'this');
 		};
