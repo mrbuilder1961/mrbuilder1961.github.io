@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "name": "Launch Microsoft Edge and open the Edge DevTools",
+            "request": "launch",
+            "type": "vscode-edge-devtools.debug",
+            "url": ""
+        },
+        {
+            "type": "pwa-msedge",
+            "name": "http://C:\\Users\\oamcf\\Desktop\\GitHub\\mrbuilder1961.github.io\\index.html",
+            "request": "launch",
+            "url": "http://C:\\Users\\oamcf\\Desktop\\GitHub\\mrbuilder1961.github.io\\index.html"
+        },
+        {
+            "type": "msedge",
+            "name": "Cookie Clicker GitHub index.html",
+            "request": "attach",
+            "url": "http://C:\\Users\\oamcf\\Desktop\\GitHub\\mrbuilder1961.github.io\\index.html"
+        }
+    ]
+}

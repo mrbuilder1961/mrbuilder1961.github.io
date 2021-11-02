@@ -1,3 +1,5 @@
 {
-    "type": "module"
+    "jshintConfig": {
+        "asi": true
+    }
 }
