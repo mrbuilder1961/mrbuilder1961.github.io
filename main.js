@@ -45,9 +45,9 @@ var shimmerTtData = false;
 var updateShimmerInfo = function() {
 	var str = '&bull; This lets you see your min and max shimmer spawn times! (A shimmer is a golden cookie or a reindeer!)<br><br>';
 	try {
-		var g = Game.shimmerTypes.golden, r = Game.shimmerTypes.reindeer;                // easter,      halloween,    valentines, buisness
-		var gAffectors = ['Lucky day', 'Serendipity', 'Golden goose egg', 'Heavenly luck', 'Starspawn', 'Starterror', 'Starlove', 'Startrade'];
-		var rAffectors = [];
+		var g = Game.shimmerTypes.golden, r = Game.shimmerTypes.reindeer;
+		var gVars = ['Lucky day', 'Serendipity', 'Golden goose egg', 'Heavenly luck', 'Starspawn', 'Starterror', 'Starlove', 'Startrade'];
+		var rVars = [];
 		
 		var Gs = Game.goldenClicks.toString().includes('7')||Game.HasAchiev('Fortune')===1||Game.Has('Lucky day')===1;
 		var Rs = false;
@@ -55,32 +55,23 @@ var updateShimmerInfo = function() {
 		if(Rs || Gs) str += '&bull; <span style="font-style:italic;">Type</span> : <b>min</b>, <b>max</b>, <b>avg</b><br><br>';
 
 		if(Gs) {
+			str += '<span style="font-size:11.5px;">Affecting factors : </span>'+Game.listTinyOwnedUpgrades(gVars)+/*multiplier/effect num+*/'<br>';
 			str += '&bull; Golden Cookie Data : <b>$1s</b>, <b>$2s</b>, <b>$3s</b>'
 				.replace('$1', Math.floor(g.minTime/30))
 				.replace('$2', Math.floor(g.maxTime/30))
 				.replace('$3', Math.floor((g.minTime/30+g.maxTime/30)/2))
 				.concat(Rs?'<br>':'');
-			
-			var iconStr = '';
-			for(var affector of gAffectors) {
-				if(Game.Has[affector]) {
-					if(gAffectors.indexOf(affector)+1===gAffectors.length) {};
-					// get icon and add it to the str
-				} 
-			}
-			//str += '&bull; Affecting factors : '+iconStr;
 		}
 		if(Rs) {
+			str += '<span style="font-size:11.5px;">Affecting factors : </span>'+Game.listTinyOwnedUpgrades(rVars)+/*multiplier/effect num+*/'<br>';
 			str += '&bull; Reindeer Data : <b>$1s</b>, <b>$2s</b>, <b>$3s</b>'
 				.replace('$1', Math.floor(r.minTime/30))
 				.replace('$2', Math.floor(r.maxTime/30))
 				.replace('$3', Math.floor((r.minTime/30+r.maxTime/30)/2));
-			// str += '&bull; Affecting factors : tbd';
 		}
 	} catch (e)	{ str = 'An error occured while loading this, check back later or just wait for a little bit.\n\n'+e.stack; }
 	if(!str.includes("error")) shimmerTtData = true;
 	
-	console.info('(Hopefully) updated tooltip!');
 	return '<div style="padding:8px;width:250px;text-align:center;">'+str+'</div>';
 };
 // end of new golden cookie data //
@@ -13977,8 +13968,6 @@ Game.Launch=function()
 
 		// register golden cookie tooltip
 		if((new Date(time).getMinutes()%15===0 && new Date(time).getSeconds()===0) || !shimmerTtData) {
-			if(!shimmerTtData) l('shimmerInfo').onclick = function(e) {  Game.attachTooltip(l('shimmerInfo'), updateShimmerInfo(), 'this');  };
-			// reindeer is not supported yet, so nothing is checked for it
 			if(!Game.goldenClicks.toString().includes('7')&&Game.HasAchiev('Fortune')!==1&&Game.Has('Lucky day')!==1) l('shimmerInfo').style.visibility="hidden";
 			else if(l('shimmerInfo').style.visibility==="hidden") l('shimmerInfo').style.visibility="visible";
 			Game.attachTooltip(l('shimmerInfo'), updateShimmerInfo(), 'this');
