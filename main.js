@@ -55,7 +55,7 @@ var updateShimmerInfo = function() {
 		if(Rs || Gs) str += '&bull; <span style="font-style:italic;">Type</span> : <b>min</b>, <b>max</b>, <b>avg</b><br><br>';
 
 		if(Gs) {
-			str += '<span style="font-size:11.5px;">Affecting factors : </span>'+Game.listTinyOwnedUpgrades(gVars)+/*multiplier/effect num+*/'<br>';
+			str += '<span style="font-size:11.5px;">Affecting factors :  </span>'+Game.listTinyOwnedUpgrades(gVars)+'<span style="font-size:11.5px;">  ('+Game.goldenMultiplier+'x faster)</span>'+'<br>';
 			str += '&bull; Golden Cookie Data : <b>$1s</b>, <b>$2s</b>, <b>$3s</b>'
 				.replace('$1', Math.floor(g.minTime/30))
 				.replace('$2', Math.floor(g.maxTime/30))
