@@ -7,7 +7,7 @@ Note that this version has a few minor modifications to the base game:
 - Sugar lump text changes color based on whether the lump is maturing, mature, or ripe
 - Ad section is gone
 - Small text changes (mostly shortenings) here and there
-- Shimmer info that renders dynamically (when certain critera are met)
+- Shimmer info that renders dynamically (when certain critera is met)
 - Error messages will be shown when the game fails to load
 
 
