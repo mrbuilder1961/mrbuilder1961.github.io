@@ -1125,7 +1125,7 @@ Game.Launch=function()
 			
 			NOTE: modding API is susceptible to change and may not always function super-well
 		*/
-		if(false) { // Example mod
+		if(false) // Example mod
 			Game.registerMod('modId',{
 				/*
 					what does the mod do?
@@ -1134,8 +1134,21 @@ Game.Launch=function()
 				save:function() { },
 				load:function() { },
 			});
-		}
-		
+		if(maybeTrue!==(undefined&&null)) 
+			Game.registerMod('specialSaves', {
+				names: ['Toxic Dough', 'OBrew\'s Cookies'],
+				init: function() {
+					if(names.includes(Game.bakeryName)) {
+						// do something, save data probably
+					}
+				},
+				save: function() {
+					// return {toxic_dough: data, obrew: data2};
+				},
+				load: function(saveData) {
+					// Game.loadSave(Game.save+JSON.stringify(saveData));
+				}
+			});
 		
 		/* replacing an existing canvas picture with a new one at runtime : Game.Loader.Replace('perfectCookie.png','imperfectCookie.png');
 		 * upgrades and achievements can use other pictures than icons.png; declare their icon with [posX,posY,'http://website.com/myIcons.png']
