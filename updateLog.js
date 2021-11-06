@@ -1,4 +1,7 @@
 var updateLog = {
+	choose: function(arr) {
+		return arr[Math.floor(arr.length*Math.random())];
+	},
 	html:
     '<div class="selectable">'+
 	'<div class="section">Info</div>'+

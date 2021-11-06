@@ -53,24 +53,13 @@ var updateShimmerInfo = function() {
 		var Gs = Game.goldenClicks.toString().includes('7')||Game.HasAchiev('Fortune')===1||Game.Has('Lucky day')===1;
 		var Rs = false;
 
-		if(Rs || Gs) str += '&bull; <span style="font-style:italic;">Type</span> : <b>min</b>, <b>max</b>, <b>avg</b><br><br>';
+		
 		if(Gs) {
-			var n = ['', ['']];
-			gVars.forEach(function(aff) {
-				if(Game.Has(aff)&&Math.random()<0.75) n = [aff, [aff]];
-			});
-			str = '<span style="font-size:13px;">Brought to you by : <b>'+n[0]'</b> ('+tinyIcons(n[1][0])+')!</span><br>'+str;
-		}
-		else if(Rs) {
-			var n = ['', ['']];
-			rVars.forEach(function(aff) {
-				if(Game.Has(aff)&&Math.random()<0.75) n = [aff, [aff]];
-			});
-			str = '<span style="font-size:13px;">Brought to you by : <b>'+n[0]'</b> ('+tinyIcons(n[1][0])+')!</span><br>'+str;
-		}
+			var n = '';
+			gVars.forEach(function(aff) {  n=((n===''&&Math.random()<0.5)||gVars.indexOf(aff)===gVars.length-1)&&!aff.includes('Star')?aff:n;  });
+			str = '<span style="font-size:14.5px;">Brought to you by : <b>'+n+'</b> ( '+tinyIcons([n])+' )!</span><br>'+str;
 
-		if(Gs) {
-			if(tinyIcons(gVars)!=='') str += '<span style="font-size:11px;">Shortened by these ('+tinyIcons(gVars)+') upgrades</span>';
+			if(tinyIcons(gVars)!=='') str += '<span style="font-size:11px;">Shortened by these ( '+tinyIcons(gVars)+' ) upgrades</span><br>';
 			str += '&bull; Golden Cookie Data : <b>$1s</b>, <b>$2s</b>, <b>$3s</b>'
 			.replace('$1', Math.floor(g.minTime/30))
 				.replace('$2', Math.floor(g.maxTime/30))
@@ -78,7 +67,11 @@ var updateShimmerInfo = function() {
 				.concat(Rs?'<br>':'');
 		}
 		if(Rs) {
-			str += '<span style="font-size:11.5px;">Affecting factors : </span>'+tinyIcons(rVars)+'<br>';
+			var n = '';
+			rVars.forEach(function(aff) {  n=((n===''&&Math.random()<0.5)||rVars.indexOf(aff)===rVars.length-1)&&!aff.includes('Star')?aff:n;  });
+			str = '<span style="font-size:14.5px;">Brought to you by : <b>'+n+'</b> ( '+tinyIcons([n])+' )!</span><br>'+str;
+
+			if(tinyIcons(rVars)!=='') str += '<span style="font-size:11px;">Shortened by these ( '+tinyIcons(rVars)+' ) upgrades</span><br>';
 			str += '&bull; Reindeer Data : <b>$1s</b>, <b>$2s</b>, <b>$3s</b>'
 				.replace('$1', Math.floor(r.minTime/30))
 				.replace('$2', Math.floor(r.maxTime/30))
