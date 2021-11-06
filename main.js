@@ -57,13 +57,16 @@ var updateShimmerInfo = function() {
 		if(Gs) {
 			var n = ['', ['']];
 			gVars.forEach(function(aff) {
-				if(Game.Has(aff)&&Math.random()<0.3) n = [aff, [aff]];
+				if(Game.Has(aff)&&Math.random()<0.75) n = [aff, [aff]];
 			});
-			str = 'Brought to you by : <b>'+n[0]'</b> ('+tinyIcons(n[1][0])+')!<br>'+str;
-			alert(tinyIcons(...n[0])+'<=...n[0]  >}{<  n[1][0]=>'+tinyIcons(n[1][0]));
+			str = '<span style="font-size:13px;">Brought to you by : <b>'+n[0]'</b> ('+tinyIcons(n[1][0])+')!</span><br>'+str;
 		}
-		else if(Rs&&false) {
-			str = ''+str;
+		else if(Rs) {
+			var n = ['', ['']];
+			rVars.forEach(function(aff) {
+				if(Game.Has(aff)&&Math.random()<0.75) n = [aff, [aff]];
+			});
+			str = '<span style="font-size:13px;">Brought to you by : <b>'+n[0]'</b> ('+tinyIcons(n[1][0])+')!</span><br>'+str;
 		}
 
 		if(Gs) {
