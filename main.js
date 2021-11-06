@@ -50,8 +50,8 @@ var updateShimmerInfo = function() {
 		var gVars = ['Lucky day', 'Serendipity', 'Golden goose egg', 'Heavenly luck', 'Starspawn', 'Starterror', 'Starlove', 'Startrade'];
 		var rVars = [];
 		
-		var Gs = Game.goldenClicks.toString().includes('7')||Game.HasAchiev('Fortune')===1||Game.Has('Lucky day')===1, gFs = Game.listTinyOwnedUpgrades(gVars)!=="";
-		var Rs = false, rFs = Game.listTinyOwnedUpgrades(rVars)!=="";
+		var Gs = Game.goldenClicks.toString().includes('7')||Game.HasAchiev('Fortune')===1||Game.Has('Lucky day')===1, gFs = Game.listTinyOwnedUpgrades(gVars)!=='';
+		var Rs = false, rFs = Game.listTinyOwnedUpgrades(rVars)!=='';
 
 		if(Rs || Gs) str += '&bull; <span style="font-style:italic;">Type</span> : <b>min</b>, <b>max</b>, <b>avg</b><br><br>';
 
@@ -83,8 +83,8 @@ var updateShimmerInfo = function() {
 						}
 						if (Game.season!=='') {
 							var godLvl=Game.hasGod('seasons');
-							if (Game.season!=='fools')  mult *= godLvl===1?0.97: godLvl===2?0.98: godLvl===3?0.99:0.98;
-							else  mult *= godLvl===1?0.955: godLvl===2?0.97: godLvl===3?0.985:0.97;							
+							if(Game.season!=='fools')  mult*=godLvl===1?0.97: godLvl===2?0.98: godLvl===3?0.99:0.98;
+							else  mult*=godLvl===1?0.955: godLvl===2?0.97: godLvl===3?0.985:0.97;							
 						}
 					}
 			if (Game.Has('Gold hoard')) mult=0.01;
@@ -1133,21 +1133,6 @@ Game.Launch=function()
 				init:function() { },
 				save:function() { },
 				load:function() { },
-			});
-		if(maybeTrue!==(undefined&&null)) 
-			Game.registerMod('specialSaves', {
-				names: ['Toxic Dough', 'OBrew\'s Cookies'],
-				init: function() {
-					if(names.includes(Game.bakeryName)) {
-						// do something, save data probably
-					}
-				},
-				save: function() {
-					// return {toxic_dough: data, obrew: data2};
-				},
-				load: function(saveData) {
-					// Game.loadSave(Game.save+JSON.stringify(saveData));
-				}
 			});
 		
 		/* replacing an existing canvas picture with a new one at runtime : Game.Loader.Replace('perfectCookie.png','imperfectCookie.png');
