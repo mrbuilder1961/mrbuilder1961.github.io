@@ -43,56 +43,31 @@ if(!Array.prototype.indexOf) {
 // new golden cookie data //
 var shimmerTtData = false;
 var updateShimmerInfo = function() {
-	var str = '&bull; This lets you see some interesting shimmer info; but note that the values shown may not be 100% accurate, so take them with a pinch of sugar. (A shimmer is a golden cookie or a reindeer!)<br><br>';
+	var str = '&bull; This lets you see some interesting shimmer data; but note that the values shown may not be 100% accurate, so take them with a pinch of sugar. (A shimmer is a golden cookie or a reindeer)<br><br>';
 	try {
+		var tinyIcons = Game.listTinyOwnedUpgrades; // just to make typing faster
 		var g = Game.shimmerTypes.golden, r = Game.shimmerTypes.reindeer;
-		// dont forget plants, temple gods, and temporary things like effects and auras
+		
 		var gVars = ['Lucky day', 'Serendipity', 'Golden goose egg', 'Heavenly luck', 'Starspawn', 'Starterror', 'Starlove', 'Startrade'];
 		var rVars = [];
-		
-		var Gs = Game.goldenClicks.toString().includes('7')||Game.HasAchiev('Fortune')===1||Game.Has('Lucky day')===1, gFs = Game.listTinyOwnedUpgrades(gVars)!=='';
-		var Rs = false, rFs = Game.listTinyOwnedUpgrades(rVars)!=='';
+		var Gs = Game.goldenClicks.toString().includes('7')||Game.HasAchiev('Fortune')===1||Game.Has('Lucky day')===1;
+		var Rs = false;
 
 		if(Rs || Gs) str += '&bull; <span style="font-style:italic;">Type</span> : <b>min</b>, <b>max</b>, <b>avg</b><br><br>';
+		if(Gs) {
+			var n = ['', ['']];
+			gVars.forEach(function(aff) {
+				if(Game.Has(aff)&&Math.random()<0.3) n = [aff, [aff]];
+			});
+			str = 'Brought to you by : <b>'+n[0]'</b> ('+tinyIcons(n[1][0])+')!<br>'+str;
+			alert(tinyIcons(...n[0])+'<=...n[0]  >}{<  n[1][0]=>'+tinyIcons(n[1][0]));
+		}
+		else if(Rs&&false) {
+			str = ''+str;
+		}
 
 		if(Gs) {
-			var mult = g.maxTime-g.minTime;
-			if (Game.Has('Lucky day')) mult*=0.5;
-			if (Game.Has('Serendipity')) mult*=0.5;
-			if (Game.Has('Golden goose egg')) mult*=0.95;
-			if (Game.Has('Heavenly luck')) mult*=0.95;
-			if (Game.Has('Green yeast digestives')) mult*=0.99;
-			if (Game.hasBuff('Sugar blessing')) mult*=0.9;
-			mult*=1-Game.auraMult('Arcane Aura')*0.05;
-			if (Game.season==='easter' && Game.Has('Starspawn')) mult*=0.98;
-					if (Game.season==='halloween' && Game.Has('Starterror')) mult*=0.98;
-					if (Game.season==='valentines' && Game.Has('Starlove')) mult*=0.98;
-					if (Game.season==='fools' && Game.Has('Startrade')) mult*=0.95;
-					if (Game.hasGod) {
-						if(Game.hasGod('industry')) {
-							var godLvl=Game.hasGod('industry');
-							mult *= godLvl===1?1.1:
-							godLvl===2?1.06:
-							godLvl===3?1.03:1.06;
-						}
-						if(Game.hasGod('mother')) {
-							var godLvl=Game.hasGod('mother');
-							mult *= godLvl===1?1.15:
-							godLvl===2?1.1:
-							godLvl===3?1.05:1.1;
-						}
-						if (Game.season!=='') {
-							var godLvl=Game.hasGod('seasons');
-							if(Game.season!=='fools')  mult*=godLvl===1?0.97: godLvl===2?0.98: godLvl===3?0.99:0.98;
-							else  mult*=godLvl===1?0.955: godLvl===2?0.97: godLvl===3?0.985:0.97;							
-						}
-					}
-			if (Game.Has('Gold hoard')) mult=0.01;
-			
-			if(gFs) str += '<span style="font-size:11px;">Shortened by these ('+Game.listTinyOwnedUpgrades(gVars)+') upgrades</span>';
-			if(gFs) {
-				str = str.replace(/(upgrades)(<\/span>)/, '$1'+';<br><span style="text-align:right;">(~'+Math.floor(mult).toString()+'x)</span><br>'+'$2')
-			}
+			if(tinyIcons(gVars)!=='') str += '<span style="font-size:11px;">Shortened by these ('+tinyIcons(gVars)+') upgrades</span>';
 			str += '&bull; Golden Cookie Data : <b>$1s</b>, <b>$2s</b>, <b>$3s</b>'
 			.replace('$1', Math.floor(g.minTime/30))
 				.replace('$2', Math.floor(g.maxTime/30))
@@ -100,13 +75,13 @@ var updateShimmerInfo = function() {
 				.concat(Rs?'<br>':'');
 		}
 		if(Rs) {
-			str += '<span style="font-size:11.5px;">Affecting factors : </span>'+Game.listTinyOwnedUpgrades(rVars)+'<br>';
+			str += '<span style="font-size:11.5px;">Affecting factors : </span>'+tinyIcons(rVars)+'<br>';
 			str += '&bull; Reindeer Data : <b>$1s</b>, <b>$2s</b>, <b>$3s</b>'
 				.replace('$1', Math.floor(r.minTime/30))
 				.replace('$2', Math.floor(r.maxTime/30))
 				.replace('$3', Math.floor((r.minTime/30+r.maxTime/30)/2));
 		}
-	} catch (e)	{ str = 'An error occured while loading this, check back later or just wait for a little bit.\n\n'+e.stack; }
+	} catch (e)	{ str = 'An error occured while loading this, check back later or just wait for a little bit.\n\n<span style="font-type:monospace;color:#fd0000;">'+e.stack+'</span>'; }
 	if(!str.includes("error")) shimmerTtData = true;
 	
 	return '<div style="padding:8px;width:250px;text-align:center;font-size:12.5px;">'+str+'</div>';
