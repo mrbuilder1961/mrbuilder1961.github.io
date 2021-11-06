@@ -40,9 +40,10 @@ if(!Array.prototype.indexOf) {
     };
 }
 
-// new golden cookie data //
+// new special stuffs //
+
 var shimmerTtData = false;
-var updateShimmerInfo = function() {
+var shimmerTooltip = function() {
 	var str = '&bull; This lets you see some interesting shimmer data; but note that the values shown may not be 100% accurate, so take them with a pinch of sugar. (A shimmer is a golden cookie or a reindeer)<br><br>';
 	try {
 		var tinyIcons = Game.listTinyOwnedUpgrades; // just to make typing faster
@@ -82,7 +83,12 @@ var updateShimmerInfo = function() {
 	
 	return '<div style="padding:8px;width:250px;text-align:center;font-size:12.5px;">'+str+'</div>';
 };
-// end of new golden cookie data //
+function hUpgradesTooltip() {
+	// todo, gets heavenly chips and will go through the list of heavenly upgrades and it will show all of the upgrades that could be purchased once you ascend
+	// requires at least one ascension, or some other ascension-related achievements
+};
+
+// end of new special stuff //
 
 function randomFloor(x) {if ((x%1)<Math.random()) return Math.floor(x); else return Math.ceil(x);}
 
@@ -13951,7 +13957,7 @@ Game.Launch=function()
 		if((new Date(time).getMinutes()%15===0 && new Date(time).getSeconds()===0) || !shimmerTtData) {
 			if(!Game.goldenClicks.toString().includes('7')&&Game.HasAchiev('Fortune')!==1&&Game.Has('Lucky day')!==1) l('shimmerInfo').style.visibility="hidden";
 			else if(l('shimmerInfo').style.visibility==="hidden") l('shimmerInfo').style.visibility="visible";
-			Game.attachTooltip(l('shimmerInfo'), updateShimmerInfo(), 'this');
+			Game.attachTooltip(l('shimmerInfo'), shimmerTooltip(), 'this');
 		};
 	}
 }
