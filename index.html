@@ -43,7 +43,7 @@ Feel free to alter this code to your liking, but please do not re-host it, do no
 		<div><a href="//orteil.dashnet.org/randomgen/" target="_blank" id="topbarRandomgen">RandomGen</a></div>
 		<div><a href="//orteil.dashnet.org/igm/" target="_blank" id="topbarIGM">Idle Game Maker</a></div>
 		
-		<div id="shimmerInfo" onclick="Game.attachTooltip(l('shimmerInfo'), updateShimmerInfo(), 'this');">Shimmer Info</div>
+		<div id="shimmerInfo" onclick="Game.tooltip.draw(l('shimmerInfo'), drawShimmerTt(), 'this');Game.attachTooltip(l('shimmerInfo'), drawShimmerTt(), 'this');">Shimmer Info</div>
 		<div id="links" class="hoverer">
 			Other versions
 			<div class="hoverable">

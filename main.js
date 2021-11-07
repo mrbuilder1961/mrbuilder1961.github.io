@@ -43,11 +43,11 @@ if(!Array.prototype.indexOf) {
 // new special stuffs //
 
 var shimmerTtData = false;
-var shimmerTooltip = function() {
+var drawShimmerTt = function(gTimes, rTimes) {
 	var str = '&bull; This lets you see some interesting shimmer data; but note that the values shown may not be 100% accurate, so take them with a pinch of sugar. (A shimmer is a golden cookie or a reindeer)<br><br>';
 	try {
-		var tinyIcons = Game.listTinyOwnedUpgrades; // just to make typing faster
-		var g = Game.shimmerTypes.golden, r = Game.shimmerTypes.reindeer;
+		var icons = Game.listTinyOwnedUpgrades; // shortcut
+		var g = !gTimes?Game.shimmerTypes.golden:gTimes, r = !rTimes?Game.shimmerTypes.reindeer:rTimes;
 		
 		var gVars = ['Lucky day', 'Serendipity', 'Golden goose egg', 'Heavenly luck', 'Starspawn', 'Starterror', 'Starlove', 'Startrade'];
 		var rVars = [];
@@ -56,23 +56,21 @@ var shimmerTooltip = function() {
 
 		
 		if(Gs) {
-			var n = '';
-			gVars.forEach(function(aff) {  n=((n===''&&Math.random()<0.5)||gVars.indexOf(aff)===gVars.length-1)&&!aff.includes('Star')?aff:n;  });
-			str = '<span style="font-size:14.5px;">Brought to you by : <b>'+n+'</b> ( '+tinyIcons([n])+' )!</span><br>'+str;
+			var n = (function(){a=[]; for(var i=0; i<gVars.length; i++){if(Game.Has(gVars[i]))a.push(gVars[i]);} return choose(a);})();
+			if(n!==''||n!==null||n!==undefined) str = '<span style="font-size:14px;">Brought to you by : <b>'+n+'</b> '+icons([n])+'</span><br>'+str;
 
-			if(tinyIcons(gVars)!=='') str += '<span style="font-size:11px;">Shortened by these ( '+tinyIcons(gVars)+' ) upgrades</span><br>';
+			if(icons(gVars)!=='') str += '<span style="font-size:11px;">Shortened by these ( '+icons(gVars)+' ) upgrades</span><br>';
 			str += '&bull; Golden Cookie Data : <b>$1s</b>, <b>$2s</b>, <b>$3s</b>'
-			.replace('$1', Math.floor(g.minTime/30))
+				.replace('$1', Math.floor(g.minTime/30))
 				.replace('$2', Math.floor(g.maxTime/30))
 				.replace('$3', Math.floor((g.minTime/30+g.maxTime/30)/2))
 				.concat(Rs?'<br>':'');
 		}
 		if(Rs) {
-			var n = '';
-			rVars.forEach(function(aff) {  n=((n===''&&Math.random()<0.5)||rVars.indexOf(aff)===rVars.length-1)&&!aff.includes('Star')?aff:n;  });
-			str = '<span style="font-size:14.5px;">Brought to you by : <b>'+n+'</b> ( '+tinyIcons([n])+' )!</span><br>'+str;
+			var n = (function(){a=[]; for(var i=0; i<rVars.length; i++){if(Game.Has(rVars[i]))a.push(rVars[i]);} return choose(a);})();
+			if(n!==''||n!==null||n!==undefined) str = '<span style="font-size:14px;">Brought to you by : <b>'+n+'</b> '+icons([n])+'</span><br>'+str;
 
-			if(tinyIcons(rVars)!=='') str += '<span style="font-size:11px;">Shortened by these ( '+tinyIcons(rVars)+' ) upgrades</span><br>';
+			if(icons(rVars)!=='') str += '<span style="font-size:11px;">Shortened by these ( '+icons(rVars)+' ) upgrades</span><br>';
 			str += '&bull; Reindeer Data : <b>$1s</b>, <b>$2s</b>, <b>$3s</b>'
 				.replace('$1', Math.floor(r.minTime/30))
 				.replace('$2', Math.floor(r.maxTime/30))
@@ -86,7 +84,7 @@ var shimmerTooltip = function() {
 function hUpgradesTooltip() {
 	// todo, gets heavenly chips and will go through the list of heavenly upgrades and it will show all of the upgrades that could be purchased once you ascend
 	// requires at least one ascension, or some other ascension-related achievements
-};
+}
 
 // end of new special stuff //
 
@@ -4436,7 +4434,9 @@ Game.Launch=function()
 						'Thanks! That hit the spot!',
 						'Thank you. A team has been dispatched.',
 						'They know.',
-						'Oops. This was just a chocolate cookie with shiny aluminium foil.'
+						'Oops. This was just a chocolate cookie with shiny aluminium foil.',
+						'Ha! You had a 500% higher chance to get a sugar lump, but you got this message.',
+						'Golden cookies clicked set to '+Game.goldenClicks+'!'
 						]);
 						popup=str;
 					}
@@ -13957,7 +13957,8 @@ Game.Launch=function()
 		if((new Date(time).getMinutes()%15===0 && new Date(time).getSeconds()===0) || !shimmerTtData) {
 			if(!Game.goldenClicks.toString().includes('7')&&Game.HasAchiev('Fortune')!==1&&Game.Has('Lucky day')!==1) l('shimmerInfo').style.visibility="hidden";
 			else if(l('shimmerInfo').style.visibility==="hidden") l('shimmerInfo').style.visibility="visible";
-			Game.attachTooltip(l('shimmerInfo'), shimmerTooltip(), 'this');
+			Game.attachTooltip(l('shimmerInfo'), drawShimmerTt(), 'this');
+			Game.tooltip.draw(l('shimmerInfo'), drawShimmerTt(), 'this');
 		};
 	}
 }
