@@ -42,12 +42,11 @@ if(!Array.prototype.indexOf) {
 
 // new special stuffs //
 
-var shimmerTtData = false;
-var drawShimmerTt = function(gTimes, rTimes) {
-	var str = '&bull; This lets you see some interesting shimmer data; but note that the values shown may not be 100% accurate, so take them with a pinch of sugar. (A shimmer is a golden cookie or a reindeer)<br><br>';
-	try {
+var drawShimmerTt = function() {
+	var str = '';
+	try { str = '&bull; This lets you see some interesting shimmer data; but note that the values shown may not be 100% accurate, so take them with a pinch of sugar. (A shimmer is a golden cookie or a reindeer)<br><br>';
 		var icons = Game.listTinyOwnedUpgrades; // shortcut
-		var g = !gTimes?Game.shimmerTypes.golden:gTimes, r = !rTimes?Game.shimmerTypes.reindeer:rTimes;
+		var st=Game.shimmerTypes, w={wrath: Game.elderWrath>0}, gmn=st.golden.getMinTime(w), gmx=st.golden.getMaxTime(w), rmn=st.reindeer.getMinTime(w), rmx=st.reindeer.getMaxTime(w);
 		
 		var gVars = ['Lucky day', 'Serendipity', 'Golden goose egg', 'Heavenly luck', 'Starspawn', 'Starterror', 'Starlove', 'Startrade'];
 		var rVars = [];
@@ -60,10 +59,10 @@ var drawShimmerTt = function(gTimes, rTimes) {
 			if(n!==''||n!==null||n!==undefined) str = '<span style="font-size:14px;">Brought to you by : <b>'+n+'</b> '+icons([n])+'</span><br>'+str;
 
 			if(icons(gVars)!=='') str += '<span style="font-size:11px;">Shortened by these ( '+icons(gVars)+' ) upgrades</span><br>';
-			str += '&bull; Golden Cookie Data : <b>$1s</b>, <b>$2s</b>, <b>$3s</b>'
-				.replace('$1', Math.floor(g.minTime/30))
-				.replace('$2', Math.floor(g.maxTime/30))
-				.replace('$3', Math.floor((g.minTime/30+g.maxTime/30)/2))
+			str += '&bull; Golden Cookie Data : <b>$s</b>, <b>$s</b> (<b>$s</b>)'
+				.replace('$', Math.floor(gmn/30))
+				.replace('$', Math.floor(gmx/30))
+				.replace('$', Math.floor((gmn/30+gmx/30)/2))
 				.concat(Rs?'<br>':'');
 		}
 		if(Rs) {
@@ -71,13 +70,12 @@ var drawShimmerTt = function(gTimes, rTimes) {
 			if(n!==''||n!==null||n!==undefined) str = '<span style="font-size:14px;">Brought to you by : <b>'+n+'</b> '+icons([n])+'</span><br>'+str;
 
 			if(icons(rVars)!=='') str += '<span style="font-size:11px;">Shortened by these ( '+icons(rVars)+' ) upgrades</span><br>';
-			str += '&bull; Reindeer Data : <b>$1s</b>, <b>$2s</b>, <b>$3s</b>'
-				.replace('$1', Math.floor(r.minTime/30))
-				.replace('$2', Math.floor(r.maxTime/30))
-				.replace('$3', Math.floor((r.minTime/30+r.maxTime/30)/2));
+			str += '&bull; Reindeer Data : <b>$s</b>, <b>$s</b> (<b>$s</b>)'
+				.replace('$', Math.floor(rmn/30))
+				.replace('$', Math.floor(rmx/30))
+				.replace('$', Math.floor((rmn/30+rmx/30)/2));
 		}
 	} catch (e)	{ str = 'An error occured while loading this, check back later or just wait for a little bit.\n\n<span style="font-type:monospace;color:#fd0000;">'+e.stack+'</span>'; }
-	if(!str.includes("error")) shimmerTtData = true;
 	
 	return '<div style="padding:8px;width:250px;text-align:center;font-size:12.5px;">'+str+'</div>';
 };
@@ -13952,14 +13950,6 @@ Game.Launch=function()
 		
 		Game.loopT++;
 		setTimeout(Game.Loop,1000/Game.fps);
-
-		// register golden cookie tooltip
-		if((new Date(time).getMinutes()%15===0 && new Date(time).getSeconds()===0) || !shimmerTtData) {
-			if(!Game.goldenClicks.toString().includes('7')&&Game.HasAchiev('Fortune')!==1&&Game.Has('Lucky day')!==1) l('shimmerInfo').style.visibility="hidden";
-			else if(l('shimmerInfo').style.visibility==="hidden") l('shimmerInfo').style.visibility="visible";
-			Game.attachTooltip(l('shimmerInfo'), drawShimmerTt(), 'this');
-			Game.tooltip.draw(l('shimmerInfo'), drawShimmerTt(), 'this');
-		};
 	}
 }
 
