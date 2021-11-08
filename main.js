@@ -13802,7 +13802,8 @@ Game.Launch=function()
 			if (str.length>11 && !Game.mobile) unit='<br>cookies';
 			str+=unit;
 			if (Game.prefs.monospace) str='<span class="monospace">'+str+'</span>';
-			str=str+'<div style="font-size:50%;"'+(Game.cpsSucked>0?' class="warning"':'')+'>per second : '+Beautify(Game.cookiesPs*(1-Game.cpsSucked),1)+'</div>';//display cookie amount
+			str+='<div style="font-size:50%;">per second/click : <span'+(Game.cpsSucked>0?' class="warning>"':'>')+Beautify(Game.cookiesPs*(1-Game.cpsSucked),1)+'</span><b>/</b>'+Beautify(Game.computedMouseCps,1)+'</div>';//display cookie amount
+			
 			l('cookies').innerHTML=str;
 			l('compactCookies').innerHTML=str;
 			Timer.track('cookie amount');
