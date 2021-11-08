@@ -40,52 +40,6 @@ if(!Array.prototype.indexOf) {
     };
 }
 
-// new special stuffs //
-
-var drawShimmerTt = function() {
-	var str = '';
-	try { str = '&bull; This lets you see some interesting shimmer data; but note that the values shown may not be 100% accurate, so take them with a pinch of sugar. (A shimmer is a golden cookie or a reindeer)<br><br>';
-		var icons = Game.listTinyOwnedUpgrades; // shortcut
-		var st=Game.shimmerTypes, w={wrath: Game.elderWrath>0}, gmn=st.golden.getMinTime(w), gmx=st.golden.getMaxTime(w), rmn=st.reindeer.getMinTime(w), rmx=st.reindeer.getMaxTime(w);
-		
-		var gVars = ['Lucky day', 'Serendipity', 'Golden goose egg', 'Heavenly luck', 'Starspawn', 'Starterror', 'Starlove', 'Startrade'];
-		var rVars = [];
-		var Gs = Game.goldenClicks.toString().includes('7')||Game.HasAchiev('Fortune')===1||Game.Has('Lucky day')===1;
-		var Rs = false;
-
-		
-		if(Gs) {
-			var n = (function(){a=[]; for(var i=0; i<gVars.length; i++){if(Game.Has(gVars[i]))a.push(gVars[i]);} return choose(a);})();
-			if(n!==''||n!==null||n!==undefined) str = '<span style="font-size:14px;">Brought to you by : <b>'+n+'</b> '+icons([n])+'</span><br>'+str;
-
-			if(icons(gVars)!=='') str += '<span style="font-size:11px;">Shortened by these ( '+icons(gVars)+' ) upgrades</span><br>';
-			str += '&bull; Golden Cookie Data : <b>$s</b>, <b>$s</b> (<b>$s</b>)'
-				.replace('$', Math.floor(gmn/30))
-				.replace('$', Math.floor(gmx/30))
-				.replace('$', Math.floor((gmn/30+gmx/30)/2))
-				.concat(Rs?'<br>':'');
-		}
-		if(Rs) {
-			var n = (function(){a=[]; for(var i=0; i<rVars.length; i++){if(Game.Has(rVars[i]))a.push(rVars[i]);} return choose(a);})();
-			if(n!==''||n!==null||n!==undefined) str = '<span style="font-size:14px;">Brought to you by : <b>'+n+'</b> '+icons([n])+'</span><br>'+str;
-
-			if(icons(rVars)!=='') str += '<span style="font-size:11px;">Shortened by these ( '+icons(rVars)+' ) upgrades</span><br>';
-			str += '&bull; Reindeer Data : <b>$s</b>, <b>$s</b> (<b>$s</b>)'
-				.replace('$', Math.floor(rmn/30))
-				.replace('$', Math.floor(rmx/30))
-				.replace('$', Math.floor((rmn/30+rmx/30)/2));
-		}
-	} catch (e)	{ str = 'An error occured while loading this, check back later or just wait for a little bit.\n\n<span style="font-type:monospace;color:#fd0000;">'+e.stack+'</span>'; }
-	
-	return '<div style="padding:8px;width:250px;text-align:center;font-size:12.5px;">'+str+'</div>';
-};
-function hUpgradesTooltip() {
-	// todo, gets heavenly chips and will go through the list of heavenly upgrades and it will show all of the upgrades that could be purchased once you ascend
-	// requires at least one ascension, or some other ascension-related achievements
-}
-
-// end of new special stuff //
-
 function randomFloor(x) {if ((x%1)<Math.random()) return Math.floor(x); else return Math.ceil(x);}
 
 function shuffle(array)
@@ -676,7 +630,7 @@ Game.Launch=function()
 	Game.updateLog = '<div class="title">Loading...</div>';
 
 	Game.ready=0;
-	
+
 	Game.Load=function()
 	{
 		//l('javascriptError').innerHTML='<div style="padding:64px 128px;"><div class="title">Loading...</div></div>';
@@ -1097,6 +1051,10 @@ Game.Launch=function()
 			-please be mindful of the length of the data you save, as it does inflate the export-save-to-string feature
 			
 			NOTE: modding API is susceptible to change and may not always function super-well
+		
+			replacing an existing canvas picture with a new one at runtime : Game.Loader.Replace('perfectCookie.png','imperfectCookie.png');
+		 	upgrades and achievements can use other pictures than icons.png; declare their icon with [posX,posY,'http://website.com/myIcons.png']
+		 	check out the "UNLOCKING STUFF" section to see how unlocking achievs and upgrades is done
 		*/
 		if(false) // Example mod
 			Game.registerMod('modId',{
@@ -1108,10 +1066,64 @@ Game.Launch=function()
 				load:function() { },
 			});
 		
-		/* replacing an existing canvas picture with a new one at runtime : Game.Loader.Replace('perfectCookie.png','imperfectCookie.png');
-		 * upgrades and achievements can use other pictures than icons.png; declare their icon with [posX,posY,'http://website.com/myIcons.png']
-		 * check out the "UNLOCKING STUFF" section to see how unlocking achievs and upgrades is done */
-		
+		Game.functions = {}; // save our functions here so they can be accessed anywhere
+		Game.functions.getShimmerTt = function(getHide) {	
+			var str='', hide=false;
+			try { str = '&bull; This lets you see some interesting shimmer data; but note that the values shown may not be 100% accurate, so take them with a pinch of sugar. (A shimmer is a golden cookie or a reindeer)<br><br>';
+				var icons = Game.listTinyOwnedUpgrades;
+				var st=Game.shimmerTypes, w={wrath: Game.elderWrath>0}, gmn=st.golden.getMinTime(w), gmx=st.golden.getMaxTime(w), rmn=st.reindeer.getMinTime(w), rmx=st.reindeer.getMaxTime(w);
+				
+				var gVars = ['Lucky day', 'Serendipity', 'Golden goose egg', 'Heavenly luck', 'Starspawn', 'Starterror', 'Starlove', 'Startrade'];
+				var rVars = [];
+				var Gs = Game.HasAchiev('Fortune')||function(){gVars.forEach(function(u){if(Game.Has(u)) return true})}();
+				var Rs = false;
+				hide=!Gs&&!Rs&&getHide;
+				
+				if(Gs) {
+					var n = (function(){a=[]; for(var i=0; i<gVars.length; i++){if(Game.Has(gVars[i]))a.push(gVars[i]);} return choose(a);})();
+					if(n!==''||n!==null||n!==undefined) str = '<span style="font-size:14px;">Brought to you by : <b>'+n+'</b> '+icons([n])+'</span><br>'+str;
+
+					if(icons(gVars)!=='') str += '<span style="font-size:11px;">Shortened by these ( '+icons(gVars)+' ) upgrades</span><br>';
+					str += '&bull; Golden Cookie Data : <b>$s</b>, <b>$s</b> (<b>$s</b>)'
+						.replace('$', Math.floor(gmn/30))
+						.replace('$', Math.floor(gmx/30))
+						.replace('$', Math.floor((gmn/30+gmx/30)/2))
+						.concat(Rs?'<br>':'');
+				}
+				if(Rs) {
+					var n = (function(){a=[]; for(var i=0; i<rVars.length; i++){if(Game.Has(rVars[i]))a.push(rVars[i]);} return choose(a);})();
+					if(n!==''||n!==null||n!==undefined) str = '<span style="font-size:14px;">Brought to you by : <b>'+n+'</b> '+icons([n])+'</span><br>'+str;
+
+					if(icons(rVars)!=='') str += '<span style="font-size:11px;">Shortened by these ( '+icons(rVars)+' ) upgrades</span><br>';
+					str += '&bull; Reindeer Data : <b>$s</b>, <b>$s</b> (<b>$s</b>)'
+						.replace('$', Math.floor(rmn/30))
+						.replace('$', Math.floor(rmx/30))
+						.replace('$', Math.floor((rmn/30+rmx/30)/2));
+				}
+			} catch(e)
+			{str='An error occured while loading this, check back later or just wait for a little bit.\n\n<span style="font-type:monospace;color:#fd0000;">'+e.stack+'</span>' }
+			
+			return getHide?'1':'<div style="padding:8px;width:250px;text-align:center;font-size:12.5px;">'+str+'</div>';
+		};
+		Game.functions.loadShimmerBar = function(showTooltip) {
+			var hide = Game.functions.getShimmerTt(true)==='1';
+			if(hide) l('shimmerInfo').style.visibility='hidden';
+			if(l('shimmerInfo').style.visibility!=='visible'||!hide) l('shimmerInfo').style.visibility='visible';
+			
+			if(showTooltip&&!hide) Game.tooltip.draw(l('shimmerInfo'), Game.functions.getShimmerTt(), 'this'); // draw it
+			Game.attachTooltip(l('shimmerInfo'), Game.functions.getShimmerTt(), 'this'); // save tooltip
+		};
+		Game.functions.hUpgradesTooltip = function() {
+			// todo, gets heavenly chips and will go through the list of heavenly upgrades and it will show all of the upgrades that could be purchased once you ascend
+			// requires at least one ascension, or some other ascension-related achievements
+			var owned=[], suggestions=[], others=[]; // all combined = Game.PrestigeUpgrades; ordered in [name, id(?)] pairs
+			Game.PrestigeUpgrades.forEach(function(u, i){
+				if(Game.Has(u)||Game.HasUnlocked(u)) {owned.push([u, i]);}
+				else if(Game./*Upgrades.prototype.*/canBuy(u)) {suggestions.push([u, i]);}
+				else {others.push([u, i]);}
+			});
+			
+		};
 		/*=====================================================================================
 		BAKERY NAME
 		=======================================================================================*/

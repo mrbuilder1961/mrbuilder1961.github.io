@@ -1,5 +1,5 @@
 The original game is located at http://orteil.dashnet.org/cookieclicker/.
-This version was forked from [aquaflame95](https://github.com/AquaFlame95/aquaflame95.github.io)'s clone, which was forked from [ozh](https://github.com/ozh/cookieclicker)'s.
+This version was forked from [aquaflame95's](https://github.com/AquaFlame95/aquaflame95.github.io) clone, which was forked from [ozh's](https://github.com/ozh/cookieclicker).
 
 Note that this version has a few minor modifications to the base game:
 - Grimoire magic bar shows decimals to the hundredths place (xx.xx instead of xx)
@@ -8,7 +8,8 @@ Note that this version has a few minor modifications to the base game:
 - Ad section is gone
 - Small text changes (mostly shortenings) here and there
 - Shimmer info that renders dynamically (when certain critera is met)
-- Error messages will be shown when the game fails to load
+- Error messages will be shown when the game fails to load [currently broken]
+- An ascension upgrade helper for knowing what upgrades to save up for [currently a WIP]
 
 
 Useable [here](https://mrbuilder1961.github.io), play responsibly!
