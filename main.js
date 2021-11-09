@@ -8306,7 +8306,7 @@ Game.Launch=function()
 		Game.last.pool='debug';
 		
 		order=15000;
-		new Game.Upgrade('Elder Covenant','Puts a permanent end to the elders\' wrath, at the price of 5% of your CpS.<q>This is a complicated ritual involving silly, inconsequential trivialities such as cursed laxatives, century-old cacao, and an infant.<br>Don\'t question it.</q>',66666666666666,[8,9],function()
+		new Game.Upgrade('Elder Covenant','Puts a permanent end to the elders\' wrath, at the price of 5% of your CpS.<q>This is a complicated ritual involving silly, inconsequential trivialities such as cursed laxatives, century-old cacao, and an infant.<br>Don\'t question it.</q>',66666666666666,[5,10],function()
 		{
 			Game.pledgeT=0;
 			Game.Lock('Revoke Elder Covenant');
@@ -8318,7 +8318,7 @@ Game.Launch=function()
 		});
 		Game.last.pool='toggle';
 
-		new Game.Upgrade('Revoke Elder Covenant','You will get 5% of your CpS back, but the grandmatriarchs will return.<q>we<br>rise<br>again</q>',6666666666,[8,9],function()
+		new Game.Upgrade('Revoke Elder Covenant','You will get 5% of your CpS back, but the grandmatriarchs will return.<q>we<br>rise<br>again</q>',6666666666,[6,10],function()
 		{
 			Game.Lock('Elder Covenant');
 			Game.Unlock('Elder Covenant');
