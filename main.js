@@ -1106,7 +1106,7 @@ Game.Launch=function()
 			return getHide?'1':'<div style="padding:8px;width:250px;text-align:center;font-size:12.5px;">'+str+'</div>';
 		};
 		Game.functions.loadShimmerBar = function(showTooltip) {
-			var hide = Game.functions.getShimmerTt(true)==='1';
+			var hide=Game.functions.getShimmerTt(true)==='1';
 			if(hide) l('shimmerInfo').style.visibility='hidden';
 			if(l('shimmerInfo').style.visibility!=='visible'||!hide) l('shimmerInfo').style.visibility='visible';
 			
