@@ -24,7 +24,6 @@ function choose(arr) {return arr[Math.floor(Math.random()*arr.length)];}
 function escapeRegExp(str){return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");}
 function replaceAll(find,replace,str){return str.replace(new RegExp(escapeRegExp(find),'g'),replace);}
 
-//disable sounds coming from soundjay.com (sorry)
 var realAudio=Audio;//backup real audio
 Audio=function(src){
 	if (src && src.indexOf('soundjay')>-1) {Game.Popup('Sorry, no sounds hotlinked from soundjay.com.');this.play=function(){};}
@@ -65,22 +64,6 @@ for (var i=0;i<360;i++)
 	//let's make a lookup table
 	sinArray[i]=Math.sin(i/360*Math.PI*2);
 }
-function quickSin(x)
-{
-	//oh man this isn't all that fast actually
-	//why do I do this. why
-	var sign=x<0?-1:1;
-	return sinArray[Math.round(
-		(Math.abs(x)*360/Math.PI/2)%360
-	)]*sign;
-}
-
-/*function ajax(url,callback){
-	var ajaxRequest;
-	try{ajaxRequest = new XMLHttpRequest();} catch (e){try{ajaxRequest=new ActiveXObject('Msxml2.XMLHTTP');} catch (e) {try{ajaxRequest=new ActiveXObject('Microsoft.XMLHTTP');} catch (e){alert("Something broke!");return false;}}}
-	if (callback){ajaxRequest.onreadystatechange=function(){if(ajaxRequest.readyState===4){callback(ajaxRequest.responseText);}}}
-	ajaxRequest.open('GET',url+'&nocache='+(new Date().getTime()),true);ajaxRequest.send(null);
-}*/
 
 var ajax=function(url,callback)
 {
@@ -220,6 +203,7 @@ SimpleBeautify=function(val)
 		str2+=str[i];
 	}
 	return str2;
+	// obro1961 comment, use toLocaleString() ?
 }
 
 var beautifyInTextFilter=/(([\d]+[,]*)+)/g;//new regex
@@ -601,7 +585,7 @@ Game.Launch=function()
 	Game.https=(location.protocol!=='https:')?false:true;
 	Game.mobile=0;
 	Game.touchEvents=0;
-	//if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) Game.mobile=1;
+	//if (/Android||webOS||iPhone||iPad||iPod||BlackBerry||IEMobile||Opera Mini/i.test(navigator.userAgent)) Game.mobile=1;
 	//if (Game.mobile) Game.touchEvents=1;
 	//if ('ontouchstart' in document.documentElement) Game.touchEvents=1;
 	
@@ -610,7 +594,7 @@ Game.Launch=function()
 	css.innerHTML='body .icon,body .crate,body .usesIcon{background-image:url(img/icons.png?v='+Game.version+');}';
 	document.head.appendChild(css);
 	
-	Game.baseSeason='';//halloween, christmas, valentines, fools, easter
+	Game.baseSeason='';
 	//automatic season detection (might not be 100% accurate)
 	var year=new Date().getFullYear();
 	var leap=(((year%4===0)&&(year%100!==0))||(year%400===0))?1:0;
@@ -621,7 +605,6 @@ Game.Launch=function()
 	else if (day>=349+leap && day<=365+leap) Game.baseSeason='christmas';
 	else
 	{
-		//easter is a pain goddamn
 		var easterDay=function(Y){var C = Math.floor(Y/100);var N = Y - 19*Math.floor(Y/19);var K = Math.floor((C - 17)/25);var I = C - Math.floor(C/4) - Math.floor((C - K)/3) + 19*N + 15;I = I - 30*Math.floor((I/30));I = I - Math.floor(I/28)*(1 - Math.floor(I/28)*Math.floor(29/(I + 1))*Math.floor((21 - N)/11));var J = Y + Math.floor(Y/4) + I + 2 - C + Math.floor(C/4);J = J - 7*Math.floor(J/7);var L = I - J;var M = 3 + Math.floor((L + 40)/44);var D = L + 28 - 31*Math.floor(M/4);return new Date(Y,M-1,D);}(year);
 		easterDay=Math.floor((easterDay-new Date(easterDay.getFullYear(),0,0))/(1000*60*60*24));
 		if (day>=easterDay-7 && day<=easterDay) Game.baseSeason='easter';
@@ -633,7 +616,6 @@ Game.Launch=function()
 
 	Game.Load=function()
 	{
-		//l('javascriptError').innerHTML='<div style="padding:64px 128px;"><div class="title">Loading...</div></div>';
 		Game.Loader=new Loader();
 		Game.Loader.domain='img/';
 		Game.Loader.loaded=Game.Init;
@@ -702,9 +684,6 @@ Game.Launch=function()
 		if (Game.beta) {var me=l('linkVersionBeta');me.parentNode.removeChild(me);}
 		else if (Game.version===1.0466) {var me=l('linkVersionOld');me.parentNode.removeChild(me);}
 		else {var me=l('linkVersionLive');me.parentNode.removeChild(me);}
-
-		//l('links').innerHTML=(Game.beta?'<a href="../" target="blank">Live version</a> | ':'<a href="beta" target="blank">Try the beta!</a> | ')+'<a href="http://orteil.dashnet.org/experiments/cookie/" target="blank">Classic</a>';
-		//l('links').innerHTML='<a href="http://orteil.dashnet.org/experiments/cookie/" target="blank">Cookie Clicker Classic</a>';
 		
 		Game.lastActivity=Date.now();//reset on mouse move, key press or click
 		
@@ -796,7 +775,7 @@ Game.Launch=function()
 		Game.blendModesOn=(document.createElement('detect').style.mixBlendMode==='');
 		
 		Game.bg='';//background (grandmas and such)
-		Game.bgFade='';//fading to background
+		Game.bgFade='';
 		Game.bgR=0;//ratio (0 - not faded, 1 - fully faded)
 		Game.bgRd=0;//ratio displayed
 		
@@ -1223,7 +1202,7 @@ Game.Launch=function()
 				{
 					var rect=Game.onCrate.getBoundingClientRect();
 					rect={left:rect.left,top:rect.top,right:rect.right,bottom:rect.bottom};
-					if (rect.left===0 && rect.top===0)//if we get that bug where we get stuck in the top-left, move to the mouse (REVISION : just do nothing)
+					if (rect.left===0 && rect.top===0)
 					{return false;/*rect.left=Game.mouseX-24;rect.right=Game.mouseX+24;rect.top=Game.mouseY-24;rect.bottom=Game.mouseY+24;*/}
 					if (this.origin==='left')
 					{
@@ -1609,7 +1588,7 @@ Game.Launch=function()
 			(type===3?'\n	golden cookie fortune : ':'')+parseInt(Game.fortuneGC)+';'+
 			(type===3?'\n	CpS fortune : ':'')+parseInt(Game.fortuneCPS)+';'+
 			(type===3?'\n	highest raw CpS : ':'')+parseFloat(Game.cookiesPsRawHighest)+';'+
-			'|';//cookies and lots of other stuff
+			'|';
 			
 			if (type===3) str+='\n\nBuildings : amount, bought, cookies produced, level, minigame data';
 			for (var i in Game.Objects)//buildings
@@ -1689,6 +1668,7 @@ Game.Launch=function()
 					//so we used to save the game using browser cookies, which was just really neat considering the game's name
 					//we're using localstorage now, which is more efficient but not as cool
 					//a moment of silence for our fallen puns
+					// ...
 					str=utf8_to_b64(str)+'!END!';
 					if (str.length<10)
 					{
@@ -1698,7 +1678,7 @@ Game.Launch=function()
 					else
 					{
 						str=escape(str);
-						Game.localStorageSet(Game.SaveTo,str);//aaand save
+						Game.localStorageSet(Game.SaveTo,str);
 						if (!Game.localStorageGet(Game.SaveTo))
 						{
 							if (Game.prefs.popups) Game.Popup('Error while saving.<br>Export your save instead!');
@@ -1711,7 +1691,7 @@ Game.Launch=function()
 						}
 					}
 				}
-				else//legacy system
+				else
 				{
 					//that's right
 					//we're using cookies
@@ -1721,7 +1701,7 @@ Game.Launch=function()
 					str=utf8_to_b64(str)+'!END!';
 					Game.saveData=escape(str);
 					str=Game.SaveTo+'='+escape(str)+'; expires='+now.toUTCString()+';';
-					document.cookie=str;//aaand save
+					document.cookie=str;
 					if (document.cookie.indexOf(Game.SaveTo)<0)
 					{
 						if (Game.prefs.popups) Game.Popup('Error while saving.<br>Export your save instead!');
@@ -1769,7 +1749,7 @@ Game.Launch=function()
 						str=unescape(local);
 					}
 				}
-				else//legacy system
+				else
 				{
 					if (document.cookie.indexOf(Game.SaveTo)>=0) str=unescape(document.cookie.split(Game.SaveTo+'=')[1]);//get cookie here
 					else return false;
@@ -1816,7 +1796,7 @@ Game.Launch=function()
 					{
 						Game.T=0;
 						
-						spl=str[2].split(';');//save stats
+						spl=str[2].split(';');
 						Game.startDate=parseInt(spl[0]);
 						Game.fullDate=parseInt(spl[1]);
 						Game.lastDate=parseInt(spl[2]);
@@ -1848,7 +1828,7 @@ Game.Launch=function()
 						Game.prefs.customGrandmas=spl[19]?parseInt(spl[19]):1;
 						Game.prefs.timeout=spl[20]?parseInt(spl[20]):0;
 						BeautifyAll();
-						spl=str[4].split(';');//cookies and lots of other stuff
+						spl=str[4].split(';');
 						Game.cookies=parseFloat(spl[0]);
 						Game.cookiesEarned=parseFloat(spl[1]);
 						Game.cookieClicks=spl[2]?parseInt(spl[2]):0;
@@ -3499,11 +3479,8 @@ Game.Launch=function()
 			var icon=[23+Math.min(phase,5),row];
 			var icon2=[23+phase2,row2];
 			if (age<0){icon=[17,5];icon2=[17,5];}
-			var opacity=Math.min(6,(age/Game.lumpOverripeAge)*7)%1;
-			if (phase>=6) {opacity=1;}
 			l('lumpsIcon').style.backgroundPosition=(-icon[0]*48)+'px '+(-icon[1]*48)+'px';
 			l('lumpsIcon2').style.backgroundPosition=(-icon2[0]*48)+'px '+(-icon2[1]*48)+'px';
-			l('lumpsIcon2').style.opacity=opacity;
 			l('lumpsAmount').textContent=Beautify(Game.lumps);
 			l("lumpsAmount").style.color = age<Game.lumpMatureAge?"#6fcfff":age<Game.lumpRipeAge?"#ffd966":age<Game.lumpOverripeAge?"#43eb95":"#6fcfff";
 		}
@@ -13675,7 +13652,6 @@ Game.Launch=function()
 		}
 		if (Game.T%15===0)
 		{
-			//written through the magic of "hope for the best" maths
 			var chipsOwned=Game.HowMuchPrestige(Game.cookiesReset);
 			var ascendNowToOwn=Math.floor(Game.HowMuchPrestige(Game.cookiesReset+Game.cookiesEarned));
 			var ascendNowToGet=ascendNowToOwn-Math.floor(chipsOwned);
@@ -13806,7 +13782,9 @@ Game.Launch=function()
 				.replace('%0', Game.cpsSucked>0?'<span class="warning">':'')
 				.replace('%1', Game.cpsSucked>0?'</span>':'')
 				.replace('$0', Beautify(Game.cookiesPs*(1-Game.cpsSucked),1))
-				.replace('$1', Beautify(Game.computedMouseCps,1).replace(/(?:r|t|int)?illion/g, '')+'.');
+				.replace('$1', Game.computedMouseCps.toLocaleString().replace(/^(\d{1,3}),(\d{1,3}).+$/, '$1.$2')+function(i){
+					return ' '+['','k','m','b','tr','qd','qnt','sx','spt','oct','nn', 'dc','vgnt','trgnt','qdrgnt','qnqgnt','sxgnt','sptgnt','octgnt','nngnt'][i.toLocaleString('en-US').split(',').length-1]+'.'||' nngnt';
+				}(Game.computedMouseCps));
 			
 			l('cookies').innerHTML=str;
 			l('compactCookies').innerHTML=str;
@@ -13867,7 +13845,7 @@ Game.Launch=function()
 			}
 			Timer.track('store');
 			
-			if (Game.PARTY)//i was bored and felt like messing with CSS
+			if (Game.PARTY)
 			{
 				var pulse=Math.pow((Game.T%10)/10,0.5);
 				Game.l.style.filter='hue-rotate('+((Game.T*5)%360)+'deg) brightness('+(150-50*pulse)+'%)';
