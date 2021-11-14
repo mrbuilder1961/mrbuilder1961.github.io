@@ -508,7 +508,13 @@ var PlaySound=function(url,vol,pitchVar)
 		var sound=SoundInsts[SoundI];
 		SoundI++;
 		if (SoundI>=12) SoundI=0;
-		sound.src=Sounds[url].src;
+		try {
+			sound.src=Sounds[url].src;
+		} catch(e) {
+			if(e.code===20) return;
+			console.error(e.stack);
+		}
+
 		//sound.currentTime=0;
 		sound.volume=Math.pow(volume*Game.volume/100,2);
 		if (pitchSupport)
@@ -1037,9 +1043,7 @@ Game.Launch=function()
 		*/
 		if(false) // Example mod
 			Game.registerMod('modId',{
-				/*
-					what does the mod do?
-				*/
+				// what does the mod do?
 				init:function() { },
 				save:function() { },
 				load:function() { },
@@ -1047,22 +1051,24 @@ Game.Launch=function()
 		
 		Game.functions = {}; // save our functions here so they can be accessed anywhere
 		Game.functions.getShimmerTt = function(getHide) {	
-			var str='', hide=false;
+			var str='',hide=false,exists=function(o){return o!==null&&o!==undefined;};
 			try { str = '&bull; This lets you see some interesting shimmer data; but note that the values shown may not be 100% accurate, so take them with a pinch of sugar. (A shimmer is a golden cookie or a reindeer)<br><br>';
 				var icons = Game.listTinyOwnedUpgrades;
 				var st=Game.shimmerTypes, w={wrath: Game.elderWrath>0}, gmn=st.golden.getMinTime(w), gmx=st.golden.getMaxTime(w), rmn=st.reindeer.getMinTime(w), rmx=st.reindeer.getMaxTime(w);
 				
-				var gVars = ['Lucky day', 'Serendipity', 'Golden goose egg', 'Heavenly luck', 'Starspawn', 'Starterror', 'Starlove', 'Startrade'];
-				var rVars = [];
-				var Gs = Game.HasAchiev('Fortune')||function(){gVars.forEach(function(u){if(Game.Has(u)) return true})}();
-				var Rs = false;
+				var gVars=['Lucky day','Serendipity','Golden goose egg','Heavenly luck','Starspawn','Starterror','Starlove','Startrade'];
+				var rVars=['Starsnow','Reindeer baking grounds'];
+				var Gs=Game.HasAchiev('Fortune')||function(){gVars.forEach(function(u){if(Game.Has(u)) return true})}();
+				var Rs=Game.HasAchiev('Oh deer')||Game.HasAchiev('Let it snow');
 				hide=!Gs&&!Rs&&getHide;
 				
 				if(Gs) {
-					var n = (function(){a=[]; for(var i=0; i<gVars.length; i++){if(Game.Has(gVars[i]))a.push(gVars[i]);} return choose(a);})();
-					if(n!==''||n!==null||n!==undefined) str = '<span style="font-size:14px;">Brought to you by : <b>'+n+'</b> '+icons([n])+'</span><br>'+str;
+					var g=(function(){a=[]; for(var i=0; i<gVars.length; i++){if(Game.Has(gVars[i]))a.push(gVars[i]);} return choose(a);})();
+					var r=(function(){a=[]; for(var i=0; i<rVars.length; i++){if(Game.Has(rVars[i]))a.push(rVars[i]);} return choose(a);})();
+					if(exists(g))
+						str='<span style="font-size:13px;">Brought to you by : <b>'+g+'</b> '+(Rs&&r?'& <b>'+r+'</b> ':' ')+icons([g])+' '+(Rs&&r?icons([r]):'')+'</span><br>'+str;
 
-					if(icons(gVars)!=='') str += '<span style="font-size:11px;">Shortened by these ( '+icons(gVars)+' ) upgrades</span><br>';
+					if(icons(gVars)!=='') str+='<span style="font-size:11px;">Shortened by these ( '+icons(gVars)+' ) upgrades</span><br>';
 					str += '&bull; Golden Cookie Data : <b>$s</b>, <b>$s</b> (<b>$s</b>)'
 						.replace('$', Math.floor(gmn/30))
 						.replace('$', Math.floor(gmx/30))
@@ -1070,10 +1076,7 @@ Game.Launch=function()
 						.concat(Rs?'<br>':'');
 				}
 				if(Rs) {
-					var n = (function(){a=[]; for(var i=0; i<rVars.length; i++){if(Game.Has(rVars[i]))a.push(rVars[i]);} return choose(a);})();
-					if(n!==''||n!==null||n!==undefined) str = '<span style="font-size:14px;">Brought to you by : <b>'+n+'</b> '+icons([n])+'</span><br>'+str;
-
-					if(icons(rVars)!=='') str += '<span style="font-size:11px;">Shortened by these ( '+icons(rVars)+' ) upgrades</span><br>';
+					if(icons(rVars)!=='') str+='<span style="font-size:11px;">Shortened by these ( '+icons(rVars)+' ) upgrades</span><br>';
 					str += '&bull; Reindeer Data : <b>$s</b>, <b>$s</b> (<b>$s</b>)'
 						.replace('$', Math.floor(rmn/30))
 						.replace('$', Math.floor(rmx/30))
@@ -1086,22 +1089,45 @@ Game.Launch=function()
 		};
 		Game.functions.loadShimmerBar = function(showTooltip) {
 			var hide=Game.functions.getShimmerTt(true)==='1';
-			if(hide) l('shimmerInfo').style.visibility='hidden';
-			if(l('shimmerInfo').style.visibility!=='visible'||!hide) l('shimmerInfo').style.visibility='visible';
+			if(hide) l('shimmerInfo').style.visibility='hidden'; if(l('shimmerInfo').style.visibility!=='visible'||!hide) l('shimmerInfo').style.visibility='visible';
 			
-			if(showTooltip&&!hide) Game.tooltip.draw(l('shimmerInfo'), Game.functions.getShimmerTt(), 'this'); // draw it
-			Game.attachTooltip(l('shimmerInfo'), Game.functions.getShimmerTt(), 'this'); // save tooltip
+			Game.attachTooltip(l('shimmerInfo'), Game.functions.getShimmerTt(), 'this');
+			if(showTooltip&&!hide) Game.tooltip.draw(l('shimmerInfo'), Game.functions.getShimmerTt(), 'this');
 		};
+
 		Game.functions.hUpgradesTooltip = function() {
-			// todo, gets heavenly chips and will go through the list of heavenly upgrades and it will show all of the upgrades that could be purchased once you ascend
-			// requires at least one ascension, or some other ascension-related achievements
-			var owned=[], suggestions=[], others=[]; // all combined = Game.PrestigeUpgrades; ordered in [name, id(?)] pairs
-			Game.PrestigeUpgrades.forEach(function(u, i){
-				if(Game.Has(u)||Game.HasUnlocked(u)) {owned.push([u, i]);}
-				else if(Game./*Upgrades.prototype.*/canBuy(u)) {suggestions.push([u, i]);}
-				else {others.push([u, i]);}
+			var text='', str='<span style="font-size:14px;"><b>Hello there!</b></span>'+(Game.HasAchiev('Rebirth')?' Since you\'ve ascended before, here are some heavenly upgrade ideas!':'')+'<br><br>', chips=Game.heavenlyChips+parseInt(Game.ascendNumber.textContent.replace(/^\+|,/g,'')), ics=Game.listTinyOwnedUpgrades;
+			var owned=[],suggestions=[],others=[]; // all combined = Game.PrestigeUpgrades; ordered in [name, cost] pairs
+			Game.PrestigeUpgrades.forEach(function(u){
+				var price=u.getPrice();
+				if(Game.Has(u.name)) {owned.push(u)}
+				else if(price<=chips) {suggestions.push(u);}
+				else {others.push(u);}
 			});
+
+			suggestions.forEach(function(sg,i,a){
+				text+='&bull; <b>'+sg.name+'</b>  (<span style="color:#73f21e;">'+Beautify(sg.getPrice())+'</span> chips)<br>';
+				if(a.length-1===i&&others.length) text+='<div class="line"></div>';
+			});
+			others.forEach(function(ot){
+				var ps=false;
+				owned.forEach(function(ow){ps=ot.parents.includes(ow)||ps});
+				if(ps&&!Game.Has(ot.name)&&!text.includes(ot.name)) {
+					var diff=(chips-ot.getPrice()).toString().substr(1);
+					text+='&bull; <b>'+ot.name+'</b>  (<b><span style="color:#fb5a71;">'+Beautify(ot.getPrice())+'</span></b> chips, missing <b>'+Beautify(parseInt(diff))+'</b>)<br>';
+				}
+			});
+			console.log({owned:owned,suggs:suggestions,others:others});
+			if(!owned.length||!suggestions.length) str+='It seems like you don\'t have any upgrades, or something went wrong; so maybe check back later?';
+
+			return '<div style="padding:8px;width:250px;text-align:center;font-size:11px;">'+str+(Game.HasAchiev('Rebirth')?text:'')+'</div>'
+		};
+		Game.functions.loadHUpgrades=function(tT) {
+			var hide=!Game.HasAchiev('Rebirth'), el=l('hUpgradesHelp');
+			if(hide) l('hUpgradesHelp').style.visibility='hidden'; if(!hide||l('hUpgradesHelp').style.visibility!=='visible') l('hUpgradesHelp').style.visibility='visible';
 			
+			Game.attachTooltip(el, Game.functions.hUpgradesTooltip(), 'this');
+			if(tT&&!hide) Game.tooltip.draw(el, Game.functions.hUpgradesTooltip(), 'this');
 		};
 		/*=====================================================================================
 		BAKERY NAME
@@ -13973,8 +13999,6 @@ window.onload=function()
 				'Hey, Orteil here. Cheated cookies taste awful... or do they?',
 			])+' [=]');
 			Game.Load();
-			//try {Game.Load();}
-			//catch(err) {console.log('ERROR : '+err.message);}
 		}
 	}
 };

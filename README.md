@@ -9,7 +9,7 @@ Note that this version has a few minor modifications to the base game:
 - Small text changes (mostly shortenings) here and there
 - Shimmer info that renders dynamically (when certain critera is met)
 - Error messages will be shown when the game fails to load [currently broken]
-- An ascension upgrade helper for knowing what upgrades to save up for [currently a WIP]
+- An ascension upgrade helper for knowing what upgrades to save up for
 
 
 Useable [here](https://mrbuilder1961.github.io), play responsibly!
