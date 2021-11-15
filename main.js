@@ -1104,6 +1104,8 @@ Game.Launch=function()
 				else if(price<=chips) {suggestions.push(u);}
 				else {others.push(u);}
 			});
+			suggestions.sort(function(u1,u2){return u1.getPrice()<u2.getPrice()?-1:u1.getPrice()>u2.getPrice()?1:0});
+			others.sort(function(u1,u2){return u1.getPrice()<u2.getPrice()?-1:u1.getPrice()>u2.getPrice()?1:0});
 
 			suggestions.forEach(function(sg,i,a){
 				text+='&bull; <b>'+sg.name+'</b>  (<span style="color:#73f21e;">'+Beautify(sg.getPrice())+'</span> chips)<br>';
