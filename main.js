@@ -1088,11 +1088,11 @@ Game.Launch=function()
 			return getHide?'1':'<div style="padding:8px;width:250px;text-align:center;font-size:12.5px;">'+str+'</div>';
 		};
 		Game.functions.loadShimmerBar = function(showTooltip) {
-			var hide=Game.functions.getShimmerTt(true)==='1';
+			var hide=Game.functions.getShimmerTt(true)==='1', el=l('shimmerInfo');
 			if(hide) l('shimmerInfo').style.visibility='hidden'; if(l('shimmerInfo').style.visibility!=='visible'||!hide) l('shimmerInfo').style.visibility='visible';
 			
-			Game.attachTooltip(l('shimmerInfo'), Game.functions.getShimmerTt(), 'this');
-			if(showTooltip&&!hide) Game.tooltip.draw(l('shimmerInfo'), Game.functions.getShimmerTt(), 'this');
+			Game.attachTooltip(el, Game.functions.getShimmerTt(), 'this');
+			if(showTooltip&&!hide) Game.tooltip.draw(el, Game.functions.getShimmerTt(), 'this');
 		};
 
 		Game.functions.hUpgradesTooltip = function() {
@@ -4438,15 +4438,14 @@ Game.Launch=function()
 						'Chocolatiness x7 for 77 seconds!',
 						'Dough elasticity halved for 66 seconds!',
 						'Golden cookie shininess doubled for 3 seconds!',
-						'World economy halved for 30 seconds!',
 						'Grandma kisses 23% stingier for 45 seconds!',
-						'Thanks for clicking!',
-						'Fooled you! This one was just a test.',
+						'Ascension chance x2 for 1 hour!',
+						'Call 1-800-COOKIES for a FREE sugar lump!',
 						'Golden cookies clicked +1!',
 						'Your click has been registered. Thank you for your cooperation.',
-						'Thanks! That hit the spot!',
+						'*moan* uwu *moan* again daddy...',
 						'Thank you. A team has been dispatched.',
-						'They know.',
+						'+1 Soul Freed',
 						'Oops. This was just a chocolate cookie with shiny aluminium foil.',
 						'Ha! You had a 500% higher chance to get a sugar lump, but you got this message.',
 						'Golden cookies clicked set to '+Game.goldenClicks+'!'
