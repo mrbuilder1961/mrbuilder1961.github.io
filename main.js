@@ -1096,7 +1096,7 @@ Game.Launch=function()
 		};
 
 		Game.functions.hUpgradesTooltip = function() {
-			var text='', str='<span style="font-size:14px;"><b>Hello there!</b></span>'+(Game.HasAchiev('Rebirth')?' Since you\'ve ascended before, here are some heavenly upgrade ideas!':'')+'<br><br>', chips=Game.heavenlyChips+parseInt(Game.ascendNumber.textContent.replace(/^\+|,/g,'')), ics=Game.listTinyOwnedUpgrades;
+			var text='', str='<span style="font-size:14px;"><b>Hello there!</b></span><span style="font-size:12.5px;">'+(Game.HasAchiev('Rebirth')?' Since you\'ve ascended before, here are some heavenly upgrade ideas!':'')+'</span><br><br>', chips=Game.heavenlyChips+parseInt(Game.ascendNumber.textContent.replace(/^\+|,/g,'')), ics=Game.listTinyOwnedUpgrades;
 			var owned=[],suggestions=[],others=[]; // all combined = Game.PrestigeUpgrades; ordered in [name, cost] pairs
 			Game.PrestigeUpgrades.forEach(function(u){
 				var price=u.getPrice();
@@ -1125,7 +1125,7 @@ Game.Launch=function()
 					text+='&bull; <b>'+ot.name+'</b>  (<b><span style="color:#fb5a71;">'+Beautify(ot.getPrice())+'</span></b> chips, missing <b>'+Beautify(parseInt(diff))+'</b>)<br>';
 					tot+=ot.getPrice();
 				}
-				if(others.length-1===i) text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#fb5a71;">'+Beautify(tot)+'</span> chips</span><br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>';
+				if(others.length-1===i) text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#fb5a71;">'+Beautify(tot)+'</span> chips</span>'+(Math.floor(chips)!==Math.floor(tot)?'<br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>':'');
 			});
 			console.log({owned:owned,suggs:suggestions,others:others});
 			if(!owned.length||!suggestions.length) str+='It seems like you don\'t have any upgrades, or something went wrong; so maybe check back later?';
