@@ -1112,7 +1112,7 @@ Game.Launch=function()
 				text+='&bull; <b>'+sg.name+'</b>  (<span style="color:#73f21e;">'+Beautify(sg.getPrice())+'</span> chips)<br>';
 				tot+=sg.getPrice();
 				if(a.length-1===i&&others.length) {
-					text+='<span style="font-size:14px;">Total : </span><span style="color:#'+(chips>=tot?'73f21e':'fb5a71')+';">'+Beautify(tot)+' chips</span>'+(tot>chips?'<br>(missing <b>'+Beautify(tot-chips)+'</b> chips)':'');
+					text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#'+(chips>=tot?'73f21e':'fb5a71')+';">'+Beautify(tot)+' chips</span></span>'+(tot>chips?'<br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>':'');
 					text+='<div class="line"></div>';
 				}
 			});
@@ -1125,7 +1125,7 @@ Game.Launch=function()
 					text+='&bull; <b>'+ot.name+'</b>  (<b><span style="color:#fb5a71;">'+Beautify(ot.getPrice())+'</span></b> chips, missing <b>'+Beautify(parseInt(diff))+'</b>)<br>';
 					tot+=ot.getPrice();
 				}
-				if(others.length-1===i) text+='<span style="font-size:14px;">Total : <span style="color:#fb5a71;">'+Beautify(tot)+' chips</span><br>(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>';
+				if(others.length-1===i) text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#fb5a71;">'+Beautify(tot)+' chips</span></span><br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>';
 			});
 			console.log({owned:owned,suggs:suggestions,others:others});
 			if(!owned.length||!suggestions.length) str+='It seems like you don\'t have any upgrades, or something went wrong; so maybe check back later?';
