@@ -1107,17 +1107,25 @@ Game.Launch=function()
 			suggestions.sort(function(u1,u2){return u1.getPrice()<u2.getPrice()?-1:u1.getPrice()>u2.getPrice()?1:0});
 			others.sort(function(u1,u2){return u1.getPrice()<u2.getPrice()?-1:u1.getPrice()>u2.getPrice()?1:0});
 
+			if(suggestions.length) var tot=0;
 			suggestions.forEach(function(sg,i,a){
 				text+='&bull; <b>'+sg.name+'</b>  (<span style="color:#73f21e;">'+Beautify(sg.getPrice())+'</span> chips)<br>';
-				if(a.length-1===i&&others.length) text+='<div class="line"></div>';
+				tot+=sg.getPrice();
+				if(a.length-1===i&&others.length) {
+					text+='<span style="font-size:14px;">Total : </span><span style="color:#'+(chips>=tot?'73f21e':'fb5a71')+';">'+Beautify(tot)+' chips</span>'+(tot>chips?'<br>(missing <b>'+Beautify(tot-chips)+'</b> chips)':'');
+					text+='<div class="line"></div>';
+				}
 			});
-			others.forEach(function(ot){
+			if(others.length) {try{var tot=0;}catch(e){tot=0;}};
+			others.forEach(function(ot,i){
 				var ps=false;
 				owned.forEach(function(ow){ps=ot.parents.includes(ow)||ps});
 				if(ps&&!Game.Has(ot.name)&&!text.includes(ot.name)) {
 					var diff=(chips-ot.getPrice()).toString().substr(1);
 					text+='&bull; <b>'+ot.name+'</b>  (<b><span style="color:#fb5a71;">'+Beautify(ot.getPrice())+'</span></b> chips, missing <b>'+Beautify(parseInt(diff))+'</b>)<br>';
+					tot+=ot.getPrice();
 				}
+				if(others.length-1===i) text+='<span style="font-size:14px;">Total : <span style="color:#fb5a71;">'+Beautify(tot)+' chips</span><br>(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>';
 			});
 			console.log({owned:owned,suggs:suggestions,others:others});
 			if(!owned.length||!suggestions.length) str+='It seems like you don\'t have any upgrades, or something went wrong; so maybe check back later?';
