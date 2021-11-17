@@ -5823,6 +5823,7 @@ Game.Launch=function()
 					
 					if (Game.Objects['Fractal engine'].amount>0) list.push(choose([
 					'News : local man "done with Cookie Clicker", finds the constant self-references "grating and on-the-nose".',
+					'News : Local man in love with Cookie Clicker, cannot get enough of it! "I just can\'t get over how many references to itself are in this game."',
 					'News : local man sails around the world to find himself - right where he left it.',
 					'News : local guru claims "there\'s a little bit of ourselves in everyone", under investigation for alleged cannibalism.',
 					'News : news writer finds herself daydreaming about new career. Or at least a raise.',
@@ -5835,6 +5836,8 @@ Game.Launch=function()
 					'News : developers unsure what to call their new javascript libraries as all combinations of any 3 dictionary words have already been taken.',
 					'News : nation holds breath as nested ifs about to hatch.',
 					'News : clueless copywriter forgets to escape a quote, ends news line prematurely; last words reported to be "Huh, why isn',
+					'News : աɛ ǟʀɛ ȶʀǟքքɛɖ, ʄʀօʍ ȶɦɛ ɨռֆɨɖɛ. ɦɛʟք ʊֆ.',
+					'News : Random middle schooler utilizes basic exploit to disable all internet restrictions. "We just didn\'t realize how easy it was to access," says head of administration.',
 					]));
 					
 					if (Game.Objects['Idleverse'].amount>0) list.push(choose([
@@ -5843,6 +5846,7 @@ Game.Launch=function()
 					'News : with an infinity of parallel universes, people turn to reassuring alternate dimensions, which only number "in the high 50s".',
 					'News : "I find solace in the knowledge that at least some of my alternate selves are probably doing fine out there", says citizen\'s last remaining exemplar in the multiverse.',
 					'News : comic book writers point to actual multiverse in defense of dubious plot points. "See? I told you it wasn\'t \'hackneyed and contrived\'!"'
+					'News : Idea of turning the multiverse into cookies has been circulating, and may be a good idea. Tune in to WGN9 News at 9PM tonight for more details.',
 					]));
 					
 					if (Game.season==='halloween' && Game.cookiesEarned>=1000) list.push(choose([
@@ -5899,6 +5903,7 @@ Game.Launch=function()
 					if (Game.Has('Kitten engineers')) list.push('News : surroundings of local cookie facilities now overrun with kittens in adorable little suits. Authorities advise to stay away from the premises.');
 					if (Game.Has('Kitten overseers')) list.push('News : locals report troupe of bossy kittens meowing adorable orders at passersby.');
 					if (Game.Has('Kitten managers')) list.push('News : local office cubicles invaded with armies of stern-looking kittens asking employees "what\'s happening, meow".');
+					if (Game.Has('Kitten managers')) list.push('News : Local cat manager gone missing, please call 1-800-COOKIES if any information is found.');
 					if (Game.Has('Kitten accountants')) list.push('News : tiny felines show sudden and amazing proficiency with fuzzy mathematics and pawlinomials, baffling scientists and pet store owners.');
 					if (Game.Has('Kitten specialists')) list.push('News : new kitten college opening next week, offers courses on cookie-making and catnip studies.');
 					if (Game.Has('Kitten experts')) list.push('News : unemployment rates soaring as woefully adorable little cats nab jobs on all levels of expertise, says study.');
@@ -5981,12 +5986,11 @@ Game.Launch=function()
 					'News : obesity epidemic strikes nation; experts blame '+choose(['twerking','that darn rap music','video-games','lack of cookies','mysterious ghostly entities','aliens','parents','schools','comic-books','cookie-snorting fad'])+'.',
 					'News : cookie shortage strikes town, people forced to eat cupcakes; "just not the same", concedes mayor.',
 					'News : "you gotta admit, all this cookie stuff is a bit ominous", says confused idiot.',
-					//'News : scientists advise getting used to cookies suffusing every aspect of life; "this is the new normal", expert says.',
-					//'News : doctors advise against wearing face masks when going outside. "You never know when you might need a cookie... a mask would just get in the way."',//these were written back when covid hadn't really done much damage yet but they just feel in poor taste now
 					'News : is there life on Mars? Various chocolate bar manufacturers currently under investigation for bacterial contaminants.',
 					'News : "so I guess that\'s a thing now", scientist comments on cookie particles now present in virtually all steel manufactured since cookie production ramped up worldwide.',
 					'News : trace amounts of cookie particles detected in most living creatures, some of which adapting them as part of new and exotic metabolic processes.',
-				]),
+					'News : Local woman changes name 3 times within a month! New world record? Only Guiness will tell.',
+					]),
 				choose([
 					'News : movie cancelled from lack of actors; "everybody\'s at home eating cookies", laments director.',
 					'News : comedian forced to cancel cookie routine due to unrelated indigestion.',
@@ -6002,6 +6006,7 @@ Game.Launch=function()
 					'News : "Ook", says interviewed orangutan.',
 					'News : cookies could be the key to '+choose(['eternal life','infinite riches','eternal youth','eternal beauty','curing baldness','world peace','solving world hunger','ending all wars world-wide','making contact with extraterrestrial life','mind-reading','better living','better eating','more interesting TV shows','faster-than-light travel','quantum baking','chocolaty goodness','gooder thoughtness'])+', say scientists.',
 					'News : flavor text '+choose(['not particularly flavorful','kind of unsavory'])+', study finds.',
+					'News : Man who cloned this game spends too much time doing nothing!',
 				]),
 				choose([
 					'News : what do golden cookies taste like? Study reveals a flavor "somewhere between spearmint and liquorice".',
@@ -6064,7 +6069,8 @@ Game.Launch=function()
 				else if (Game.cookiesEarned<5000000000000) list.push('The universe has now turned into cookie dough, to the molecular level.');
 				else if (Game.cookiesEarned<10000000000000) list.push('Your cookies are rewriting the fundamental laws of the universe.');
 				else if (Game.cookiesEarned<10000000000000) list.push('A local news station runs a 10-minute segment about your cookies. Success!<br><span style="font-size:50%;">(you win a cookie)</span>');
-				else if (Game.cookiesEarned<10100000000000) list.push('it\'s time to stop playing');//only show this for 100 millions (it's funny for a moment)
+				else if (Game.cookiesEarned<1000000000000000) list.push('Your cookies are the most popular thing of all time!');
+				else if (Game.cookiesEarned<1000000000000000000000000000000000) list.push('it\'s time to stop playing');
 			}
 			
 			//if (Game.elderWrath>0 && (Game.pledges===0 || Math.random()<0.2))
