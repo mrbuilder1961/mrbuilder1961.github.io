@@ -143,7 +143,7 @@ M.launch=function()
 					if (age>=this.mature)
 					{
 						var moni=Math.min(Game.cookies*0.03,Game.cookiesPs*60*30);
-						if (moni!=0)
+						if (moni!==0)
 						{
 							Game.Earn(moni);
 							Game.Popup('(Bakeberry)<br>+'+Beautify(moni)+' cookies!',Game.mouseX,Game.mouseY);
@@ -169,7 +169,7 @@ M.launch=function()
 					if (age>=this.mature)
 					{
 						var moni=Math.min(Game.cookies*0.03,Game.cookiesPs*60*3);
-						if (moni!=0)
+						if (moni!==0)
 						{
 							Game.Earn(moni);
 							Game.Popup('(Chocoroot)<br>+'+Beautify(moni)+' cookies!',Game.mouseX,Game.mouseY);
@@ -194,7 +194,7 @@ M.launch=function()
 					if (age>=this.mature)
 					{
 						var moni=Math.min(Game.cookies*0.03,Game.cookiesPs*60*3);
-						if (moni!=0)
+						if (moni!==0)
 						{
 							Game.Earn(moni);
 							Game.Popup('(White chocoroot)<br>+'+Beautify(moni)+' cookies!',Game.mouseX,Game.mouseY);
@@ -345,7 +345,7 @@ M.launch=function()
 					if (age>=this.mature)
 					{
 						var moni=Math.min(Game.cookies*0.04,Game.cookiesPs*60*60);
-						if (moni!=0)
+						if (moni!==0)
 						{
 							Game.Earn(moni);
 							Game.Popup('(Queenbeet)<br>+'+Beautify(moni)+' cookies!',Game.mouseX,Game.mouseY);
@@ -392,7 +392,7 @@ M.launch=function()
 					if (age>=this.mature)
 					{
 						var moni=Math.min(Game.cookies*0.08,Game.cookiesPs*60*60*2);
-						if (moni!=0)
+						if (moni!==0)
 						{
 							Game.Earn(moni);
 							Game.Popup('(Duketater)<br>+'+Beautify(moni)+' cookies!',Game.mouseX,Game.mouseY);
@@ -419,7 +419,7 @@ M.launch=function()
 				onDie:function(x,y)
 				{
 					var moni=Math.min(Game.cookies*0.01,Game.cookiesPs*60)*Math.random();
-					if (moni!=0)
+					if (moni!==0)
 					{
 						Game.Earn(moni);
 						Game.Popup('(Crumbspore)<br>+'+Beautify(moni)+' cookies!',Game.mouseX,Game.mouseY);
@@ -444,7 +444,7 @@ M.launch=function()
 				onDie:function(x,y)
 				{
 					var moni=Math.min(Game.cookies*0.03,Game.cookiesPs*60*5)*Math.random();
-					if (moni!=0)
+					if (moni!==0)
 					{
 						Game.Earn(moni);
 						Game.Popup('(Doughshroom)<br>+'+Beautify(moni)+' cookies!',Game.mouseX,Game.mouseY);
@@ -709,7 +709,7 @@ M.launch=function()
 				{
 					for (var x=Math.max(0,X-s);x<Math.min(6,X+s+1);x++)
 					{
-						if (X==x && Y==y) {}
+						if (X===x && Y===y) {}
 						else
 						{
 							for (var i=0;i<mult.length;i++)
@@ -738,32 +738,32 @@ M.launch=function()
 						var soilMult=M.soilsById[M.soil].effMult;
 						var mult=soilMult;
 						
-						if (stage==1) mult*=0.1;
-						else if (stage==2) mult*=0.25;
-						else if (stage==3) mult*=0.5;
+						if (stage===1) mult*=0.1;
+						else if (stage===2) mult*=0.25;
+						else if (stage===3) mult*=0.5;
 						else mult*=1;
 						
 						//age mult, power mult, weed mult
-						/*if (name=='elderwort') effectOn(x,y,1,[1+0.03*mult,1,1]);
-						else if (name=='queenbeetLump') effectOn(x,y,1,[1,1-0.2*mult,1]);
-						else if (name=='nursetulip') effectOn(x,y,1,[1,1+0.2*mult,1]);
-						else if (name=='shriekbulb') effectOn(x,y,1,[1,1-0.05*mult,1]);
-						else if (name=='tidygrass') effectOn(x,y,2,[1,1,0]);
-						else if (name=='everdaisy') effectOn(x,y,1,[1,1,0]);
-						else if (name=='ichorpuff') effectOn(x,y,1,[1-0.5*mult,1-0.5*mult,1]);*/
+						/*if (name==='elderwort') effectOn(x,y,1,[1+0.03*mult,1,1]);
+						else if (name==='queenbeetLump') effectOn(x,y,1,[1,1-0.2*mult,1]);
+						else if (name==='nursetulip') effectOn(x,y,1,[1,1+0.2*mult,1]);
+						else if (name==='shriekbulb') effectOn(x,y,1,[1,1-0.05*mult,1]);
+						else if (name==='tidygrass') effectOn(x,y,2,[1,1,0]);
+						else if (name==='everdaisy') effectOn(x,y,1,[1,1,0]);
+						else if (name==='ichorpuff') effectOn(x,y,1,[1-0.5*mult,1-0.5*mult,1]);*/
 						
 						var ageMult=1;
 						var powerMult=1;
 						var weedMult=1;
 						var range=0;
 						
-						if (name=='elderwort') {ageMult=1.03;range=1;}
-						else if (name=='queenbeetLump') {powerMult=0.8;range=1;}
-						else if (name=='nursetulip') {powerMult=1.2;range=1;}
-						else if (name=='shriekbulb') {powerMult=0.95;range=1;}
-						else if (name=='tidygrass') {weedMult=0;range=2;}
-						else if (name=='everdaisy') {weedMult=0;range=1;}
-						else if (name=='ichorpuff') {ageMult=0.5;powerMult=0.5;range=1;}
+						if (name==='elderwort') {ageMult=1.03;range=1;}
+						else if (name==='queenbeetLump') {powerMult=0.8;range=1;}
+						else if (name==='nursetulip') {powerMult=1.2;range=1;}
+						else if (name==='shriekbulb') {powerMult=0.95;range=1;}
+						else if (name==='tidygrass') {weedMult=0;range=2;}
+						else if (name==='everdaisy') {weedMult=0;range=1;}
+						else if (name==='ichorpuff') {ageMult=0.5;powerMult=0.5;range=1;}
 						
 						//by god i hope these are right
 						if (ageMult>=1) ageMult=(ageMult-1)*mult+1; else if (mult>=1) ageMult=1/((1/ageMult)*mult); else ageMult=1-(1-ageMult)*mult;
@@ -823,45 +823,45 @@ M.launch=function()
 							
 							var mult=soilMult;
 							
-							if (stage==1) mult*=0.1;
-							else if (stage==2) mult*=0.25;
-							else if (stage==3) mult*=0.5;
+							if (stage===1) mult*=0.1;
+							else if (stage===2) mult*=0.25;
+							else if (stage===3) mult*=0.5;
 							else mult*=1;
 							
 							mult*=M.plotBoost[y][x][1];
 							
-							if (name=='bakerWheat') effs.cps+=0.01*mult;
-							else if (name=='thumbcorn') effs.click+=0.02*mult;
-							else if (name=='cronerice') effs.grandmaCps+=0.03*mult;
-							else if (name=='gildmillet') {effs.goldenCookieGain+=0.01*mult;effs.goldenCookieEffDur+=0.001*mult;}
-							else if (name=='clover') effs.goldenCookieFreq+=0.01*mult;
-							else if (name=='goldenClover') effs.goldenCookieFreq+=0.03*mult;
-							else if (name=='shimmerlily') {effs.goldenCookieGain+=0.01*mult;effs.goldenCookieFreq+=0.01*mult;effs.itemDrops+=0.01*mult;}
-							else if (name=='elderwort') {effs.wrathCookieGain+=0.01*mult;effs.wrathCookieFreq+=0.01*mult;effs.grandmaCps+=0.01*mult;}
-							else if (name=='bakeberry') effs.cps+=0.01*mult;
-							else if (name=='chocoroot') effs.cps+=0.01*mult;
-							else if (name=='whiteChocoroot') effs.goldenCookieGain+=0.01*mult;
+							if (name==='bakerWheat') effs.cps+=0.01*mult;
+							else if (name==='thumbcorn') effs.click+=0.02*mult;
+							else if (name==='cronerice') effs.grandmaCps+=0.03*mult;
+							else if (name==='gildmillet') {effs.goldenCookieGain+=0.01*mult;effs.goldenCookieEffDur+=0.001*mult;}
+							else if (name==='clover') effs.goldenCookieFreq+=0.01*mult;
+							else if (name==='goldenClover') effs.goldenCookieFreq+=0.03*mult;
+							else if (name==='shimmerlily') {effs.goldenCookieGain+=0.01*mult;effs.goldenCookieFreq+=0.01*mult;effs.itemDrops+=0.01*mult;}
+							else if (name==='elderwort') {effs.wrathCookieGain+=0.01*mult;effs.wrathCookieFreq+=0.01*mult;effs.grandmaCps+=0.01*mult;}
+							else if (name==='bakeberry') effs.cps+=0.01*mult;
+							else if (name==='chocoroot') effs.cps+=0.01*mult;
+							else if (name==='whiteChocoroot') effs.goldenCookieGain+=0.01*mult;
 							
-							else if (name=='whiteMildew') effs.cps+=0.01*mult;
-							else if (name=='brownMold') effs.cps*=1-0.01*mult;
+							else if (name==='whiteMildew') effs.cps+=0.01*mult;
+							else if (name==='brownMold') effs.cps*=1-0.01*mult;
 							
-							else if (name=='meddleweed') {}
+							else if (name==='meddleweed') {}
 							
-							else if (name=='whiskerbloom') effs.milk+=0.002*mult;
-							else if (name=='chimerose') {effs.reindeerGain+=0.01*mult;effs.reindeerFreq+=0.01*mult;}
+							else if (name==='whiskerbloom') effs.milk+=0.002*mult;
+							else if (name==='chimerose') {effs.reindeerGain+=0.01*mult;effs.reindeerFreq+=0.01*mult;}
 							
-							else if (name=='nursetulip') {effs.cps*=1-0.02*mult;}
-							else if (name=='drowsyfern') {effs.cps+=0.03*mult;effs.click*=1-0.05*mult;effs.goldenCookieFreq*=1-0.1*mult;}
-							else if (name=='wardlichen') {effs.wrinklerSpawn*=1-0.15*mult;effs.wrathCookieFreq*=1-0.02*mult;}
-							else if (name=='keenmoss') {effs.itemDrops+=0.03*mult;}
-							else if (name=='queenbeet') {effs.goldenCookieEffDur+=0.003*mult;effs.cps*=1-0.02*mult;}
-							else if (name=='queenbeetLump') {effs.cps*=1-0.1*mult;}
-							else if (name=='glovemorel') {effs.click+=0.04*mult;effs.cursorCps+=0.01*mult;effs.cps*=1-0.01*mult;}
-							else if (name=='cheapcap') {effs.upgradeCost*=1-0.002*mult;effs.buildingCost*=1-0.002*mult;}
-							else if (name=='foolBolete') {effs.goldenCookieFreq+=0.02*mult;effs.goldenCookieGain*=1-0.05*mult;effs.goldenCookieDur*=1-0.02*mult;effs.goldenCookieEffDur*=1-0.02*mult;}
-							else if (name=='wrinklegill') {effs.wrinklerSpawn+=0.02*mult;effs.wrinklerEat+=0.01*mult;}
-							else if (name=='greenRot') {effs.goldenCookieDur+=0.005*mult;effs.goldenCookieFreq+=0.01*mult;effs.itemDrops+=0.01*mult;}
-							else if (name=='shriekbulb') {effs.cps*=1-0.02*mult;}
+							else if (name==='nursetulip') {effs.cps*=1-0.02*mult;}
+							else if (name==='drowsyfern') {effs.cps+=0.03*mult;effs.click*=1-0.05*mult;effs.goldenCookieFreq*=1-0.1*mult;}
+							else if (name==='wardlichen') {effs.wrinklerSpawn*=1-0.15*mult;effs.wrathCookieFreq*=1-0.02*mult;}
+							else if (name==='keenmoss') {effs.itemDrops+=0.03*mult;}
+							else if (name==='queenbeet') {effs.goldenCookieEffDur+=0.003*mult;effs.cps*=1-0.02*mult;}
+							else if (name==='queenbeetLump') {effs.cps*=1-0.1*mult;}
+							else if (name==='glovemorel') {effs.click+=0.04*mult;effs.cursorCps+=0.01*mult;effs.cps*=1-0.01*mult;}
+							else if (name==='cheapcap') {effs.upgradeCost*=1-0.002*mult;effs.buildingCost*=1-0.002*mult;}
+							else if (name==='foolBolete') {effs.goldenCookieFreq+=0.02*mult;effs.goldenCookieGain*=1-0.05*mult;effs.goldenCookieDur*=1-0.02*mult;effs.goldenCookieEffDur*=1-0.02*mult;}
+							else if (name==='wrinklegill') {effs.wrinklerSpawn+=0.02*mult;effs.wrinklerEat+=0.01*mult;}
+							else if (name==='greenRot') {effs.goldenCookieDur+=0.005*mult;effs.goldenCookieFreq+=0.01*mult;effs.itemDrops+=0.01*mult;}
+							else if (name==='shriekbulb') {effs.cps*=1-0.02*mult;}
 						}
 					}
 				}
@@ -964,13 +964,13 @@ M.launch=function()
 						var effStr='';
 						for (var i in M.effs)
 						{
-							if (M.effs[i]!=1 && effs[i])
+							if (M.effs[i]!==1 && effs[i])
 							{
 								var amount=(M.effs[i]-1)*100;
 								effStr+='<div style="font-size:10px;margin-left:64px;"><b>&bull; '+effs[i].n+' :</b> <span class="'+((amount*(effs[i].rev?-1:1))>0?'green':'red')+'">'+(amount>0?'+':'-')+Beautify(Math.abs(M.effs[i]-1)*100,2)+'%</span></div>';
 							}
 						}
-						if (effStr=='') effStr='<div style="font-size:10px;margin-left:64px;"><b>None.</b></div>';
+						if (effStr==='') effStr='<div style="font-size:10px;margin-left:64px;"><b>None.</b></div>';
 						str+='<div>Combined effects of all your plants :</div>'+effStr;
 					}
 					str+='<div class="line"></div>';
@@ -1018,7 +1018,7 @@ M.launch=function()
 								{
 									var me=M.plantsById[tile[0]-1];
 									var age=tile[1];
-									if (me.key=='cheapcap' && Math.random()<0.15)
+									if (me.key==='cheapcap' && Math.random()<0.15)
 									{
 										M.plot[y][x]=[0,0];
 										if (me.onKill) me.onKill(x,y,age);
@@ -1121,7 +1121,7 @@ M.launch=function()
 						(me.weed?'<div style="margin:6px 0px;font-size:11px;"><b>Is a weed</b></div>':'')+
 						(me.fungus?'<div style="margin:6px 0px;font-size:11px;"><b>Is a fungus</b></div>':'')+
 						(me.detailsStr?('<div style="margin:6px 0px;font-size:11px;"><b>Details :</b> '+me.detailsStr+'</div>'):'')+
-						(children!=''?('<div style="margin:6px 0px;font-size:11px;"><b>Possible mutations :</b> '+children+'</div>'):'')+
+						(children!==''?('<div style="margin:6px 0px;font-size:11px;"><b>Possible mutations :</b> '+children+'</div>'):'')+
 						'<div class="line"></div>'+
 						'<div style="margin:6px 0px;"><b>Effects :</b></div>'+
 						'<div style="font-size:11px;font-weight:bold;">'+me.effsStr+'</div>'+
@@ -1151,7 +1151,7 @@ M.launch=function()
 					(M.parent.amount<me.req?(
 						'<div style="text-align:center;">Soil unlocked at '+me.req+' farms.</div>'
 					):('<div class="icon" style="background:url(img/gardenPlants.png?v='+Game.version+');float:left;margin-left:-8px;margin-top:-8px;background-position:'+(-me.icon*48)+'px '+(-34*48)+'px;"></div>'+
-					'<div><div class="name">'+me.name+'</div><div><small>'+((M.soil==me.id)?'Your field is currently using this soil.':(M.nextSoil>Date.now())?'You will be able to change your soil again in '+Game.sayTime((M.nextSoil-Date.now())/1000*30+30,-1)+'.':'Click to use this type of soil for your whole field.')+'</small></div></div>'+
+					'<div><div class="name">'+me.name+'</div><div><small>'+((M.soil===me.id)?'Your field is currently using this soil.':(M.nextSoil>Date.now())?'You will be able to change your soil again in '+Game.sayTime((M.nextSoil-Date.now())/1000*30+30,-1)+'.':'Click to use this type of soil for your whole field.')+'</small></div></div>'+
 					'<div class="line"></div>'+
 					'<div class="description">'+
 						'<div style="margin:6px 0px;"><b>Effects :</b></div>'+
@@ -1199,17 +1199,17 @@ M.launch=function()
 			return function(){
 				if (Game.keys[16]) return '';
 				var tile=M.plot[y][x];
-				if (tile[0]==0)
+				if (tile[0]===0)
 				{
 					var me=(M.seedSelected>=0)?M.plantsById[M.seedSelected]:0;
 					var str='<div style="padding:8px 4px;min-width:350px;text-align:center;">'+
 						'<div class="name">Empty tile</div>'+'<div class="line"></div><div class="description">'+
 							'This tile of soil is empty.<br>Pick a seed and plant something!'+
 							(me?'<div class="line"></div>Click to plant <b>'+me.name+'</b> for <span class="price'+(M.canPlant(me)?'':' disabled')+'">'+Beautify(Math.round(M.getCost(me)))+'</span>.<br><small>(Shift-click to plant multiple.)</small><br><small>(Holding the shift key pressed will also hide tooltips.)</small>':'')+
-							(M.plotBoost[y][x]!=[1,1,1]?('<small>'+
-								(M.plotBoost[y][x][0]!=1?'<br>Aging multiplier : '+Beautify(M.plotBoost[y][x][0]*100)+'%':'')+
-								(M.plotBoost[y][x][1]!=1?'<br>Effect multiplier : '+Beautify(M.plotBoost[y][x][1]*100)+'%':'')+
-								(M.plotBoost[y][x][2]!=1?'<br>Weeds/fungus repellent : '+Beautify(100-M.plotBoost[y][x][2]*100)+'%':'')+
+							(M.plotBoost[y][x]!==[1,1,1]?('<small>'+
+								(M.plotBoost[y][x][0]!==1?'<br>Aging multiplier : '+Beautify(M.plotBoost[y][x][0]*100)+'%':'')+
+								(M.plotBoost[y][x][1]!==1?'<br>Effect multiplier : '+Beautify(M.plotBoost[y][x][1]*100)+'%':'')+
+								(M.plotBoost[y][x][2]!==1?'<br>Weeds/fungus repellent : '+Beautify(100-M.plotBoost[y][x][2]*100)+'%':'')+
 								'</small>'
 							):'')+
 						'</div>'+
@@ -1238,28 +1238,28 @@ M.launch=function()
 								'<div style="background:url(img/gardenPlants.png?v='+Game.version+');background-position:'+(-4*48)+'px '+(-icon[1]*48)+'px;position:absolute;left:'+((((me.mature)/100)*256)-24)+'px;top:-32px;transform:scale(0.5,0.5);width:48px;height:48px;"></div>'+
 							'</div><br>'+
 							'<b>Stage :</b> '+['bud','sprout','bloom','mature'][stage-1]+'<br>'+
-							'<small>'+(stage==1?'Plant effects : 10%':stage==2?'Plant effects : 25%':stage==3?'Plant effects : 50%':'Plant effects : 100%; may reproduce, will drop seed when harvested')+'</small>'+
+							'<small>'+(stage===1?'Plant effects : 10%':stage===2?'Plant effects : 25%':stage===3?'Plant effects : 50%':'Plant effects : 100%; may reproduce, will drop seed when harvested')+'</small>'+
 							'<br><small>'+(
 								stage<4?(
-									'Mature in about '+Game.sayTime(((100/(M.plotBoost[y][x][0]*(me.ageTick+me.ageTickR/2)))*((me.mature-tile[1])/100)*M.stepT)*30,-1)+' ('+Beautify(Math.ceil((100/(M.plotBoost[y][x][0]*(me.ageTick+me.ageTickR/2)))*((me.mature-tile[1])/100)))+' tick'+(Math.ceil((100/(M.plotBoost[y][x][0]*(me.ageTick+me.ageTickR/2)))*((me.mature-tile[1])/100))==1?'':'s')+')'
+									'Mature in about '+Game.sayTime(((100/(M.plotBoost[y][x][0]*(me.ageTick+me.ageTickR/2)))*((me.mature-tile[1])/100)*M.stepT)*30,-1)+' ('+Beautify(Math.ceil((100/(M.plotBoost[y][x][0]*(me.ageTick+me.ageTickR/2)))*((me.mature-tile[1])/100)))+' tick'+(Math.ceil((100/(M.plotBoost[y][x][0]*(me.ageTick+me.ageTickR/2)))*((me.mature-tile[1])/100))===1?'':'s')+')'
 								):(
 									!me.immortal?(
-										'Decays in about '+Game.sayTime(((100/(M.plotBoost[y][x][0]*(me.ageTick+me.ageTickR/2)))*((100-tile[1])/100)*M.stepT)*30,-1)+' ('+Beautify(Math.ceil((100/(M.plotBoost[y][x][0]*(me.ageTick+me.ageTickR/2)))*((100-tile[1])/100)))+' tick'+(Math.ceil((100/(M.plotBoost[y][x][0]*(me.ageTick+me.ageTickR/2)))*((100-tile[1])/100))==1?'':'s')+')'
+										'Decays in about '+Game.sayTime(((100/(M.plotBoost[y][x][0]*(me.ageTick+me.ageTickR/2)))*((100-tile[1])/100)*M.stepT)*30,-1)+' ('+Beautify(Math.ceil((100/(M.plotBoost[y][x][0]*(me.ageTick+me.ageTickR/2)))*((100-tile[1])/100)))+' tick'+(Math.ceil((100/(M.plotBoost[y][x][0]*(me.ageTick+me.ageTickR/2)))*((100-tile[1])/100))===1?'':'s')+')'
 									):
 										'Does not decay'
 								)
 							)+'</small>'+
 							//'<small><br>'+M.plotBoost[y][x]+'</small>'+
-							(M.plotBoost[y][x]!=[1,1,1]?('<small>'+
-								(M.plotBoost[y][x][0]!=1?'<br>Aging multiplier : '+Beautify(M.plotBoost[y][x][0]*100)+'%':'')+
-								(M.plotBoost[y][x][1]!=1?'<br>Effect multiplier : '+Beautify(M.plotBoost[y][x][1]*100)+'%':'')+
-								(M.plotBoost[y][x][2]!=1?'<br>Weeds/fungus repellent : '+Beautify(100-M.plotBoost[y][x][2]*100)+'%':'')+
+							(M.plotBoost[y][x]!==[1,1,1]?('<small>'+
+								(M.plotBoost[y][x][0]!==1?'<br>Aging multiplier : '+Beautify(M.plotBoost[y][x][0]*100)+'%':'')+
+								(M.plotBoost[y][x][1]!==1?'<br>Effect multiplier : '+Beautify(M.plotBoost[y][x][1]*100)+'%':'')+
+								(M.plotBoost[y][x][2]!==1?'<br>Weeds/fungus repellent : '+Beautify(100-M.plotBoost[y][x][2]*100)+'%':'')+
 								'</small>'
 							):'')+
 						'</div>'+
 						'<div class="line"></div>'+
 						//'<div style="text-align:center;">Click to harvest'+(M.seedSelected>=0?', planting <b>'+M.plantsById[M.seedSelected].name+'</b><br>for <span class="price'+(M.canPlant(me)?'':' disabled')+'">'+Beautify(Math.round(M.getCost(M.plantsById[M.seedSelected])))+'</span> in its place':'')+'.</div>'+
-						'<div style="text-align:center;">Click to '+(stage==4?'harvest':'unearth')+'.</div>'+
+						'<div style="text-align:center;">Click to '+(stage===4?'harvest':'unearth')+'.</div>'+
 						'<div class="line"></div>'+
 						M.getPlantDesc(me)+
 					'</div>';
@@ -1282,7 +1282,7 @@ M.launch=function()
 			{
 				var me=M.plants[i];
 				var icon=[0,me.icon];
-				str+='<div id="gardenSeed-'+me.id+'" class="gardenSeed'+(M.seedSelected==me.id?' on':'')+' locked" '+Game.getDynamicTooltip('Game.ObjectsById['+M.parent.id+'].minigame.seedTooltip('+me.id+')','this')+'>';
+				str+='<div id="gardenSeed-'+me.id+'" class="gardenSeed'+(M.seedSelected===me.id?' on':'')+' locked" '+Game.getDynamicTooltip('Game.ObjectsById['+M.parent.id+'].minigame.seedTooltip('+me.id+')','this')+'>';
 					str+='<div id="gardenSeedIcon-'+me.id+'" class="gardenSeedIcon shadowFilter" style="background-position:'+(-icon[0]*48)+'px '+(-icon[1]*48)+'px;"></div>';
 				str+='</div>';
 			}
@@ -1301,12 +1301,12 @@ M.launch=function()
 						return false;
 					}
 					if (!me.plantable && !Game.sesame) return false;
-					if (M.seedSelected==me.id){M.seedSelected=-1;}
+					if (M.seedSelected===me.id){M.seedSelected=-1;}
 					else {M.seedSelected=me.id;PlaySound('snd/toneTick.mp3');}
 					for (var i in M.plants)
 					{
 						var it=M.plants[i];
-						if (it.id==M.seedSelected){it.l.classList.add('on');}
+						if (it.id===M.seedSelected){it.l.classList.add('on');}
 						else {it.l.classList.remove('on');}
 					}
 				}}(me));
@@ -1339,7 +1339,7 @@ M.launch=function()
 			{
 				var me=M.soils[i];
 				var icon=[me.icon,34];
-				str+='<div id="gardenSoil-'+me.id+'" class="gardenSeed gardenSoil disabled'+(M.soil==me.id?' on':'')+'" '+Game.getDynamicTooltip('Game.ObjectsById['+M.parent.id+'].minigame.soilTooltip('+me.id+')','this')+'>';
+				str+='<div id="gardenSoil-'+me.id+'" class="gardenSeed gardenSoil disabled'+(M.soil===me.id?' on':'')+'" '+Game.getDynamicTooltip('Game.ObjectsById['+M.parent.id+'].minigame.soilTooltip('+me.id+')','this')+'>';
 					str+='<div id="gardenSoilIcon-'+me.id+'" class="gardenSeedIcon shadowFilter" style="background-position:'+(-icon[0]*48)+'px '+(-icon[1]*48)+'px;"></div>';
 				str+='</div>';
 			}
@@ -1349,11 +1349,11 @@ M.launch=function()
 			{
 				var me=M.soils[i];
 				AddEvent(l('gardenSoil-'+me.id),'click',function(me){return function(){
-					if (M.freeze || M.soil==me.id || M.nextSoil>Date.now() || M.parent.amount<me.req){return false;}
+					if (M.freeze || M.soil===me.id || M.nextSoil>Date.now() || M.parent.amount<me.req){return false;}
 					PlaySound('snd/toneTick.mp3');
 					M.nextSoil=Date.now()+(Game.Has('Turbo-charged soil')?1:(1000*60*10));
 					M.toCompute=true;M.soil=me.id;M.computeStepT();
-					for (var i in M.soils){var it=M.soils[i];if (it.id==M.soil){l('gardenSoil-'+it.id).classList.add('on');}else{l('gardenSoil-'+it.id).classList.remove('on');}}
+					for (var i in M.soils){var it=M.soils[i];if (it.id===M.soil){l('gardenSoil-'+it.id).classList.add('on');}else{l('gardenSoil-'+it.id).classList.remove('on');}}
 				}}(me));
 				AddEvent(l('gardenSoil-'+me.id),'mouseover',M.hideCursor);
 				AddEvent(l('gardenSoil-'+me.id),'mouseout',M.showCursor);
@@ -1434,7 +1434,7 @@ M.launch=function()
 				for (var i in M.plants)
 				{
 					var it=M.plants[i];
-					if (it.id==M.seedSelected) {l('gardenSeed-'+it.id).classList.add('on');}
+					if (it.id===M.seedSelected) {l('gardenSeed-'+it.id).classList.add('on');}
 					else {l('gardenSeed-'+it.id).classList.remove('on');}
 				}
 			}
@@ -1532,7 +1532,7 @@ M.launch=function()
 							var doIt=true;
 							var tile=M.plot[y][x];
 							var me=M.plantsById[tile[0]-1];
-							if (type && me!=type) doIt=false;
+							if (type && me!==type) doIt=false;
 							if (mortal && me.immortal) doIt=false;
 							if (mature && tile[1]<me.mature) doIt=false;
 							
@@ -1759,7 +1759,7 @@ M.launch=function()
 		M.freeze=parseInt(spl2[i2++]||M.freeze)?1:0;
 		M.harvests=parseInt(spl2[i2++]||0);
 		M.harvestsTotal=parseInt(spl2[i2++]||0);
-		var on=parseInt(spl2[i2++]||0);if (on && Game.ascensionMode!=1) M.parent.switchMinigame(1);
+		var on=parseInt(spl2[i2++]||0);if (on && Game.ascensionMode!==1) M.parent.switchMinigame(1);
 		M.convertTimes=parseFloat(spl2[i2++]||M.convertTimes);
 		M.nextFreeze=parseFloat(spl2[i2++]||M.nextFreeze);
 		var seeds=spl[i++]||'';
@@ -1768,7 +1768,7 @@ M.launch=function()
 			var n=0;
 			for (var ii in M.plants)
 			{
-				if (seeds.charAt(n)=='1') M.plants[ii].unlocked=1; else M.plants[ii].unlocked=0;
+				if (seeds.charAt(n)==='1') M.plants[ii].unlocked=1; else M.plants[ii].unlocked=0;
 				n++;
 			}
 		}
@@ -1861,7 +1861,7 @@ M.launch=function()
 				var weedMult=M.soilsById[M.soil].weedMult;
 				
 				var loops=1;
-				if (M.soilsById[M.soil].key=='woodchips') loops=3;
+				if (M.soilsById[M.soil].key==='woodchips') loops=3;
 				loops*=M.loopsMult;
 				M.loopsMult=1;
 			
@@ -1884,7 +1884,7 @@ M.launch=function()
 									//die of old age
 									M.plot[y][x]=[0,0];
 									if (me.onDie) me.onDie(x,y);
-									if (M.soilsById[M.soil].key=='pebbles' && Math.random()<0.35)
+									if (M.soilsById[M.soil].key==='pebbles' && Math.random()<0.35)
 									{
 										if (M.unlockSeed(me)) Game.Popup('Unlocked '+me.name+' seed.',Game.mouseX,Game.mouseY);
 									}
@@ -1902,7 +1902,7 @@ M.launch=function()
 									}
 									var contam=choose(list);
 
-									if (contam && me.key!=contam)
+									if (contam && me.key!==contam)
 									{
 										if ((!M.plants[contam].weed && !M.plants[contam].fungus) || Math.random()<M.plotBoost[y][x][2])
 										{
@@ -1951,7 +1951,7 @@ M.launch=function()
 										}
 										if (list.length>0) M.plot[y][x]=[M.plants[choose(list)].id+1,0];
 									}
-									else if (loop==0)
+									else if (loop===0)
 									{
 										//weeds in empty tiles (no other plants must be nearby)
 										var chance=0.002*weedMult*M.plotBoost[y][x][2];
@@ -1997,7 +1997,7 @@ M.launch=function()
 				M.cursorL.style.display='block';
 			}
 		}
-		if (Game.drawT%10==0)
+		if (Game.drawT%10===0)
 		{
 			M.lumpRefill.style.display='block';
 			if (M.freeze) l('gardenNextTick').innerHTML='Garden is frozen. Unfreeze to resume.';

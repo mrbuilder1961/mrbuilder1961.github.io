@@ -119,7 +119,7 @@ M.launch=function()
 				icon=me.icon||[0,0];
 				var str='<div style="padding:8px 4px;min-width:350px;">'+
 				'<div class="icon" style="float:left;margin-left:-8px;margin-top:-8px;background-position:'+(-icon[0]*48)+'px '+(-icon[1]*48)+'px;"></div>'+
-				'<div class="name">'+me.name+' <span style="font-size:12px;opacity:0.8;">(from <span style="font-variant:small-caps;">'+me.company+'</span>)</span> <span class="bankSymbol">'+me.symbol+' <span class="bankSymbolNum'+(delta>=0?' bankSymbolUp':delta<0?' bankSymbolDown':'')+'">'+(delta+''+(delta==Math.floor(delta)?'.00':(delta*10)==Math.floor(delta*10)?'0':'')+'%')+'</span></span></div>'+
+				'<div class="name">'+me.name+' <span style="font-size:12px;opacity:0.8;">(from <span style="font-variant:small-caps;">'+me.company+'</span>)</span> <span class="bankSymbol">'+me.symbol+' <span class="bankSymbolNum'+(delta>=0?' bankSymbolUp':delta<0?' bankSymbolDown':'')+'">'+(delta+''+(delta===Math.floor(delta)?'.00':(delta*10)===Math.floor(delta*10)?'0':'')+'%')+'</span></span></div>'+
 				'<div class="line"></div><div class="description">'+
 					'<q>'+me.desc+'</q>'+
 					'<div class="line"></div><div style="font-size:11px;">&bull; <div class="icon" style="pointer-events:none;display:inline-block;transform:scale(0.5);margin:-16px -18px -16px -14px;vertical-align:middle;background-position:'+(-icon[0]*48)+'px '+(-icon[1]*48)+'px;"></div> '+me.name+': currently worth <b>$'+Beautify(val,2)+'</b> per unit.<br>&bull; You currently own <div class="icon" style="pointer-events:none;display:inline-block;transform:scale(0.5);margin:-16px -18px -16px -14px;vertical-align:middle;background-position:'+(-icon[0]*48)+'px '+(-icon[1]*48)+'px;"></div> <b>'+Beautify(me.stock)+'</b>x '+me.name+' (worth <b>$'+Beautify(val*me.stock,2)+'</b>).<br>&bull; Your warehouses can store up to <div class="icon" style="pointer-events:none;display:inline-block;transform:scale(0.5);margin:-16px -18px -16px -14px;vertical-align:middle;background-position:'+(-icon[0]*48)+'px '+(-icon[1]*48)+'px;"></div> <b>'+Beautify(M.getGoodMaxStock(me))+'</b>x '+me.name+'.<br>&bull; You may increase your storage space by upgrading your offices and by buying more <div class="icon" style="pointer-events:none;display:inline-block;transform:scale(0.5);margin:-16px -18px -16px -14px;vertical-align:middle;background-position:'+(-me.building.iconColumn*48)+'px '+(0*48)+'px;"></div> '+me.building.plural+'. You also get 10 extra storage space per '+me.building.single+' level (currently: <b>+'+(me.building.level*10)+'</b>).<br>&bull; The average worth of this stock and how high it can peak depends on the building it is tied to, along with the level of your <div class="icon" style="pointer-events:none;display:inline-block;transform:scale(0.5);margin:-16px -18px -16px -14px;vertical-align:middle;background-position:'+(-15*48)+'px '+(0*48)+'px;"></div> banks.</div>'+
@@ -141,13 +141,13 @@ M.launch=function()
 				var maxStock=M.getGoodMaxStock(me);
 				if (buyOrSell) overhead*=1+0.01*(20*Math.pow(0.95,M.brokers));
 				cost*=overhead;
-				if (n==10000) n=Math.floor(Game.cookies/cost);
-				else if (n==-10000) n=me.stock;
+				if (n===10000) n=Math.floor(Game.cookies/cost);
+				else if (n===-10000) n=me.stock;
 				n=Math.abs(n);
 				if (buyOrSell) n=Math.min(n,maxStock-stock);
 				if (!buyOrSell) n=Math.min(n,stock);
 				var str='<div style="padding:8px 4px;min-width:128px;text-align:center;font-size:11px;">'+
-					'<div style="font-size:9px;opacity:0.6;">Stock: <b'+((!buyOrSell && stock==0)?' class="red"':'')+'>'+Beautify(stock)+'</b>/<b'+((buyOrSell && stock>=maxStock)?' class="red"':'')+'>'+Beautify(maxStock)+'</b></div>'+
+					'<div style="font-size:9px;opacity:0.6;">Stock: <b'+((!buyOrSell && stock===0)?' class="red"':'')+'>'+Beautify(stock)+'</b>/<b'+((buyOrSell && stock>=maxStock)?' class="red"':'')+'>'+Beautify(maxStock)+'</b></div>'+
 					'<div class="line"></div>'+
 					'<div>'+(buyOrSell?'Buy':'Sell')+' <b>'+Beautify(n)+'</b>x <div class="icon" style="pointer-events:none;display:inline-block;transform:scale(0.5);margin:-16px -18px -16px -14px;vertical-align:middle;background-position:'+(-me.icon[0]*48)+'px '+(-me.icon[1]*48)+'px;"></div> '+me.name+'</div>'+
 					'<div>for <b>$'+Beautify(val,2)+'</b> each</div>'+
@@ -157,7 +157,7 @@ M.launch=function()
 					'<div><b class="hasTinyCookie '+(n<=0?'gray':(Game.cookies>=cost*n || !buyOrSell)?'green':'red')+'">'+Beautify(cost*n)+'</b></div>'+
 					(n>0?('<div style="font-size:9px;opacity:0.6;font-weight:bold;">($'+Beautify(val*overhead*n,2)+')</div>'+
 					'<div style="font-size:9px;opacity:0.6;font-weight:bold;">('+Game.sayTime(val*overhead*n*Game.fps,-1)+' of CpS)</div>'):'')+
-					(((me.last==1 && !buyOrSell) || (me.last==2 && buyOrSell))?'<div class="line"></div><div class="red">You cannot buy and sell this stock in the same tick.</div>':'')+
+					(((me.last===1 && !buyOrSell) || (me.last===2 && buyOrSell))?'<div class="line"></div><div class="red">You cannot buy and sell this stock in the same tick.</div>':'')+
 				'</div>';
 				return str;
 			};
@@ -196,9 +196,9 @@ M.launch=function()
 			var cost=Game.cookiesPsRawHighest*costInS;
 			var overhead=1+0.01*(20*Math.pow(0.95,M.brokers));
 			cost*=overhead;
-			if (n==10000) n=Math.floor(Game.cookies/cost);
+			if (n===10000) n=Math.floor(Game.cookies/cost);
 			n=Math.min(n,M.getGoodMaxStock(me)-me.stock);
-			if (n>0 && me.last!=2 && Game.cookies>=cost*n && me.stock+n<=M.getGoodMaxStock(me))
+			if (n>0 && me.last!==2 && Game.cookies>=cost*n && me.stock+n<=M.getGoodMaxStock(me))
 			{
 				if (costInS*overhead*n>=86400) Game.Win('Buy buy buy');
 				M.profit-=costInS*overhead*n;
@@ -222,9 +222,9 @@ M.launch=function()
 		M.sellGood=function(id,n)
 		{
 			var me=M.goodsById[id];
-			if (n==10000) n=me.stock;
+			if (n===10000) n=me.stock;
 			n=Math.min(n,me.stock);
-			if (n>0 && me.last!=1 && me.stock>0)
+			if (n>0 && me.last!==1 && me.stock>0)
 			{
 				var costInS=M.getGoodPrice(me);
 				if (costInS*n>=86400) Game.Win('Make my day');
@@ -318,7 +318,7 @@ M.launch=function()
 				'<div class="line"></div><div class="description" style="font-size:11px;">'+
 					'A nice broker to trade more cookies.<br>'+
 					'&bull; Buying goods normally incurs overhead costs of <b>20% extra</b>. Each broker you hire reduces that cost by <b>5%</b>.<br>'+
-					'&bull; Current overhead costs thanks to your '+Beautify(M.brokers)+' broker'+(M.brokers==1?'':'s')+': <b>+'+Beautify(20*Math.pow(0.95,M.brokers),2)+'%</b><br>'+
+					'&bull; Current overhead costs thanks to your '+Beautify(M.brokers)+' broker'+(M.brokers===1?'':'s')+': <b>+'+Beautify(20*Math.pow(0.95,M.brokers),2)+'%</b><br>'+
 					'&bull; Buying a broker costs <b class="hasTinyCookie '+(Game.cookies>=M.getBrokerPrice()?'green':'red')+'">20 minutes</b> of CpS (that\'s $1200).<br>'+
 					'&bull; Maximum number of brokers you can own: <b class="'+(M.brokers<M.getMaxBrokers()?'green':'red')+'">'+Beautify(M.getMaxBrokers())+'</b> (the highest amount of grandmas you\'ve owned this run, divided by 10, plus your grandma level)<br>'+
 					'<q>Brokers are Wall Street-class grandmas versed in the ways of finance. Stockbroker grandmas work hard and play hard, and will fight telephone in hand to get your clients the best possible deals - with a sizeable profit margin for you, of course.</q>'+
@@ -499,13 +499,13 @@ M.launch=function()
 		M.graphCtx=M.graph.getContext('2d',{alpha:false});
 		
 		AddEvent(l('bankGraphLines'),'click',function(e){
-			if (M.graphLines==0) M.graphLines=1;
+			if (M.graphLines===0) M.graphLines=1;
 			else M.graphLines=0;
 			M.toRedraw=2;
 			PlaySound('snd/tick.mp3');
 		});
 		AddEvent(l('bankGraphCols'),'click',function(e){
-			if (M.graphCols==0) M.graphCols=1;
+			if (M.graphCols===0) M.graphCols=1;
 			else M.graphCols=0;
 			M.setCols();
 			M.toRedraw=2;
@@ -514,7 +514,7 @@ M.launch=function()
 		if (l('bankCheatSpeed'))
 		{
 			AddEvent(l('bankCheatSpeed'),'click',function(e){
-			if (M.secondsPerTick==60) M.secondsPerTick=1/10;
+			if (M.secondsPerTick===60) M.secondsPerTick=1/10;
 			else M.secondsPerTick=60;
 			M.toRedraw=2;
 			PlaySound('snd/tick.mp3');
@@ -565,10 +565,10 @@ M.launch=function()
 			me.graphIconL=l('bankGood-'+me.id+'-graphIcon');
 			
 			AddEvent(l('bankGood-'+i),'mouseover',function(i){return function(e){
-				if (M.hoverOnGood!=i) {M.hoverOnGood=i;M.toRedraw=2;}
+				if (M.hoverOnGood!==i) {M.hoverOnGood=i;M.toRedraw=2;}
 			}}(i));
 			AddEvent(l('bankGood-'+i),'mouseout',function(i){return function(e){
-				if (M.hoverOnGood==i) {M.hoverOnGood=-1;M.toRedraw=2;}
+				if (M.hoverOnGood===i) {M.hoverOnGood=-1;M.toRedraw=2;}
 			}}(i));
 			
 			AddEvent(l('bankGood-'+i+'-viewHide'),'click',function(i){return function(e){
@@ -577,7 +577,7 @@ M.launch=function()
 					var mode=M.goodsById[i].hidden;
 					for (var ii=0;ii<M.goodsById.length;ii++)
 					{
-						if (ii==i) M.goodsById[ii].hidden=!mode;
+						if (ii===i) M.goodsById[ii].hidden=!mode;
 						else if (!mode) M.goodsById[ii].hidden=false;
 						else M.goodsById[ii].hidden=true;
 						M.updateGoodStyle(ii);
@@ -652,10 +652,10 @@ M.launch=function()
 					}
 				}
 			}
-			if (isOnLine!=M.hoverOnGood)
+			if (isOnLine!==M.hoverOnGood)
 			{
 				M.hoverOnGood=isOnLine;
-				if (M.hoverOnGood!=-1)
+				if (M.hoverOnGood!==-1)
 				{
 					M.graph.style.cursor='pointer';
 				}
@@ -669,7 +669,7 @@ M.launch=function()
 		});
 		AddEvent(M.graph,'mouseout',function(e){
 			M.graph.style.cursor='auto';
-			if (M.hoverOnGood!=-1) {M.hoverOnGood=-1;M.toRedraw=2;}
+			if (M.hoverOnGood!==-1) {M.hoverOnGood=-1;M.toRedraw=2;}
 			Game.tooltip.shouldHide=1;
 		});
 		
@@ -739,7 +739,7 @@ M.launch=function()
 		}
 		M.onResize();
 		
-		var on=parseInt(spl[i++]||0);if (on && Game.ascensionMode!=1) M.parent.switchMinigame(1);
+		var on=parseInt(spl[i++]||0);if (on && Game.ascensionMode!==1) M.parent.switchMinigame(1);
 	}
 	M.reset=function(hard)
 	{
@@ -789,26 +789,26 @@ M.launch=function()
 			
 			me.d*=0.97;
 			
-			if (me.mode==0) {me.d*=0.95;me.d+=0.05*(Math.random()-0.5);}
-			else if (me.mode==1) {me.d*=0.99;me.d+=0.05*(Math.random()-0.1);}
-			else if (me.mode==2) {me.d*=0.99;me.d-=0.05*(Math.random()-0.1);}
-			else if (me.mode==3) {me.d+=0.15*(Math.random()-0.1);me.val+=Math.random();}
-			else if (me.mode==4) {me.d-=0.15*(Math.random()-0.1);me.val-=Math.random();}
-			else if (me.mode==5) me.d+=0.3*(Math.random()-0.5);
+			if (me.mode===0) {me.d*=0.95;me.d+=0.05*(Math.random()-0.5);}
+			else if (me.mode===1) {me.d*=0.99;me.d+=0.05*(Math.random()-0.1);}
+			else if (me.mode===2) {me.d*=0.99;me.d-=0.05*(Math.random()-0.1);}
+			else if (me.mode===3) {me.d+=0.15*(Math.random()-0.1);me.val+=Math.random();}
+			else if (me.mode===4) {me.d-=0.15*(Math.random()-0.1);me.val-=Math.random();}
+			else if (me.mode===5) me.d+=0.3*(Math.random()-0.5);
 			
 			me.val+=(M.getRestingVal(me.id)-me.val)*0.02;
 			me.val+=(Math.random()-0.5)*0.4;
 			me.d+=0.1*(Math.random()-0.5);
 			if (Math.random()<0.1) me.val+=(Math.random()-0.5)*3;
 			if (Math.random()<0.1) me.d+=(Math.random()-0.5)*0.3;
-			if (me.mode==5)
+			if (me.mode===5)
 			{
 				if (Math.random()<0.5) me.val+=(Math.random()-0.5)*10;
 				if (Math.random()<0.2) me.d=(Math.random()-0.5)*2;
 			}
-			if (me.mode==3 && Math.random()<0.3) {me.d+=(Math.random()-0.5)*0.1;me.val+=(Math.random()-0.7)*10;}
-			if (me.mode==3 && Math.random()<0.03) {me.mode=4;}
-			if (me.mode==4 && Math.random()<0.3) {me.d+=(Math.random()-0.5)*0.1;me.val+=(Math.random()-0.3)*10;}
+			if (me.mode===3 && Math.random()<0.3) {me.d+=(Math.random()-0.5)*0.1;me.val+=(Math.random()-0.7)*10;}
+			if (me.mode===3 && Math.random()<0.03) {me.mode=4;}
+			if (me.mode===4 && Math.random()<0.3) {me.d+=(Math.random()-0.5)*0.1;me.val+=(Math.random()-0.3)*10;}
 			
 			if (me.val>(100+(Game.Objects['Bank'].level-1)*3) && me.d>0) me.d*=0.9;
 			
@@ -816,7 +816,7 @@ M.launch=function()
 			/*if (me.val<=0 && me.d<0)
 			{
 				me.d*=0.75;
-				if (me.mode==4 && Math.random()<0.05) me.mode=2;
+				if (me.mode===4 && Math.random()<0.05) me.mode=2;
 			}
 			if (me.val<2) me.val+=(2-me.val)*0.1;
 			me.val=Math.max(me.val,0.01);*/
@@ -839,7 +839,7 @@ M.launch=function()
 			if (me.dur<=0)
 			{
 				me.dur=Math.floor(10+Math.random()*990);
-				if (Math.random()<0.7 && (me.mode==3 || me.mode==4)) me.mode=5;
+				if (Math.random()<0.7 && (me.mode===3 || me.mode===4)) me.mode=5;
 				else me.mode=choose([0,1,1,2,2,3,4,5]);
 			}
 		}
@@ -860,7 +860,7 @@ M.launch=function()
 			M.tick();
 		}
 		
-		if (Game.T%10==0)
+		if (Game.T%10===0)
 		{
 			var doResize=false;
 			for (var i=0;i<M.goodsById.length;i++)
@@ -889,7 +889,7 @@ M.launch=function()
 		{
 			var me=M.goodsById[i];
 			if (me.hidden) continue;
-			//if (me.id==0) me.vals[0]=50+50*Math.sin(Date.now()*0.0002+me.id);
+			//if (me.id===0) me.vals[0]=50+50*Math.sin(Date.now()*0.0002+me.id);
 			for (var ii=0;ii<me.vals.length;ii++)
 			{
 				maxVal=Math.max(maxVal,me.vals[ii]);
@@ -899,7 +899,7 @@ M.launch=function()
 		var newScale=(Math.max(1,currentSize/neededSize));
 		var dif=(currentSize/M.graphScale)/neededSize;
 		var dif=(currentSize/M.graphScale)-neededSize;
-		if (M.graphScale!=newScale && dif>5 || dif<-5)
+		if (M.graphScale!==newScale && dif>5 || dif<-5)
 		{
 			M.graphScale=newScale;
 			M.toRedraw=2;
@@ -945,22 +945,22 @@ M.launch=function()
 		
 		for (var i=0;i<height/M.graphScale;i+=2)//horizontal lines (1 every 2 units)
 		{
-			if (i%10!=0) ctx.fillStyle=M.cols.line1; else ctx.fillStyle=M.cols.line2;
+			if (i%10!==0) ctx.fillStyle=M.cols.line1; else ctx.fillStyle=M.cols.line2;
 			ctx.fillRect(width-span*rows,height-Math.floor(i*M.graphScale),span*rows,1);
 		}
 		for (var iR=0;iR<rows;iR++)//vertical lines (1 every 10 ticks)
 		{
-			if ((iR-M.ticks)%10!=0) continue;
-			if ((iR-M.ticks)%60!=0) ctx.fillStyle=M.cols.line1; else ctx.fillStyle=M.cols.line2;
+			if ((iR-M.ticks)%10!==0) continue;
+			if ((iR-M.ticks)%60!==0) ctx.fillStyle=M.cols.line1; else ctx.fillStyle=M.cols.line2;
 			ctx.fillRect(width-span*iR-1,0,1,height);
 		}
 		for (var i=0;i<M.goodsById.length+1;i++)
 		{
 			//some trickery going on here to always display the M.hoverOnGood bars above the others
 			var id=i;
-			if (i==M.goodsById.length) id=M.hoverOnGood;
-			else if (i==M.hoverOnGood) continue;
-			if (id==-1) continue;
+			if (i===M.goodsById.length) id=M.hoverOnGood;
+			else if (i===M.hoverOnGood) continue;
+			if (id===-1) continue;
 			var me=M.goodsById[id];
 			if (me.hidden || !me.active) continue;
 			for (var iR=0;iR<rows;iR++)
@@ -969,13 +969,13 @@ M.launch=function()
 				{
 					var delta=M.goodDelta(me.id,iR);
 					
-					if (M.graphLines==0)
+					if (M.graphLines===0)
 					{
 						var min=Math.max(me.vals[0+iR],me.vals[1+iR]);
 						var max=Math.abs((me.vals[0+iR]-me.vals[1+iR]));
 						var min2=Math.abs(Math.sin((M.ticks-iR)*11+id*137))*max*2;
 						var max2=min2+Math.abs(Math.sin((M.ticks-iR)*13+id*139))*max*2;
-						if (M.hoverOnGood==id)
+						if (M.hoverOnGood===id)
 						{
 							ctx.fillStyle=M.cols.highlight;
 							ctx.fillRect(width-span*iR-span-1,Math.floor(height-min*M.graphScale)-1,span+1,Math.max(3,Math.ceil(max*M.graphScale))+2);
@@ -986,7 +986,7 @@ M.launch=function()
 					}
 					else
 					{
-						if (M.hoverOnGood==id)
+						if (M.hoverOnGood===id)
 						{
 							ctx.lineWidth=4;
 							ctx.strokeStyle=M.cols.highlight;
@@ -1010,17 +1010,17 @@ M.launch=function()
 	{
 		//run each draw frame
 		
-		if (Game.drawT%2==0 && M.toRedraw>0 && M.graph && M.graphCtx)
+		if (Game.drawT%2===0 && M.toRedraw>0 && M.graph && M.graphCtx)
 		{
 			if (M.lastTickDrawn<M.ticks-1) M.toRedraw=2;
 			M.lastTickDrawn=M.ticks;
-			M.drawGraph(M.toRedraw==2?true:false);
+			M.drawGraph(M.toRedraw===2?true:false);
 			
 			for (var i=0;i<M.goodsById.length;i++)
 			{
 				var me=M.goodsById[i];
 				var val=M.goodDelta(me.id);
-				me.symbolNumL.innerHTML=val+''+(val==Math.floor(val)?'.00':(val*10)==Math.floor(val*10)?'0':'')+'%'/*+', '+['stable','slow rise','slow fall','fast rise','fast fall','chaotic'][me.mode]*/;
+				me.symbolNumL.innerHTML=val+''+(val===Math.floor(val)?'.00':(val*10)===Math.floor(val*10)?'0':'')+'%'/*+', '+['stable','slow rise','slow fall','fast rise','fast fall','chaotic'][me.mode]*/;
 				if (val>=0) {me.symbolNumL.classList.add('bankSymbolUp');me.symbolNumL.classList.remove('bankSymbolDown');}
 				else if (val<0) {me.symbolNumL.classList.remove('bankSymbolUp');me.symbolNumL.classList.add('bankSymbolDown');}
 				else {me.symbolNumL.classList.remove('bankSymbolUp');me.symbolNumL.classList.remove('bankSymbolDown');}
@@ -1037,7 +1037,7 @@ M.launch=function()
 			}
 			M.toRedraw=0;
 		}
-		if (Game.drawT%10==0)
+		if (Game.drawT%10===0)
 		{
 			var office=M.offices[M.officeLevel];
 			l('bankOfficeIcon').style.backgroundPosition=(-office.icon[0]*48)+'px '+(-office.icon[1]*48)+'px';
@@ -1050,7 +1050,7 @@ M.launch=function()
 				if (Game.Objects['Cursor'].amount>=office.cost[0] && Game.Objects['Cursor'].level>=office.cost[1]) l('bankOfficeUpgrade').classList.remove('bankButtonOff');
 				else l('bankOfficeUpgrade').classList.add('bankButtonOff');
 			}
-			l('bankBrokersText').innerHTML=M.brokers==0?'no brokers':M.brokers==1?'1 broker':(M.brokers+' brokers');
+			l('bankBrokersText').innerHTML=M.brokers===0?'no brokers':M.brokers===1?'1 broker':(M.brokers+' brokers');
 			if (M.brokers<M.getMaxBrokers() && Game.cookies>=M.getBrokerPrice()) l('bankBrokersBuy').classList.remove('bankButtonOff');
 			else l('bankBrokersBuy').classList.add('bankButtonOff');
 			

@@ -21,8 +21,8 @@ M.launch=function()
 				{
 					var val=Math.max(7,Math.min(Game.cookies*0.15,Game.cookiesPs*60*30));
 					Game.Earn(val);
-					Game.Notify('Conjure baked goods!','You magic <b>'+Beautify(val)+' cookie'+(val==1?'':'s')+'</b> out of thin air.',[21,11],6);
-					Game.Popup('<div style="font-size:80%;">+'+Beautify(val)+' cookie'+(val==1?'':'s')+'!</div>',Game.mouseX,Game.mouseY);
+					Game.Notify('Conjure baked goods!','You magic <b>'+Beautify(val)+' cookie'+(val===1?'':'s')+'</b> out of thin air.',[21,11],6);
+					Game.Popup('<div style="font-size:80%;">+'+Beautify(val)+' cookie'+(val===1?'':'s')+'!</div>',Game.mouseX,Game.mouseY);
 				},
 				fail:function()
 				{
@@ -31,7 +31,7 @@ M.launch=function()
 					val=Math.min(Game.cookies,val);
 					Game.Spend(val);
 					Game.Notify(buff.name,buff.desc,buff.icon,6);
-					Game.Popup('<div style="font-size:80%;">Backfire!<br>Summoning failed! Lost '+Beautify(val)+' cookie'+(val==1?'':'s')+'!</div>',Game.mouseX,Game.mouseY);
+					Game.Popup('<div style="font-size:80%;">Backfire!<br>Summoning failed! Lost '+Beautify(val)+' cookie'+(val===1?'':'s')+'!</div>',Game.mouseX,Game.mouseY);
 				},
 			},
 			'hand of fate':{
@@ -57,7 +57,7 @@ M.launch=function()
 					if (Math.random()<0.15) choices=['cookie storm drop'];
 					if (Math.random()<0.0001) choices.push('free sugar lump');
 					newShimmer.force=choose(choices);
-					if (newShimmer.force=='cookie storm drop')
+					if (newShimmer.force==='cookie storm drop')
 					{
 						newShimmer.sizeMult=Math.random()*0.75+0.25;
 					}
@@ -93,7 +93,7 @@ M.launch=function()
 						me.time+=gain;
 						changed++;
 					}
-					if (changed==0){Game.Popup('<div style="font-size:80%;">No buffs to alter!</div>',Game.mouseX,Game.mouseY);return -1;}
+					if (changed===0){Game.Popup('<div style="font-size:80%;">No buffs to alter!</div>',Game.mouseX,Game.mouseY);return -1;}
 					Game.Popup('<div style="font-size:80%;">Zap! Buffs lengthened.</div>',Game.mouseX,Game.mouseY);
 				},
 				fail:function()
@@ -107,7 +107,7 @@ M.launch=function()
 						me.time=Math.max(me.time,0);
 						changed++;
 					}
-					if (changed==0){Game.Popup('<div style="font-size:80%;">No buffs to alter!</div>',Game.mouseX,Game.mouseY);return -1;}
+					if (changed===0){Game.Popup('<div style="font-size:80%;">No buffs to alter!</div>',Game.mouseX,Game.mouseY);return -1;}
 					Game.Popup('<div style="font-size:80%;">Backfire!<br>Fizz! Buffs shortened.</div>',Game.mouseX,Game.mouseY);
 				},
 			},
@@ -129,15 +129,15 @@ M.launch=function()
 						if (Game.Objects[i].amount>0) n++;
 					}
 					for (var i in Game.Objects)
-					{if ((Game.Objects[i].amount<max || n==1) && Game.Objects[i].getPrice()<=Game.cookies*2 && Game.Objects[i].amount<400) buildings.push(Game.Objects[i]);}
-					if (buildings.length==0){Game.Popup('<div style="font-size:80%;">No buildings to improve!</div>',Game.mouseX,Game.mouseY);return -1;}
+					{if ((Game.Objects[i].amount<max || n===1) && Game.Objects[i].getPrice()<=Game.cookies*2 && Game.Objects[i].amount<400) buildings.push(Game.Objects[i]);}
+					if (buildings.length===0){Game.Popup('<div style="font-size:80%;">No buildings to improve!</div>',Game.mouseX,Game.mouseY);return -1;}
 					var building=choose(buildings);
 					building.buyFree(1);
 					Game.Popup('<div style="font-size:80%;">A new '+building.single+'<br>bursts out of the ground.</div>',Game.mouseX,Game.mouseY);
 				},
 				fail:function()
 				{
-					if (Game.BuildingsOwned==0){Game.Popup('<div style="font-size:80%;">Backfired, but no buildings to destroy!</div>',Game.mouseX,Game.mouseY);return -1;}
+					if (Game.BuildingsOwned===0){Game.Popup('<div style="font-size:80%;">Backfired, but no buildings to destroy!</div>',Game.mouseX,Game.mouseY);return -1;}
 					var buildings=[];
 					for (var i in Game.Objects)
 					{if (Game.Objects[i].amount>0) buildings.push(Game.Objects[i]);}
@@ -196,12 +196,12 @@ M.launch=function()
 				{
 					var spells=[],selfCost=M.getSpellCost(M.spells['gambler\'s fever dream']);
 					for (var i in M.spells)
-						if (i!='gambler\'s fever dream' && (M.magic-selfCost)>=M.getSpellCost(M.spells[i])*0.5) spells.push(M.spells[i]);
-					if (spells.length==0){Game.Popup('<div style="font-size:80%;">No eligible spells!</div>',Game.mouseX,Game.mouseY);return -1;}
+						if (i!=='gambler\'s fever dream' && (M.magic-selfCost)>=M.getSpellCost(M.spells[i])*0.5) spells.push(M.spells[i]);
+					if (spells.length===0){Game.Popup('<div style="font-size:80%;">No eligible spells!</div>',Game.mouseX,Game.mouseY);return -1;}
 					var spell=choose(spells),cost=M.getSpellCost(spell)*0.5;
 					
 					setTimeout(function(spell,cost,seed){return function(){
-						if (Game.seed!=seed) return false;
+						if (Game.seed!==seed) return false;
 						var out=M.castSpell(spell,{cost:cost,failChanceMax:0.3,passthrough:true});
 						if (!out) {
 							M.magic+=selfCost;
@@ -307,7 +307,7 @@ M.launch=function()
 			Math.seedrandom(Game.seed+'/'+M.spellsCastTotal);
 			if (!spell.fail || Math.random()<(1-failChance)) {out=spell.win();} else {fail=true;out=spell.fail();}
 			Math.seedrandom();
-			if (out!=-1)
+			if (out!==-1)
 			{
 				if (!spell.passthrough && !obj.passthrough)
 				{
@@ -352,7 +352,7 @@ M.launch=function()
 				me.icon=me.icon||[28,12];
 				var cost=Beautify(M.getSpellCost(me));
 				var costBreakdown=M.getSpellCostBreakdown(me);
-				if (cost!=costBreakdown) costBreakdown=' <small>('+costBreakdown+')</small>'; else costBreakdown='';
+				if (cost!==costBreakdown) costBreakdown=' <small>('+costBreakdown+')</small>'; else costBreakdown='';
 				var backfire=M.getFailChance(me);
 				var str='<div style="padding:8px 4px;min-width:350px;">'+
 				'<div class="icon" style="float:left;margin-left:-8px;margin-top:-8px;background-position:'+(-me.icon[0]*48)+'px '+(-me.icon[1]*48)+'px;"></div>'+
@@ -460,7 +460,7 @@ M.launch=function()
 		M.magic=parseFloat(spl[i++]||M.magicM);
 		M.spellsCast=parseInt(spl[i++]||0);
 		M.spellsCastTotal=parseInt(spl[i++]||0);
-		var on=parseInt(spl[i++]||0);if (on && Game.ascensionMode!=1) M.parent.switchMinigame(1);
+		var on=parseInt(spl[i++]||0);if (on && Game.ascensionMode!==1) M.parent.switchMinigame(1);
 	}
 	M.reset=function()
 	{
@@ -471,11 +471,11 @@ M.launch=function()
 	M.logic=function()
 	{
 		//run each frame
-		if (Game.T%5==0) {M.computeMagicM();}
+		if (Game.T%5===0) {M.computeMagicM();}
 		M.magicPS=Math.max(0.002,Math.pow(M.magic/Math.max(M.magicM,100),0.5))*0.002;
 		M.magic+=M.magicPS;
 		M.magic=Math.min(M.magic,M.magicM);
-		if (Game.T%5==0)
+		if (Game.T%5===0)
 		{
 			for (var i in M.spells)
 			{
