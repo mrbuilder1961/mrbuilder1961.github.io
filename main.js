@@ -819,7 +819,7 @@ Game.Launch=function()
 			Game.prefs.focus=1;//make the game refresh less frequently when off-focus
 			Game.prefs.popups=0;//use old-style popups
 			Game.prefs.format=0;//shorten numbers
-			Game.prefs.notifs=0;//notifications fade faster
+			Game.prefs.notifs=0;//notifications fade
 			Game.prefs.animate=1;//animate buildings
 			Game.prefs.wobbly=1;//wobbly cookie
 			Game.prefs.monospace=0;//alt monospace font for cookies
@@ -1150,8 +1150,8 @@ Game.Launch=function()
 			console.info('Loaded heavenly upgrades calculator!');
 		};
 
-		Game.functions.loadExtensions = function() {var funcs=Game.functions; funcs.loadShimmerBar();funcs.loadHUpgrades();};
-		Game.extensionData={loadtime:Date.now(),loaded:false};
+		Game.functions.loadExtensions = function() {var funcs=Game.functions; funcs.loadShimmerBar();funcs.loadHUpgrades(); Game.extensionData.loaded=1;};
+		Game.extensionData={loadtime:Date.now(),loaded:0};
 		/*=====================================================================================
 		BAKERY NAME
 		=======================================================================================*/
@@ -5845,7 +5845,7 @@ Game.Launch=function()
 					'News : public recoils at the notion of a cosmos made of infinite idle games. "I kinda hoped there\'d be more to it", says distraught citizen.',
 					'News : with an infinity of parallel universes, people turn to reassuring alternate dimensions, which only number "in the high 50s".',
 					'News : "I find solace in the knowledge that at least some of my alternate selves are probably doing fine out there", says citizen\'s last remaining exemplar in the multiverse.',
-					'News : comic book writers point to actual multiverse in defense of dubious plot points. "See? I told you it wasn\'t \'hackneyed and contrived\'!"'
+					'News : comic book writers point to actual multiverse in defense of dubious plot points. "See? I told you it wasn\'t \'hackneyed and contrived\'!"',
 					'News : Idea of turning the multiverse into cookies has been circulating, and may be a good idea. Tune in to WGN9 News at 9PM tonight for more details.',
 					]));
 					
@@ -13995,10 +13995,7 @@ Game.Launch=function()
 			l('debugLog').innerHTML=str;
 			
 		}
-		if(Date.now()-Game.extensionData.loadtime<=100&&!Game.extensionData.loaded) {
-			Game.functions.loadExtensions();
-			Game.extensionData.loaded=true;
-		}
+		if(!Game.extensionData.loaded&&new Date().getSeconds()%60===0) Game.functions.loadExtensions();
 
 		Timer.reset();
 		
