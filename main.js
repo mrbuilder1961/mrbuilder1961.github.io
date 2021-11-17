@@ -1050,6 +1050,15 @@ Game.Launch=function()
 			});
 		
 		Game.functions = {}; // save our functions here so they can be accessed anywhere
+		Game.functions.listTinyUpgrades = function(arr) {
+			var str='', a=Array.isArray(arr)?arr:[arr];
+			for (var i=0;i<a.length;i++)
+				if (Game.Upgrades[a[i]]) {
+					var it=Game.Upgrades[a[i]];
+					str+='<div class="icon" style="vertical-align:middle;display:inline-block;'+(it.icon[2]?'background-image:url('+it.icon[2]+');':'')+'background-position:'+(-it.icon[0]*48)+'px '+(-it.icon[1]*48)+'px;transform:scale(0.5);margin:-16px;"></div>';
+				}
+			return str;
+		}
 		Game.functions.getShimmerTt = function(getHide) {	
 			var str='',hide=false,exists=function(o){return o!==null&&o!==undefined;};
 			try { str = '&bull; This lets you see some interesting shimmer data; but note that the values shown may not be 100% accurate, so take them with a pinch of sugar. (A shimmer is a golden cookie or a reindeer)<br><br>';
@@ -1085,7 +1094,7 @@ Game.Launch=function()
 			} catch(e)
 			{str='An error occured while loading this, check back later or just wait for a little bit.\n\n<span style="font-type:monospace;color:#fd0000;">'+e.stack+'</span>' }
 			
-			return getHide?'1':'<div style="padding:8px;width:250px;text-align:center;font-size:12.5px;">'+str+'</div>';
+			return hide?'1':'<div style="padding:8px;width:250px;text-align:center;font-size:12.5px;">'+str+'</div>';
 		};
 		Game.functions.loadShimmerBar = function(showTooltip) {
 			var hide=Game.functions.getShimmerTt(true)==='1', el=l('shimmerInfo');
@@ -1093,10 +1102,11 @@ Game.Launch=function()
 			
 			Game.attachTooltip(el, Game.functions.getShimmerTt(), 'this');
 			if(showTooltip&&!hide) Game.tooltip.draw(el, Game.functions.getShimmerTt(), 'this');
+			console.info('Loaded shimmer info bar!');
 		};
 
 		Game.functions.hUpgradesTooltip = function() {
-			var text='', str='<span style="font-size:14px;"><b>Hello there!</b></span><span style="font-size:12.5px;">'+(Game.HasAchiev('Rebirth')?' Since you\'ve ascended before, here are some heavenly upgrade ideas!':'')+'</span><br><br>', chips=Game.heavenlyChips+parseInt(Game.ascendNumber.textContent.replace(/^\+|,/g,'')), ics=Game.listTinyOwnedUpgrades;
+			var text='', str='<span style="font-size:14px;"><b>Hello there!</b></span><span style="font-size:12.5px;">'+(Game.HasAchiev('Rebirth')?' Since you\'ve ascended before, here are some heavenly upgrade ideas!':'')+'</span><br><br>', chips=Game.heavenlyChips+parseInt(Game.ascendNumber.textContent.replace(/^\+|,/g,'')), ics=Game.functions.listTinyUpgrades;
 			var owned=[],suggestions=[],others=[]; // all combined = Game.PrestigeUpgrades; ordered in [name, cost] pairs
 			Game.PrestigeUpgrades.forEach(function(u){
 				var price=u.getPrice();
@@ -1109,7 +1119,7 @@ Game.Launch=function()
 
 			if(suggestions.length) var tot=0;
 			suggestions.forEach(function(sg,i,a){
-				text+='&bull; <b>'+sg.name+'</b>  (<span style="color:#73f21e;">'+Beautify(sg.getPrice())+'</span> chips)<br>';
+				text+=ics(sg.name)+'   <b>'+sg.name+'</b>  (<span style="color:#73f21e;">'+Beautify(sg.getPrice())+'</span> chips)<br>';
 				tot+=sg.getPrice();
 				if(a.length-1===i&&others.length) {
 					text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#'+(chips>=tot?'73f21e':'fb5a71')+';">'+Beautify(tot)+'</span> chips</span>'+(tot>chips?'<br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>':'');
@@ -1122,15 +1132,14 @@ Game.Launch=function()
 				owned.forEach(function(ow){ps=ot.parents.includes(ow)||ps});
 				if(ps&&!Game.Has(ot.name)&&!text.includes(ot.name)) {
 					var diff=(chips-ot.getPrice()).toString().substr(1);
-					text+='&bull; <b>'+ot.name+'</b>  (<b><span style="color:#fb5a71;">'+Beautify(ot.getPrice())+'</span></b> chips, missing <b>'+Beautify(parseInt(diff))+'</b>)<br>';
+					text+=ics(ot.name)+'   <b>'+ot.name+'</b>  (<b><span style="color:#fb5a71;">'+Beautify(ot.getPrice())+'</span></b> chips, missing <b>'+Beautify(parseInt(diff))+'</b>)<br>';
 					tot+=ot.getPrice();
 				}
-				if(others.length-1===i) text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#fb5a71;">'+Beautify(tot)+'</span> chips</span>'+(Math.floor(chips)!==Math.floor(tot)?'<br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>':'');
+				if(others.length-1===i) text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#fb5a71;">'+Beautify(tot)+'</span> chips</span>'+(Beautify(tot)!==Beautify(tot-chips)?'<br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>':'');
 			});
-			console.log({owned:owned,suggs:suggestions,others:others});
 			if(!owned.length||!suggestions.length) str+='It seems like you don\'t have any upgrades, or something went wrong; so maybe check back later?';
 
-			return '<div style="padding:8px;width:250px;text-align:center;font-size:11px;">'+str+(Game.HasAchiev('Rebirth')?text:'')+'</div>'
+			return '<div style="padding:8px;width:250px;text-align:center;font-size:11px;">'+str+(Game.HasAchiev('Rebirth')?text:'')+'</div>';
 		};
 		Game.functions.loadHUpgrades=function(tT) {
 			var hide=!Game.HasAchiev('Rebirth'), el=l('hUpgradesHelp');
@@ -1138,7 +1147,11 @@ Game.Launch=function()
 			
 			Game.attachTooltip(el, Game.functions.hUpgradesTooltip(), 'this');
 			if(tT&&!hide) Game.tooltip.draw(el, Game.functions.hUpgradesTooltip(), 'this');
+			console.info('Loaded heavenly upgrades calculator!');
 		};
+
+		Game.functions.loadExtensions = function() {var funcs=Game.functions; funcs.loadShimmerBar();funcs.loadHUpgrades();};
+		Game.extensionData={loadtime:Date.now(),loaded:false};
 		/*=====================================================================================
 		BAKERY NAME
 		=======================================================================================*/
@@ -13976,11 +13989,16 @@ Game.Launch=function()
 			l('debugLog').innerHTML=str;
 			
 		}
+		if(Date.now()-Game.extensionData.loadtime<=100&&!Game.extensionData.loaded) {
+			Game.functions.loadExtensions();
+			Game.extensionData.loaded=true;
+		}
+
 		Timer.reset();
 		
 		Game.loopT++;
 		setTimeout(Game.Loop,1000/Game.fps);
-	}
+	};	
 }
 
 
@@ -13990,7 +14008,8 @@ LAUNCH THIS THING
 try {  Game.Launch();  } catch(e) {
     console.error(e);
     alert(e);
-    l('jsErrorText').textContent = e.stack.replace(/\s{2,}| {2,}/g, ' ');
+	try {l('jsErrorText').textContent = e.stack.replace(/\s{2,}| {2,}/g, ' ');} catch(x) {}
+    
 }
 
 window.onload=function()
