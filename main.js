@@ -1106,8 +1106,8 @@ Game.Launch=function()
 		};
 
 		Game.functions.hUpgradesTooltip = function() {
-			var chips=Game.heavenlyChips+parseInt(Game.ascendNumber.textContent.replace(/^\+|,/g,'')),ics=Game.listTinyUpgrades,text='',hcIcon='<div class="icon" style="float:left;background-position:-912px -336px;"></div>';
-			var str='<span style="font-size:14px;"><b>Hello there!</b></span><span style="font-size:12.5px;">'+(Game.HasAchiev('Rebirth')?' Since you\'ve ascended before, here are some heavenly upgrade ideas!':'')+'<br>If you ascended now, you would receive  '+hcIcon+' <b>'+Beautify(chips)+'</b> chips!</span><br><br>';
+			var chips=Game.heavenlyChips+parseInt(Game.ascendNumber.textContent.replace(/^\+|,/g,'')),ics=Game.listTinyUpgrades,text='';
+			var str='<span style="font-size:14px;"><b>Hello there!</b></span><span style="font-size:12.5px;">'+(Game.HasAchiev('Rebirth')?' Since you\'ve ascended before, here are some heavenly upgrade ideas!':'')+'<br>If you ascended now, you would receive  '+ics('Heavenly chip secret')+' <b>'+Beautify(chips)+'</b> chips!</span><br><br>';
 			var owned=[],suggestions=[],others=[]; // all combined = Game.PrestigeUpgrades; ordered in [name, cost] pairs
 			Game.PrestigeUpgrades.forEach(function(u){
 				var price=u.getPrice();
