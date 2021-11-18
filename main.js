@@ -1107,7 +1107,7 @@ Game.Launch=function()
 
 		Game.functions.hUpgradesTooltip = function() {
 			var chips=Game.heavenlyChips+parseInt(Game.ascendNumber.textContent.replace(/^\+|,/g,'')),ics=Game.listTinyUpgrades,text='';
-			var str='<span style="font-size:14px;"><b>Hello there!</b></span><span style="font-size:12.5px;">'+(Game.HasAchiev('Rebirth')?' Since you\'ve ascended before, here are some heavenly upgrade ideas!':'')+'<br>If you ascended now, you would receive<br><b>'+Beautify(chips)+'</b> '+ics('Heavenly chip secret')+'</span><br><br>';
+			var str='<span style="font-size:14px;"><b>Hello there!</b></span><span style="font-size:12.5px;">'+(Game.HasAchiev('Rebirth')?' Since you\'ve ascended before, here are some heavenly upgrade ideas!':'')+'<br>If you ascended now, you would have<br><b>'+Beautify(chips)+'</b> '+ics('Heavenly chip secret')+(chips>1?' s':'')+'</span><br><br>';
 			var owned=[],suggestions=[],others=[]; // all combined = Game.PrestigeUpgrades; ordered in [name, cost] pairs
 			Game.PrestigeUpgrades.forEach(function(u){
 				var price=u.getPrice();
