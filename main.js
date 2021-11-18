@@ -1050,7 +1050,7 @@ Game.Launch=function()
 			});
 		
 		Game.functions = {}; // save our functions here so they can be accessed anywhere
-		Game.functions.listTinyUpgrades = function(arr) {
+		Game.listTinyUpgrades = function(arr) {
 			var str='', a=Array.isArray(arr)?arr:[arr];
 			for (var i=0;i<a.length;i++)
 				if (Game.Upgrades[a[i]]) {
@@ -1106,7 +1106,8 @@ Game.Launch=function()
 		};
 
 		Game.functions.hUpgradesTooltip = function() {
-			var text='', str='<span style="font-size:14px;"><b>Hello there!</b></span><span style="font-size:12.5px;">'+(Game.HasAchiev('Rebirth')?' Since you\'ve ascended before, here are some heavenly upgrade ideas!':'')+'</span><br><br>', chips=Game.heavenlyChips+parseInt(Game.ascendNumber.textContent.replace(/^\+|,/g,'')), ics=Game.functions.listTinyUpgrades;
+			var chips=Game.heavenlyChips+parseInt(Game.ascendNumber.textContent.replace(/^\+|,/g,'')),ics=Game.listTinyUpgrades,text='',hcIcon='<div class="icon" style="float:left;background-position:-912px -336px;"></div>';
+			var str='<span style="font-size:14px;"><b>Hello there!</b></span><span style="font-size:12.5px;">'+(Game.HasAchiev('Rebirth')?' Since you\'ve ascended before, here are some heavenly upgrade ideas!':'')+'<br>If you ascended now, you would receive  '+hcIcon+' <b>'+Beautify(chips)+'</b> chips!</span><br><br>';
 			var owned=[],suggestions=[],others=[]; // all combined = Game.PrestigeUpgrades; ordered in [name, cost] pairs
 			Game.PrestigeUpgrades.forEach(function(u){
 				var price=u.getPrice();
