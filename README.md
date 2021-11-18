@@ -1,4 +1,4 @@
-The original game is located at http://orteil.dashnet.org/cookieclicker/.
+The original game is located at [here](https://orteil.dashnet.org/cookieclicker/).
 This version was forked from [aquaflame95's](https://github.com/AquaFlame95/aquaflame95.github.io) clone, which was forked from [ozh's](https://github.com/ozh/cookieclicker).
 
 Note that this version has a few minor modifications to the base game:
@@ -7,9 +7,10 @@ Note that this version has a few minor modifications to the base game:
 - Sugar lump text changes color based on whether the lump is maturing, mature, or ripe
 - Ad section is gone
 - Small text changes (mostly shortenings) here and there
-- Shimmer info that renders dynamically (when certain critera is met)
+- Shimmer info that renders dynamically*
 - Error messages will be shown when the game fails to load [currently broken]
-- An ascension upgrade helper for knowing what upgrades to save up for
+- An ascension upgrade helper for knowing what upgrades to save up for*
 
 
 Useable [here](https://mrbuilder1961.github.io), play responsibly!
+\**When certain criteria are met*\*
