@@ -1,7 +1,7 @@
 The original game is located at [here](https://orteil.dashnet.org/cookieclicker/).
-This version was forked from [aquaflame95's](https://github.com/AquaFlame95/aquaflame95.github.io) clone, which was forked from [ozh's](https://github.com/ozh/cookieclicker).
+This version was forked from [aquaflame95's](https://github.com/AquaFlame95/aquaflame95.github.io) clone, which was forked from [ozh's](https://github.com/ozh/cookieclicker). This game is made by none of the people listed here, except for Orteil and Opti who host the official webpage. This is for "educational purposes".
 
-Note that this version has a few minor modifications to the base game:
+Note that this version has a few modifications to the base game:
 - Grimoire magic bar shows decimals to the hundredths place
 - The game thinks the version is 2.042, so that anyone playing interchangebly between the Steam version and the online version can import and export without any hassle (note that most of the changes in 2.042 are related to the Steam game anyway)
 - Sugar lump text changes color based on whether the lump is maturing, mature, or ripe
