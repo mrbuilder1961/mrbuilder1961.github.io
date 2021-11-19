@@ -1108,15 +1108,16 @@ Game.Launch=function()
 			var owned=[],suggestions=[],others=[]; // all combined = Game.PrestigeUpgrades; ordered in [name, cost] pairs
 			Game.PrestigeUpgrades.forEach(function(u){
 				var price=u.getPrice();
-				if(Game.Has(u.name)) {owned.push(u)}
-				else if(price<=chips) {suggestions.push(u);}
-				else {others.push(u);}
+				if(Game.Has(u.name)) owned.push(u);
+				else if(price<=chips) suggestions.push(u);
+				else others.push(u);
 			});
 			suggestions.sort(function(u1,u2){return u1.getPrice()<u2.getPrice()?-1:u1.getPrice()>u2.getPrice()?1:0});
 			others.sort(function(u1,u2){return u1.getPrice()<u2.getPrice()?-1:u1.getPrice()>u2.getPrice()?1:0});
 
 			if(suggestions.length) var tot=0;
 			suggestions.forEach(function(sg,i,a){
+				if(Game.Has(sg.name)) return;
 				text+=ics(sg.name)+'   <b>'+sg.name+'</b>  (<span style="color:#73f21e;">'+Beautify(sg.getPrice())+'</span> chips)<br>';
 				tot+=sg.getPrice();
 				if(a.length-1===i&&others.length) {
@@ -1126,6 +1127,7 @@ Game.Launch=function()
 			});
 			if(others.length) {try{var tot=0;}catch(e){tot=0;}};
 			others.forEach(function(ot,i){
+				if(Game.Has(ot.name)) return;
 				var ps=false;
 				owned.forEach(function(ow){ps=ot.parents.includes(ow)||ps});
 				if(ps&&!Game.Has(ot.name)&&!text.includes(ot.name)) {
@@ -1135,7 +1137,7 @@ Game.Launch=function()
 				}
 				if(others.length-1===i) text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#fb5a71;">'+Beautify(tot)+'</span> chips</span>'+(Beautify(tot)!==Beautify(tot-chips)?'<br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>':'');
 			});
-			if(!owned.length||!suggestions.length) str+='It seems like you don\'t have any upgrades; so maybe check back later?';
+			if(!owned.length&&!suggestions.length) str+='It seems like you don\'t have any upgrades; so maybe check back later?';
 
 			return '<div style="padding:8px;width:250px;text-align:center;font-size:11px;">'+str+(Game.HasAchiev('Rebirth')?text:'')+'</div>';
 		};
