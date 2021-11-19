@@ -1117,17 +1117,17 @@ Game.Launch=function()
 
 			if(suggestions.length) var tot=0;
 			suggestions.forEach(function(sg,i,a){
-				if(Game.Has(sg.name)) return;
-				text+=ics(sg.name)+'   <b>'+sg.name+'</b>  (<span style="color:#73f21e;">'+Beautify(sg.getPrice())+'</span> chips)<br>';
+				if(!Game.Has(sg.name)) {
+				text+=ics(sg.name)+'   <b>'+sg.name+'</b>  (<span style="color:#73f21e;">'+Beautify(sg.getPrice())+'</span> chip'+sg.getPrice()>1?'s':''+')<br>';
 				tot+=sg.getPrice();
 				if(a.length-1===i&&others.length) {
 					text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#'+(chips>=tot?'73f21e':'fb5a71')+';">'+Beautify(tot)+'</span> chips</span>'+(tot>chips?'<br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>':'');
 					text+='<div class="line"></div>';
-				}
+				}}
 			});
 			if(others.length) {try{var tot=0;}catch(e){tot=0;}};
 			others.forEach(function(ot,i){
-				if(Game.Has(ot.name)) return;
+				if(!Game.Has(ot.name)) {
 				var ps=false;
 				owned.forEach(function(ow){ps=ot.parents.includes(ow)||ps});
 				if(ps&&!Game.Has(ot.name)&&!text.includes(ot.name)) {
@@ -1136,6 +1136,7 @@ Game.Launch=function()
 					tot+=ot.getPrice();
 				}
 				if(others.length-1===i) text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#fb5a71;">'+Beautify(tot)+'</span> chips</span>'+(Beautify(tot)!==Beautify(tot-chips)?'<br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>':'');
+				}
 			});
 			if(!owned.length&&!suggestions.length) str+='It seems like you don\'t have any upgrades; so maybe check back later?';
 
