@@ -5569,7 +5569,7 @@ Game.Launch=function()
 				'<div class="listing"><b>Cookies per click :</b> '+Beautify(Game.computedMouseCps,1)+'</div>'+
 				'<div class="listing"><b>Cookie clicks :</b> '+Beautify(Game.cookieClicks)+'</div>'+
 				'<div class="listing"><b>Hand-made cookies :</b> '+Beautify(Game.handmadeCookies)+'</div>'+
-				'<div class="listing"><b>Golden cookie clicks :</b> '+Beautify(Game.goldenClicksLocal)+' <small>(all time : '+Beautify(Game.goldenClicks)+') (missed : '+Beautify(Game.missedGoldenClicks)+')</small></div>'+
+				//'<div class="listing"><b>Golden cookie clicks :</b> '+Beautify(Game.goldenClicksLocal)+' <small>(all time : '+Beautify(Game.goldenClicks)+') (missed : '+Beautify(Game.missedGoldenClicks)+')</small></div>'+
 				'<br><div class="listing"><b>Running version :</b> '+(parseFloat(Game.version)===2.042?"2.042 (2.031)":Game.version)+'</div>'+
 				
 				((researchStr!=='' || wrathStr!=='' || pledgeStr!=='' || santaStr!=='' || dragonStr!=='' || Game.season!=='' || ascensionModeStr!=='' || Game.canLumps())?(
