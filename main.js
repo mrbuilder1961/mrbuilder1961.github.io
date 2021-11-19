@@ -1103,7 +1103,7 @@ Game.Launch=function()
 		};
 
 		Game.functions.hUpgradesTooltip = function() {
-			var chips=Game.heavenlyChips+parseInt(Game.ascendNumber.textContent.replace(/^\+|,/g,'')),ics=Game.listTinyUpgrades,text='';
+			var chips=Game.heavenlyChips+(parseInt(Game.ascendNumber.textContent.replace(/^\+|,/g,''))||0),ics=Game.listTinyUpgrades,text='';
 			var str='<span style="font-size:14px;"><b>Hello there!</b></span><span style="font-size:12.5px;">'+(Game.HasAchiev('Rebirth')?' Since you\'ve ascended before, here are some heavenly upgrade ideas!':'')+'<br>If you ascended now, you would have<br><b>'+Beautify(chips)+'</b> '+ics('Heavenly chip secret')+(chips>1?'  s!':'  !')+'</span><br><br>';
 			var owned=[],suggestions=[],others=[]; // all combined = Game.PrestigeUpgrades; ordered in [name, cost] pairs
 			Game.PrestigeUpgrades.forEach(function(u){
@@ -1135,7 +1135,7 @@ Game.Launch=function()
 				}
 				if(others.length-1===i) text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#fb5a71;">'+Beautify(tot)+'</span> chips</span>'+(Beautify(tot)!==Beautify(tot-chips)?'<br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>':'');
 			});
-			if(!owned.length||!suggestions.length) str+='It seems like you don\'t have any upgrades, or something went wrong; so maybe check back later?';
+			if(!owned.length||!suggestions.length) str+='It seems like you don\'t have any upgrades; so maybe check back later?';
 
 			return '<div style="padding:8px;width:250px;text-align:center;font-size:11px;">'+str+(Game.HasAchiev('Rebirth')?text:'')+'</div>';
 		};
