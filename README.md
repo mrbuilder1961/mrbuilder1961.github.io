@@ -14,4 +14,5 @@ Note that this version has a few minor modifications to the base game:
 
 
 Useable [here](https://mrbuilder1961.github.io), play responsibly!
-\**When certain criteria are met*\*
+
+\**When certain criteria are met, may not always work properly*\*
