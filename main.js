@@ -1131,22 +1131,24 @@ Game.Launch=function()
 				}
 				if(others.length-1===i) text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#fb5a71;">'+Beautify(tot)+'</span> chips</span>'+(Beautify(tot)!==Beautify(tot-chips)?'<br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>':'');
 			});
-			if(!owned.length&&!suggestions.length) str+='It seems like you don\'t have any upgrades; so maybe check back later?';
-
-			return '<div style="padding:8px;width:250px;text-align:center;font-size:11px;">'+str+(Game.HasAchiev('Rebirth')?text:'')+'<br><span style="font-size:9px;font-style:italic;color:#999;">psssst! you can click me to update the data!</span></div>';
+			if(!owned.length&&!suggestions.length) str+='It seems like an error occurred, so maybe check back later?';
+			
+			return '<div style="padding:8px;width:max-content;text-align:center;font-size:11px;">'+str+(Game.HasAchiev('Rebirth')?text:'')+'<br><span style="font-size:9px;font-style:italic;color:#999;">psssst! you can click me to update the data!</span></div>';
 		};
 		Game.functions.loadHUpgrades=function(tT) {
-			var hide=!Game.HasAchiev('Rebirth'), el=l('hUpgradesHelp');
+			var hide=!Game.HasAchiev('Rebirth'), el=l('hUpgradesHelp'),tooltip=Game.functions.hUpgradesTooltip();
 			if(hide||Game.ascensionMode===1) {l('hUpgradesHelp').style.visibility='hidden';return;}
 			if(!hide||l('hUpgradesHelp').style.visibility!=='visible'&&Game.ascensionMode!==1) l('hUpgradesHelp').style.visibility='visible';
 			if(tT||Game.extensionData.lastClickHU===0) Game.extensionData.lastClickHU=Date.now();
 			
-			Game.attachTooltip(el, Game.functions.hUpgradesTooltip(), 'this');
-			if(tT&&!hide&&Game.ascensionMode!==1) Game.tooltip.draw(el, Game.functions.hUpgradesTooltip(), 'this');
+			Game.attachTooltip(el, tooltip, 'this');
+			if(tT&&!hide&&Game.ascensionMode!==1) Game.tooltip.draw(el, tooltip, 'this');
 			console.info('Loaded heavenly upgrades calculator!');
 		};
 
-		Game.functions.loadExtensions = function() {var funcs=Game.functions; funcs.loadShimmerBar();funcs.loadHUpgrades();};
+		Game.functions.loadExtensions = function() {
+			var funcs=Game.functions; funcs.loadShimmerBar();funcs.loadHUpgrades();
+		};
 		Game.extensionData={loadtime:Date.now(),lastClickHU:0,lastClickShimmer:0};
 		/*=====================================================================================
 		BAKERY NAME
