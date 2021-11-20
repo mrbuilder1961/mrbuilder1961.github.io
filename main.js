@@ -489,8 +489,7 @@ var pitchSupport=false;
 //note : Chrome turns out to not support webkitPreservesPitch despite the specifications claiming otherwise, and Firefox clips some short sounds when changing playbackRate, so i'm turning the feature off completely until browsers get it together
 //if (SoundInsts[0].preservesPitch || SoundInsts[0].mozPreservesPitch || SoundInsts[0].webkitPreservesPitch) pitchSupport=true;
 
-var PlaySound=function(url,vol,pitchVar)
-{
+var playsnd=function(url,vol,pitchVar) {
 	//url : the url of the sound to play (will be cached so it only loads once)
 	//vol : volume between 0 and 1 (multiplied by game volume setting); defaults to 1 (full volume)
 	//(DISABLED) pitchVar : pitch variance in browsers that support it (Firefox only at the moment); defaults to 0.05 (which means pitch can be up to -5% or +5% anytime the sound plays)
@@ -508,12 +507,7 @@ var PlaySound=function(url,vol,pitchVar)
 		var sound=SoundInsts[SoundI];
 		SoundI++;
 		if (SoundI>=12) SoundI=0;
-		try {
-			sound.src=Sounds[url].src;
-		} catch(e) {
-			if(e.code===20) return;
-			console.error(e.stack);
-		}
+		try { sound.src=Sounds[url].src;	} catch(e) { if(e.code!==20) console.error(e.stack); }
 
 		//sound.currentTime=0;
 		sound.volume=Math.pow(volume*Game.volume/100,2);
@@ -528,7 +522,7 @@ var PlaySound=function(url,vol,pitchVar)
 		}
 		sound.play();
 	}
-}
+}, PlaySound=function(url,vol,pitchVar){try{playsnd(url,vol,pitchVar);}catch(e){if(e.code===20)return;console.error(e.stack)}}; //wrap the real function in a try/catch loop just in case
 
 if (!Date.now){Date.now=function now() {return new Date().getTime();};}
 
@@ -1091,24 +1085,26 @@ Game.Launch=function()
 			} catch(e)
 			{str='An error occured while loading this, check back later or just wait for a little bit.\n\n<span style="font-type:monospace;color:#fd0000;">'+e.stack+'</span>' }
 			
-			return hide?'1':'<div style="padding:8px;width:250px;text-align:center;font-size:12.5px;">'+str+'</div>';
+			return hide?'1':'<div style="padding:8px;width:250px;text-align:center;font-size:12.5px;">'+str+'<br><span style="font-size:9px;font-style:italic;color:#999;">psssst! you can click me to update the data!</span></div>';
 		};
-		Game.functions.loadShimmerBar = function(showTooltip) {
+		Game.functions.loadShimmerBar = function(tT) {
 			var hide=Game.functions.getShimmerTt(true)==='1', el=l('shimmerInfo');
-			if(hide) l('shimmerInfo').style.visibility='hidden'; if(l('shimmerInfo').style.visibility!=='visible'||!hide) l('shimmerInfo').style.visibility='visible';
+			if(hide||Game.ascensionMode===1) {l('shimmerInfo').style.visibility='hidden';return;}
+			if(!hide||l('shimmerInfo').style.visibility!=='visible'&&Game.ascensionMode!==1) l('shimmerInfo').style.visibility='visible';
+			if(tT||Game.extensionData.lastShimmerHU===0) Game.extensionData.lastShimmerHU=Date.now();
 			
 			Game.attachTooltip(el, Game.functions.getShimmerTt(), 'this');
-			if(showTooltip&&!hide) Game.tooltip.draw(el, Game.functions.getShimmerTt(), 'this');
+			if(tT&&!hide) Game.tooltip.draw(el, Game.functions.getShimmerTt(), 'this');
 			console.info('Loaded shimmer info bar!');
 		};
 
 		Game.functions.hUpgradesTooltip = function() {
 			var chips=Game.heavenlyChips+(parseInt(Game.ascendNumber.textContent.replace(/^\+|,/g,''))||0),ics=Game.listTinyUpgrades,text='';
 			var str='<span style="font-size:14px;"><b>Hello there!</b></span><span style="font-size:12.5px;">'+(Game.HasAchiev('Rebirth')?' Since you\'ve ascended before, here are some heavenly upgrade ideas!':'')+'<br>If you ascended now, you would have<br><b>'+Beautify(chips)+'</b> '+ics('Heavenly chip secret')+(chips>1?'  s!':'  !')+'</span><br><br>';
-			var owned=[],suggestions=[],others=[]; // all combined = Game.PrestigeUpgrades; ordered in [name, cost] pairs
+			var owned=[],suggestions=[],others=[]; // all combined = Game.PrestigeUpgrades;
 			Game.PrestigeUpgrades.forEach(function(u){
 				var price=u.getPrice();
-				if(Game.Has(u.name)) owned.push(u);
+				if(u.bought) owned.push(u);
 				else if(price<=chips) suggestions.push(u);
 				else others.push(u);
 			});
@@ -1117,42 +1113,41 @@ Game.Launch=function()
 
 			if(suggestions.length) var tot=0;
 			suggestions.forEach(function(sg,i,a){
-				if(!Game.Has(sg.name)) {
-				text+=ics(sg.name)+'   <b>'+sg.name+'</b>  (<span style="color:#73f21e;">'+Beautify(sg.getPrice())+'</span> chip'+sg.getPrice()>1?'s':''+')<br>';
+				text+=ics(sg.name)+' <b>'+sg.name+'</b>  (<span style="color:#73f21e;">'+Beautify(sg.getPrice())+'</span> chips)<br>';
 				tot+=sg.getPrice();
 				if(a.length-1===i&&others.length) {
 					text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#'+(chips>=tot?'73f21e':'fb5a71')+';">'+Beautify(tot)+'</span> chips</span>'+(tot>chips?'<br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>':'');
 					text+='<div class="line"></div>';
-				}}
+				}
 			});
 			if(others.length) {try{var tot=0;}catch(e){tot=0;}};
 			others.forEach(function(ot,i){
-				if(!Game.Has(ot.name)) {
 				var ps=false;
 				owned.forEach(function(ow){ps=ot.parents.includes(ow)||ps});
 				if(ps&&!Game.Has(ot.name)&&!text.includes(ot.name)) {
 					var diff=(chips-ot.getPrice()).toString().substr(1);
-					text+=ics(ot.name)+'   <b>'+ot.name+'</b>  (<b><span style="color:#fb5a71;">'+Beautify(ot.getPrice())+'</span></b> chips, missing <b>'+Beautify(parseInt(diff))+'</b>)<br>';
+					text+=ics(ot.name)+' <b>'+ot.name+'</b>  (<b><span style="color:#fb5a71;">'+Beautify(ot.getPrice())+'</span></b> chips, missing <b>'+Beautify(parseInt(diff))+'</b>)<br>';
 					tot+=ot.getPrice();
 				}
 				if(others.length-1===i) text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#fb5a71;">'+Beautify(tot)+'</span> chips</span>'+(Beautify(tot)!==Beautify(tot-chips)?'<br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>':'');
-				}
 			});
 			if(!owned.length&&!suggestions.length) str+='It seems like you don\'t have any upgrades; so maybe check back later?';
 
-			return '<div style="padding:8px;width:250px;text-align:center;font-size:11px;">'+str+(Game.HasAchiev('Rebirth')?text:'')+'</div>';
+			return '<div style="padding:8px;width:250px;text-align:center;font-size:11px;">'+str+(Game.HasAchiev('Rebirth')?text:'')+'<br><span style="font-size:9px;font-style:italic;color:#999;">psssst! you can click me to update the data!</span></div>';
 		};
 		Game.functions.loadHUpgrades=function(tT) {
 			var hide=!Game.HasAchiev('Rebirth'), el=l('hUpgradesHelp');
-			if(hide) l('hUpgradesHelp').style.visibility='hidden'; if(!hide||l('hUpgradesHelp').style.visibility!=='visible') l('hUpgradesHelp').style.visibility='visible';
+			if(hide||Game.ascensionMode===1) {l('hUpgradesHelp').style.visibility='hidden';return;}
+			if(!hide||l('hUpgradesHelp').style.visibility!=='visible'&&Game.ascensionMode!==1) l('hUpgradesHelp').style.visibility='visible';
+			if(tT||Game.extensionData.lastClickHU===0) Game.extensionData.lastClickHU=Date.now();
 			
 			Game.attachTooltip(el, Game.functions.hUpgradesTooltip(), 'this');
-			if(tT&&!hide) Game.tooltip.draw(el, Game.functions.hUpgradesTooltip(), 'this');
+			if(tT&&!hide&&Game.ascensionMode!==1) Game.tooltip.draw(el, Game.functions.hUpgradesTooltip(), 'this');
 			console.info('Loaded heavenly upgrades calculator!');
 		};
 
-		Game.functions.loadExtensions = function() {var funcs=Game.functions; funcs.loadShimmerBar();funcs.loadHUpgrades(); Game.extensionData.loaded=1;};
-		Game.extensionData={loadtime:Date.now(),loaded:0};
+		Game.functions.loadExtensions = function() {var funcs=Game.functions; funcs.loadShimmerBar();funcs.loadHUpgrades();};
+		Game.extensionData={loadtime:Date.now(),lastClickHU:0,lastClickShimmer:0};
 		/*=====================================================================================
 		BAKERY NAME
 		=======================================================================================*/
@@ -5567,7 +5562,7 @@ Game.Launch=function()
 				'<div class="listing"><b>Cookies per click :</b> '+Beautify(Game.computedMouseCps,1)+'</div>'+
 				'<div class="listing"><b>Cookie clicks :</b> '+Beautify(Game.cookieClicks)+'</div>'+
 				'<div class="listing"><b>Hand-made cookies :</b> '+Beautify(Game.handmadeCookies)+'</div>'+
-				//'<div class="listing"><b>Golden cookie clicks :</b> '+Beautify(Game.goldenClicksLocal)+' <small>(all time : '+Beautify(Game.goldenClicks)+') (missed : '+Beautify(Game.missedGoldenClicks)+')</small></div>'+
+				'<div class="listing"><b>Golden cookie clicks :</b> '+Beautify(Game.goldenClicksLocal)+' <small>(all time : '+Beautify(Game.goldenClicks)+') (missed : '+Beautify(Game.missedGoldenClicks)+')</small></div>'+
 				'<br><div class="listing"><b>Running version :</b> '+(parseFloat(Game.version)===2.042?"2.042 (2.031)":Game.version)+'</div>'+
 				
 				((researchStr!=='' || wrathStr!=='' || pledgeStr!=='' || santaStr!=='' || dragonStr!=='' || Game.season!=='' || ascensionModeStr!=='' || Game.canLumps())?(
@@ -7696,8 +7691,9 @@ Game.Launch=function()
 			for (var i in Game.UpgradesInStore)
 			{
 				var me=Game.UpgradesInStore[i];
-				if (!me.isVaulted() && me.pool!=='toggle' && me.pool!=='tech') me.buy(1);
+				if (!me.isVaulted() && me.pool!=='toggle' && me.pool!=='tech') me.buy(1, true);
 			}
+			PlaySound('snd/tick.mp3')
 		}
 		
 		Game.vault=[];
@@ -7731,7 +7727,7 @@ Game.Launch=function()
 		}
 		
 		
-		Game.Upgrade.prototype.buy=function(bypass)
+		Game.Upgrade.prototype.buy=function(bypass, noSound)
 		{
 			var success=0;
 			var cancelPurchase=0;
@@ -7745,7 +7741,7 @@ Game.Launch=function()
 						l('toggleBox').style.display='none';
 						l('toggleBox').innerHTML='';
 						Game.choiceSelectorOn=-1;
-						PlaySound('snd/tick.mp3');
+						if(!noSound) PlaySound('snd/tick.mp3');
 					}
 					else
 					{
@@ -7792,7 +7788,7 @@ Game.Launch=function()
 						l('toggleBox').style.display='block';
 						l('toggleBox').focus();
 						Game.tooltip.hide();
-						PlaySound('snd/tick.mp3');
+						if(!noSound) PlaySound('snd/tick.mp3');
 						success=1;
 					}
 				}
@@ -13994,8 +13990,7 @@ Game.Launch=function()
 			l('debugLog').innerHTML=str;
 			
 		}
-		if(!Game.extensionData.loaded&&new Date().getSeconds()%60===0) Game.functions.loadExtensions();
-
+		if(Date.now()-Game.extensionData.lastClickHU>599999||Date.now()-Game.extensionData.lastShimmerHU>599999) Game.functions.loadExtensions(); //loads on load and after 10 minutes of no clicks
 		Timer.reset();
 		
 		Game.loopT++;
