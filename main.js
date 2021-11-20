@@ -1091,7 +1091,6 @@ Game.Launch=function()
 			var hide=Game.functions.getShimmerTt(true)==='1', el=l('shimmerInfo');
 			if(hide||Game.ascensionMode===1) {l('shimmerInfo').style.visibility='hidden';return;}
 			if(!hide||l('shimmerInfo').style.visibility!=='visible'&&Game.ascensionMode!==1) l('shimmerInfo').style.visibility='visible';
-			if(tT||Game.extensionData.lastShimmerHU===0) Game.extensionData.lastShimmerHU=Date.now();
 			
 			Game.attachTooltip(el, Game.functions.getShimmerTt(), 'this');
 			if(tT&&!hide) Game.tooltip.draw(el, Game.functions.getShimmerTt(), 'this');
@@ -1139,7 +1138,6 @@ Game.Launch=function()
 			var hide=!Game.HasAchiev('Rebirth'), el=l('hUpgradesHelp'),tooltip=Game.functions.hUpgradesTooltip();
 			if(hide||Game.ascensionMode===1) {l('hUpgradesHelp').style.visibility='hidden';return;}
 			if(!hide||l('hUpgradesHelp').style.visibility!=='visible'&&Game.ascensionMode!==1) l('hUpgradesHelp').style.visibility='visible';
-			if(tT||Game.extensionData.lastClickHU===0) Game.extensionData.lastClickHU=Date.now();
 			
 			Game.attachTooltip(el, tooltip, 'this');
 			if(tT&&!hide&&Game.ascensionMode!==1) Game.tooltip.draw(el, tooltip, 'this');
@@ -1147,9 +1145,9 @@ Game.Launch=function()
 		};
 
 		Game.functions.loadExtensions = function() {
-			var funcs=Game.functions; funcs.loadShimmerBar();funcs.loadHUpgrades();
+			var funcs=Game.functions; funcs.loadShimmerBar();funcs.loadHUpgrades();Game.extensionData.loaded=1;
 		};
-		Game.extensionData={loadtime:Date.now(),lastClickHU:0,lastClickShimmer:0};
+		Game.extensionData={loadtime:Date.now(),loaded:0};
 		/*=====================================================================================
 		BAKERY NAME
 		=======================================================================================*/
@@ -3269,7 +3267,7 @@ Game.Launch=function()
 			str+='<div class="line"></div>';
 			if (age<0) str+='This sugar lump has been exposed to time travel shenanigans and will take an excruciating <b>'+Game.sayTime(((Game.lumpMatureAge-age)/1000+1)*Game.fps,-1)+'</b> to reach maturity.';
 			else if (age<Game.lumpMatureAge) str+='This sugar lump is still growing and will take <b>'+Game.sayTime(((Game.lumpMatureAge-age)/1000+1)*Game.fps,-1)+'</b> to reach maturity.';
-			else if (age<Game.lumpRipeAge) str+='This sugar lump is mature and will be ripe in <b>'+Game.sayTime(((Game.lumpRipeAge-age)/1000+1)*Game.fps,-1)+'</b>.<br>You may <b>click it to harvest it now</b>, but there is a <b>50% chance you won\'t get anything</b>.';
+			else if (age<Game.lumpRipeAge) str+='This sugar lump is mature and will be ripe in <b>'+Game.sayTime(((Game.lumpRipeAge-age)/1000+1)*Game.fps,-1)+'</b>.<br>You may <b>click it</b> to <b>harvest it now</b>, but there is a <b><span style="color:#ffd966;">50% chance</span> you won\'t get anything</b>.';
 			else if (age<Game.lumpOverripeAge) str+='<b>This sugar lump is ripe! Click it to harvest it.</b><br>If you do nothing, it will auto-harvest in <b>'+Game.sayTime(((Game.lumpOverripeAge-age)/1000+1)*Game.fps,-1)+'</b>.';
 			
 			var phase=(age/Game.lumpOverripeAge)*7;
@@ -3279,11 +3277,11 @@ Game.Launch=function()
 				if (Game.lumpCurrentType===1) str+='This sugar lump grew to be <b>bifurcated</b>; harvesting it has a 50% chance of yielding two lumps.';
 				else if (Game.lumpCurrentType===2) str+='This sugar lump grew to be <b>golden</b>; harvesting it will yield 2 to 7 lumps, your current cookies will be doubled (capped to a gain of 24 hours of your CpS), and you will find 10% more golden cookies for the next 24 hours. This is SUPER rare (0.075%), so if you haven\'t cheated then WOW! Buy a lottery ticket or something!';
 				else if (Game.lumpCurrentType===3) str+='This sugar lump was affected by the elders and grew to be <b>meaty</b>; harvesting it will yield between 0 and 2 lumps.';
-				else if (Game.lumpCurrentType===4) str+='This sugar lump is <b>caramelized</b>, its stickiness binding it to unexpected things; harvesting it will yield between 1 and 3 lumps and will refill your sugar lump cooldowns.';
+				else if (Game.lumpCurrentType===4) str+='This sugar lump is <b>caramelized</b>, its stickiness binding it to unexpected things; harvesting it will yield between 1 and 3 lumps and will refill your sugar lump cooldowns!';
 			}
 			
 			str+='<div class="line"></div>';
-			str+='Your sugar lumps mature after <b>'+Game.sayTime((Game.lumpMatureAge/1000)*Game.fps,-1)+'</b>,<br>ripen after <b>'+Game.sayTime((Game.lumpRipeAge/1000)*Game.fps,-1)+'</b>,<br>and fall after <b>'+Game.sayTime((Game.lumpOverripeAge/1000)*Game.fps,-1)+'</b>.';
+			str+='Your sugar lumps mature after <b><span style="color:#6fcfff;">'+Game.sayTime((Game.lumpMatureAge/1000)*Game.fps,-1)+'</span></b>,<br>ripen after <b><span style="color:#43eb95;">'+Game.sayTime((Game.lumpRipeAge/1000)*Game.fps,-1)+'</span></b>,<br>and fall after <b><span style="color:#ffd966;">'+Game.sayTime((Game.lumpOverripeAge/1000)*Game.fps,-1)+'</span></b>.';
 			
 			str+='<div class="line"></div>'+
 			'&bull; Sugar lumps can be harvested when mature, though if left alone beyond that point they will start ripening (increasing the chance of harvesting them) and will eventually fall and be auto-harvested after some time.<br>&bull; Sugar lumps are delicious and may be used as currency for all sorts of things.<br>&bull; Once a sugar lump is harvested, another one will start growing in its place.<br>&bull; Note that sugar lumps keep growing when the game is closed.';
@@ -13992,7 +13990,7 @@ Game.Launch=function()
 			l('debugLog').innerHTML=str;
 			
 		}
-		if(Date.now()-Game.extensionData.lastClickHU>599999||Date.now()-Game.extensionData.lastShimmerHU>599999) Game.functions.loadExtensions(); //loads on load and after 10 minutes of no clicks
+		if(!Game.extensionData.loaded) Game.functions.loadExtensions();
 		Timer.reset();
 		
 		Game.loopT++;
