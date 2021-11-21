@@ -1073,7 +1073,7 @@ Game.Launch=function()
 						.replace('$', Math.floor(gmn/30))
 						.replace('$', Math.floor(gmx/30))
 						.replace('$', Math.floor((gmn/30+gmx/30)/2))
-						.concat(Rs?'<br>':'');
+						.concat(Rs?'<br><br>':'');
 				}
 				if(Rs) {
 					if(icons(rVars)!=='') str+='<span style="font-size:11px;">Shortened by these ( '+icons(rVars)+' ) upgrades</span><br>';
@@ -1085,7 +1085,7 @@ Game.Launch=function()
 			} catch(e)
 			{str='An error occured while loading this, check back later or just wait for a little bit.\n\n<span style="font-type:monospace;color:#fd0000;">'+e.stack+'</span>' }
 			
-			return hide?'1':'<div style="padding:8px;width:250px;text-align:center;font-size:12.5px;">'+str+'<br><span style="font-size:9px;font-style:italic;color:#999;">psssst! you can click me to update the data!</span></div>';
+			return hide?'1':'<div style="padding:3px;width:250px;text-align:center;font-size:12.5px;">'+str+'<br><span style="font-size:9px;font-style:italic;color:#999;">psssst! you can click me to update the data!</span></div>';
 		};
 		Game.functions.loadShimmerBar = function(tT) {
 			var hide=Game.functions.getShimmerTt(true)==='1', el=l('shimmerInfo');
@@ -1099,7 +1099,7 @@ Game.Launch=function()
 
 		Game.functions.hUpgradesTooltip = function() {
 			var chips=Game.heavenlyChips+(parseInt(Game.ascendNumber.textContent.replace(/^\+|,/g,''))||0),ics=Game.listTinyUpgrades,text='';
-			var str='<span style="font-size:14px;"><b>Hello there!</b></span><span style="font-size:12.5px;">'+(Game.HasAchiev('Rebirth')?' Since you\'ve ascended before, here are some heavenly upgrade ideas!':'')+'<br>If you ascended now, you would have<br><b>'+Beautify(chips)+'</b> '+ics('Heavenly chip secret')+(chips>1?'  s!':'  !')+'</span><br><br>';
+			var str='<span style="font-size:14px;"><b>Hello there!</b></span><span style="font-size:12.5px;">'+(Game.HasAchiev('Rebirth')?' Here are some heavenly upgrade ideas!':'')+'<br>If you ascended now, you would have <b>'+Beautify(chips)+'</b> '+ics('Heavenly chip secret')+(chips>1?' s!':' !')+'</span><br><br>';
 			var owned=[],suggestions=[],others=[]; // all combined = Game.PrestigeUpgrades;
 			Game.PrestigeUpgrades.forEach(function(u){
 				var price=u.getPrice();
@@ -1132,7 +1132,7 @@ Game.Launch=function()
 			});
 			if(!owned.length&&!suggestions.length) str+='It seems like an error occurred, so maybe check back later?';
 			
-			return '<div style="padding:8px;width:max-content;text-align:center;font-size:11px;">'+str+(Game.HasAchiev('Rebirth')?text:'')+'<br><span style="font-size:9px;font-style:italic;color:#999;">psssst! you can click me to update the data!</span></div>';
+			return '<div style="padding:3px;width:max-content;text-align:center;font-size:11px;">'+str+(Game.HasAchiev('Rebirth')?text:'')+'<br><span style="font-size:9px;font-style:italic;color:#999;">psssst! you can click me to update the data!</span></div>';
 		};
 		Game.functions.loadHUpgrades=function(tT) {
 			var hide=!Game.HasAchiev('Rebirth'), el=l('hUpgradesHelp'),tooltip=Game.functions.hUpgradesTooltip();
@@ -13828,9 +13828,9 @@ Game.Launch=function()
 			str+=unit;
 			if (Game.prefs.monospace) str='<span class="monospace">'+str+'</span>';
 			str+='<div style="font-size:50%;">per second/click : %0$0%1/$1</div>'
-				.replace('%0', Game.cpsSucked>0?'<span class="warning">':'')
-				.replace('%1', Game.cpsSucked>0?'</span>':'')
+				.replace('%0', Game.cpsSucked>0?'<span style="color:#'+(Game.prefs.fancy?'dd4949':'ff9292')+';">':'')
 				.replace('$0', Beautify(Game.cookiesPs*(1-Game.cpsSucked),1))
+				.replace('%1', Game.cpsSucked>0?'</span>':'')
 				.replace('$1', Game.computedMouseCps.toLocaleString().replace(/^(\d{1,3}),(\d{1,3}).+$/, '$1.$2')+function(i){
 					return ' '+['','k','m','b','tr','qd','qnt','sx','spt','oct','nn', 'dc','vgnt','trgnt','qdrgnt','qnqgnt','sxgnt','sptgnt','octgnt','nngnt'][i.toLocaleString('en-US').split(',').length-1]+'.'||' nngnt';
 				}(Game.computedMouseCps));
