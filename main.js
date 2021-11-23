@@ -1112,7 +1112,7 @@ Game.Launch=function()
 
 			if(suggestions.length) var tot=0;
 			suggestions.forEach(function(sg,i,a){
-				text+=ics(sg.name)+' <b>'+sg.name+'</b>  (<span style="color:#73f21e;">'+Beautify(sg.getPrice())+'</span> chips)'+(suggestions.length<17||i%2===0?'<br>':'');
+				text+=ics(sg.name)+' <b>'+sg.name+'</b>  (<span style="color:#73f21e;">'+Beautify(sg.getPrice())+'</span> chips)   '+(suggestions.length>17||i%2!==0?'<br>':'');
 				tot+=sg.getPrice();
 				if(a.length-1===i&&others.length) {
 					text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#'+(chips>=tot?'73f21e':'fb5a71')+';">'+Beautify(tot)+'</span> chips</span>'+(tot>chips?'<br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>':'');
@@ -1125,7 +1125,7 @@ Game.Launch=function()
 				owned.forEach(function(ow){ps=ot.parents.includes(ow)||ps});
 				if(ps&&!Game.Has(ot.name)&&!text.includes(ot.name)) {
 					var diff=(chips-ot.getPrice()).toString().substr(1);
-					text+=ics(ot.name)+' <b>'+ot.name+'</b>  (<b><span style="color:#fb5a71;">'+Beautify(ot.getPrice())+'</span></b> chips, missing <b>'+Beautify(parseInt(diff))+'</b>)'+(others.length<17||i%2===0?'<br>':'');
+					text+=ics(ot.name)+' <b>'+ot.name+'</b>  (<b><span style="color:#fb5a71;">'+Beautify(ot.getPrice())+'</span></b> chips, missing <b>'+Beautify(parseInt(diff))+'</b>)   '+(others.length>17||i%2!==0?'<br>':'');
 					tot+=ot.getPrice();
 				}
 				if(others.length-1===i) text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#fb5a71;">'+Beautify(tot)+'</span> chips</span>'+(Beautify(tot)!==Beautify(tot-chips)?'<br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>':'');
