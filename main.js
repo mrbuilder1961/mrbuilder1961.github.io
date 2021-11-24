@@ -5553,13 +5553,13 @@ Game.Launch=function()
 				'<div class="listing"><b>Run started :</b> '+(startDate===''?'just now':(startDate+' ago'))+'</div>'+
 				'<div class="listing"><b>Buildings owned :</b> '+Beautify(buildingsOwned)+'</div>'+
 				'<div class="listing"><b>Cookies per second :</b> '+Beautify(Game.cookiesPs,1)+' <small>'+
-					'(multiplier : '+String(Math.round(Game.globalCpsMult*100))+'%)'+
+					'(multiplier : '+(Math.round(Game.globalCpsMult*100)).toLocaleString('en-US')+'%)'+
 					(Game.cpsSucked>0?' <span class="warning">(withered : '+Beautify(Math.round(Game.cpsSucked*100),1)+'%)</span>':'')+
 					'</small></div>'+
 				'<div class="listing"><b>Raw cookies per second :</b> '+Beautify(Game.cookiesPsRaw,1)+' <small>'+
 					'(highest this ascension : '+Beautify(Game.cookiesPsRawHighest,1)+')'+
 					'</small></div>'+
-				'<div class="listing"><b>Cookies per click :</b> '+Beautify(Game.computedMouseCps,1)+'</div>'+
+				'<div class="listing"><b>Cookies per click :</b> '+Beautify(Game.computedMouseCps,1)+' <small>(guestimated multiplier : '+String(Game.cookiesPs/Game.computedMouseCps).substr(0,4).replace('.','')+'%)</small></div>'+
 				'<div class="listing"><b>Cookie clicks :</b> '+Beautify(Game.cookieClicks)+'</div>'+
 				'<div class="listing"><b>Hand-made cookies :</b> '+Beautify(Game.handmadeCookies)+'</div>'+
 				'<div class="listing"><b>Golden cookie clicks :</b> '+Beautify(Game.goldenClicksLocal)+' <small>(all time : '+Beautify(Game.goldenClicks)+') (missed : '+Beautify(Game.missedGoldenClicks)+')</small></div>'+
