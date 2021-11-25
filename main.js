@@ -1110,35 +1110,33 @@ Game.Launch=function()
 			suggestions.sort(function(u1,u2){var p1=u1.getPrice(),p2=u2.getPrice();return p1<p2?-1:p1>p2?1:0});
 			others.sort(function(u1,u2){var p1=u1.getPrice(),p2=u2.getPrice();return p1<p2?-1:p1>p2?1:0});
 
-			if(suggestions.length) var tot=0;
+			if(suggestions.length||others.length) var tot=0,left=[],right=[],tmp='';
 			suggestions.forEach(function(sg,i,a){
-				text+=ics(sg.name)+' <b>'+sg.name+'</b>  (<span style="color:#73f21e;">'+Beautify(sg.getPrice())+'</span> chips)   '+(suggestions.length<17||(i%2!==0&&suggestions.length>17)?'<br>':'');
+				text+=ics(sg.name)+' <b>'+sg.name+'</b>  (<span style="color:#73f21e;">'+Beautify(sg.getPrice())+'</span> chips)';
+				if(Math.ceil(a.length/2)>=i) left[i]=tmp; else if(a.length>=i) right[i]=tmp;
 				tot+=sg.getPrice();
 				if(a.length-1===i&&others.length) {
+					if(a.length>17) for(var ix=0;ix<a.length;ix+=2) {text+=(left[ix]||right[ix])+'  '+(left[ix+1]||right[ix+1])+'<br>'}
+					else for(var ix=0;ix<a.length;ix+=2) {text+=(left[ix]||right[ix])+'<br>'}
 					text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#'+(chips>=tot?'73f21e':'fb5a71')+';">'+Beautify(tot)+'</span> chips</span>'+(tot>chips?'<br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>':'');
 					text+='<div class="line"></div>';
 				}
 			});
-			if(others.length) {try{var tot=0;}catch(e){tot=0;}};
-			others.forEach(function(ot,i){
-				var ps=false;
+			others.forEach(function(ot,i,a){
+				if(i===0) {tot=0,left=[],right=[];} var ps=false;
 				owned.forEach(function(ow){ps=ot.parents.includes(ow)||ps});
 				if(ps&&!Game.Has(ot.name)&&!text.includes(ot.name)) {
 					var diff=(chips-ot.getPrice()).toString().substr(1);
-					text+=ics(ot.name)+' <b>'+ot.name+'</b>  (<b><span style="color:#fb5a71;">'+Beautify(ot.getPrice())+'</span></b> chips, missing <b>'+Beautify(parseInt(diff))+'</b>)   '+(others.length<17||(i%2!==0&&others.length>17)?'<br>':'');
+					tmp=ics(ot.name)+' <b>'+ot.name+'</b>  (<b><span style="color:#fb5a71;">'+Beautify(ot.getPrice())+'</span></b> chips, missing <b>'+Beautify(parseInt(diff))+'</b>)';
+					if(Math.ceil(a.length/2)>=i) left[i]=tmp; else if(a.length>=i) right[i]=tmp;
 					tot+=ot.getPrice();
 				}
-				if(others.length-1===i) text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#fb5a71;">'+Beautify(tot)+'</span> chips</span>'+(Beautify(tot)!==Beautify(tot-chips)?'<br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>':'');
+				if(a.length-1===i) {
+					if(a.length>17) for(var ix=0;ix<a.length;ix+=2) {text+=(left[ix]||right[ix])+'  '+(left[ix+1]||right[ix+1])+'<br>'}
+					else for(var ix=0;ix<a.length;ix+=2) {text+=(left[ix]||right[ix])+'<br>'}
+					text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#fb5a71;">'+Beautify(tot)+'</span> chips</span>'+(Beautify(tot)!==Beautify(tot-chips)?'<br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>':'');
+				}
 			});
-			suggestions=(function(a){var out=a.join('&-&');{
-				for(var i=0;i<out.match(/-/g).length;i++) out=out.replace('-',a[i+a.length/2]);
-				out=out.split('&');
-			};return out;})(suggestions);
-			others=(function(a){var out=a.join('&-&');{
-				for(var i=0;i<out.match(/-/g).length;i++) out=out.replace('-',a[i+a.length/2]);
-				out=out.split('&');
-			};return out;})(others);
-			
 			if(!owned.length&&!suggestions.length) str+='It seems like an error occurred, so maybe check back later?';
 			
 			return '<div style="padding:3px;width:max-content;text-align:center;font-size:11px;">'+str+(Game.HasAchiev('Rebirth')?text:'')+'<br><span style="font-size:9px;font-style:italic;color:#999;">psssst! you can click me to update the data!</span></div>';
