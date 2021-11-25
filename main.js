@@ -1059,7 +1059,7 @@ Game.Launch=function()
 				var gVars=['Lucky day','Serendipity','Golden goose egg','Heavenly luck','Starspawn','Starterror','Starlove','Startrade'];
 				var rVars=['Starsnow','Reindeer baking grounds'];
 				var Gs=Game.HasAchiev('Fortune')||function(){gVars.forEach(function(u){if(Game.Has(u)) return true})}();
-				var Rs=Game.HasAchiev('Oh deer')||Game.HasAchiev('Let it snow')&&Game.season==='christmas';
+				var Rs=(Game.HasAchiev('Oh deer')||Game.HasAchiev('Let it snow'))&&/christmas/i.test(Game.season);
 				hide=!Gs&&!Rs&&getHide;
 				
 				if(Gs) {
@@ -1131,11 +1131,11 @@ Game.Launch=function()
 				if(others.length-1===i) text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#fb5a71;">'+Beautify(tot)+'</span> chips</span>'+(Beautify(tot)!==Beautify(tot-chips)?'<br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>':'');
 			});
 			suggestions=(function(a){var out=a.join('&-&');{
-				for(var i=0;i<out.match(/-/g).length;i++) out=out.replace('-',a[i+a.length/2]);//is this the right index?
+				for(var i=0;i<out.match(/-/g).length;i++) out=out.replace('-',a[i+a.length/2]);
 				out=out.split('&');
 			};return out;})(suggestions);
 			others=(function(a){var out=a.join('&-&');{
-				for(var i=0;i<out.match(/-/g).length;i++) out=out.replace('-',a[i+a.length/2]);//is this the right index?
+				for(var i=0;i<out.match(/-/g).length;i++) out=out.replace('-',a[i+a.length/2]);
 				out=out.split('&');
 			};return out;})(others);
 			
