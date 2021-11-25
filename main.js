@@ -1107,8 +1107,8 @@ Game.Launch=function()
 				else if(price<=chips) suggestions.push(u);
 				else others.push(u);
 			});
-			suggestions.sort(function(u1,u2){return u1.getPrice()<u2.getPrice()?-1:u1.getPrice()>u2.getPrice()?1:0});
-			others.sort(function(u1,u2){return u1.getPrice()<u2.getPrice()?-1:u1.getPrice()>u2.getPrice()?1:0});
+			suggestions.sort(function(u1,u2){var p1=u1.getPrice(),p2=u2.getPrice();return p1<p2?-1:p1>p2?1:0});
+			others.sort(function(u1,u2){var p1=u1.getPrice(),p2=u2.getPrice();return p1<p2?-1:p1>p2?1:0});
 
 			if(suggestions.length) var tot=0;
 			suggestions.forEach(function(sg,i,a){
@@ -1130,6 +1130,15 @@ Game.Launch=function()
 				}
 				if(others.length-1===i) text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#fb5a71;">'+Beautify(tot)+'</span> chips</span>'+(Beautify(tot)!==Beautify(tot-chips)?'<br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>':'');
 			});
+			suggestions=(function(a){var out=a.join('&-&');{
+				for(var i=0;i<out.match(/-/g).length;i++) out=out.replace('-',a[i+a.length/2]);//is this the right index?
+				out=out.split('&');
+			};return out;})(suggestions);
+			others=(function(a){var out=a.join('&-&');{
+				for(var i=0;i<out.match(/-/g).length;i++) out=out.replace('-',a[i+a.length/2]);//is this the right index?
+				out=out.split('&');
+			};return out;})(others);
+			
 			if(!owned.length&&!suggestions.length) str+='It seems like an error occurred, so maybe check back later?';
 			
 			return '<div style="padding:3px;width:max-content;text-align:center;font-size:11px;">'+str+(Game.HasAchiev('Rebirth')?text:'')+'<br><span style="font-size:9px;font-style:italic;color:#999;">psssst! you can click me to update the data!</span></div>';
