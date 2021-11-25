@@ -1115,11 +1115,11 @@ Game.Launch=function()
 				text+=ics(sg.name)+' <b>'+sg.name+'</b>  (<span style="color:#73f21e;">'+Beautify(sg.getPrice())+'</span> chips)';
 				if(Math.ceil(a.length/2)>=i) left[i]=tmp; else if(a.length>=i) right[i]=tmp;
 				tot+=sg.getPrice();
-				if(a.length-1===i&&others.length) {
+				if(a.length-1===i) {
 					if(a.length>17) for(var ix=0;ix<a.length;ix+=2) {text+=(left[ix]||right[ix])+'  '+(left[ix+1]||right[ix+1])+'<br>'}
-					else for(var ix=0;ix<a.length;ix+=2) {text+=(left[ix]||right[ix])+'<br>'}
+					else for(var ix=0;ix<a.length;ix++) {text+=(left[ix]||right[ix])+'<br>'}
 					text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#'+(chips>=tot?'73f21e':'fb5a71')+';">'+Beautify(tot)+'</span> chips</span>'+(tot>chips?'<br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>':'');
-					text+='<div class="line"></div>';
+					if(others.length) text+='<div class="line"></div>';
 				}
 			});
 			others.forEach(function(ot,i,a){
@@ -1133,7 +1133,7 @@ Game.Launch=function()
 				}
 				if(a.length-1===i) {
 					if(a.length>17) for(var ix=0;ix<a.length;ix+=2) {text+=(left[ix]||right[ix])+'  '+(left[ix+1]||right[ix+1])+'<br>'}
-					else for(var ix=0;ix<a.length;ix+=2) {text+=(left[ix]||right[ix])+'<br>'}
+					else for(var ix=0;ix<a.length;ix++) {text+=(left[ix]||right[ix])+'<br>'}
 					text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#fb5a71;">'+Beautify(tot)+'</span> chips</span>'+(Beautify(tot)!==Beautify(tot-chips)?'<br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>':'');
 				}
 			});
