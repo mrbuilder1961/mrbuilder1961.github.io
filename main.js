@@ -1100,15 +1100,18 @@ Game.Launch=function()
 		Game.functions.hUpgradesTooltip = function() {
 			var chips=Game.heavenlyChips+(parseInt(Game.ascendNumber.textContent.replace(/^\+|,/g,''))||0),ics=Game.listTinyUpgrades,text='';
 			var str='<span style="font-size:14px;"><b>Hello there!</b></span><span style="font-size:12.5px;">'+(Game.HasAchiev('Rebirth')?' Here are some heavenly upgrade ideas!':'')+'<br>If you ascended now, you would have <b>'+Beautify(chips)+'</b> '+ics('Heavenly chip secret')+(chips>1?' s!':' !')+'</span><br><br>';
-			var owned=[],suggestions=[],others=[]; // all combined = Game.PrestigeUpgrades;
+			var owned=[],suggestions=[],others=[];
 			Game.PrestigeUpgrades.forEach(function(u){
 				var price=u.getPrice();
 				if(u.bought) owned.push(u);
 				else if(price<=chips) suggestions.push(u);
-				else others.push(u);
 			});
-			suggestions.sort(function(u1,u2){var p1=u1.getPrice(),p2=u2.getPrice();return p1<p2?-1:p1>p2?1:0});
-			others.sort(function(u1,u2){var p1=u1.getPrice(),p2=u2.getPrice();return p1<p2?-1:p1>p2?1:0});
+			Game.PrestigeUpgrades.forEach(function(u){
+				owned.forEach(function(o){ps=u.parents.includes(o)||ps});
+				if(!(owned.includes(u)||suggestions.includes(u)||Game.Has(u.name)||text.includes(u.name))&&ps) others.push(u)
+			});
+			function sortPrice(u1,u2) {var p1=u1.getPrice(),p2=u2.getPrice();return p1<p2?-1:p1>p2?1:0};
+			suggestions.sort(sortPrice(u1,u2)); others.sort(sortPrice(u1,u2));
 
 			if(suggestions.length||others.length) var tot=0,left=[],right=[],tmp='';
 			suggestions.forEach(function(sg,i,a){
@@ -1123,14 +1126,11 @@ Game.Launch=function()
 				}
 			});
 			others.forEach(function(ot,i,a){
-				if(i===0) {tot=0,left=[],right=[];} var ps=false;
-				owned.forEach(function(ow){ps=ot.parents.includes(ow)||ps});
-				if(ps&&!Game.Has(ot.name)&&!text.includes(ot.name)) {
-					var diff=(chips-ot.getPrice()).toString().substr(1);
-					tmp=ics(ot.name)+' <b>'+ot.name+'</b>  (<b><span style="color:#fb5a71;">'+Beautify(ot.getPrice())+'</span></b> chips, missing <b>'+Beautify(parseInt(diff))+'</b>)';
-					if(Math.ceil(a.length/2)>=i) left[i]=tmp; else if(a.length>=i) right[i]=tmp;
-					tot+=ot.getPrice();
-				}
+				if(i===0) {tot=0,left=[],right=[];}
+				var diff=(chips-ot.getPrice()).toString().substr(1);
+				tmp=ics(ot.name)+' <b>'+ot.name+'</b>  (<b><span style="color:#fb5a71;">'+Beautify(ot.getPrice())+'</span></b> chips, missing <b>'+Beautify(parseInt(diff))+'</b>)';
+				if(Math.ceil(a.length/2)>=i) left[i]=tmp; else if(a.length>=i) right[i]=tmp;
+				tot+=ot.getPrice();
 				if(a.length-1===i) {
 					if(a.length>17) for(var ix=0;ix<a.length;ix+=2) text+=((left[ix]||right[ix])+'  '+(left[ix+1]||right[ix+1])+'<br>')
 					else for(var ix=0;ix<a.length;ix++) text+=((left[ix]||right[ix])+'<br>')
