@@ -1112,7 +1112,7 @@ Game.Launch=function()
 
 			if(suggestions.length||others.length) var tot=0,left=[],right=[],tmp='';
 			suggestions.forEach(function(sg,i,a){
-				text+=ics(sg.name)+' <b>'+sg.name+'</b>  (<span style="color:#73f21e;">'+Beautify(sg.getPrice())+'</span> chips)';
+				tmp=ics(sg.name)+' <b>'+sg.name+'</b>  (<span style="color:#73f21e;">'+Beautify(sg.getPrice())+'</span> chips)';
 				if(Math.ceil(a.length/2)>=i) left[i]=tmp; else if(a.length>=i) right[i]=tmp;
 				tot+=sg.getPrice();
 				if(a.length-1===i) {
