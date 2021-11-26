@@ -1107,8 +1107,8 @@ Game.Launch=function()
 				else if(price<=chips) suggestions.push(u);
 			});
 			Game.PrestigeUpgrades.forEach(function(u){
-				owned.forEach(function(o){ps=u.parents.includes(o)||ps});
-				if(!(owned.includes(u)||suggestions.includes(u)||Game.Has(u.name)||text.includes(u.name))&&ps) others.push(u)
+				var ps=0;owned.forEach(function(o){ps=u.parents.includes(o)||ps});
+				if(!(owned.includes(u)||suggestions.includes(u)||Game.Has(u.name)||others.includes(u))&&ps) others.push(u)
 			});
 			function sortPrice(u1,u2) {var p1=u1.getPrice(),p2=u2.getPrice();return p1<p2?-1:p1>p2?1:0};
 			suggestions.sort(sortPrice(u1,u2)); others.sort(sortPrice(u1,u2));
