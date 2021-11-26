@@ -1116,8 +1116,8 @@ Game.Launch=function()
 				if(Math.ceil(a.length/2)>=i) left[i]=tmp; else if(a.length>=i) right[i]=tmp;
 				tot+=sg.getPrice();
 				if(a.length-1===i) {
-					if(a.length>17) for(var ix=0;ix<a.length;ix+=2) {text+=(left[ix]||right[ix])+'  '+(left[ix+1]||right[ix+1])+'<br>'}
-					else for(var ix=0;ix<a.length;ix++) {text+=(left[ix]||right[ix])+'<br>'}
+					if(a.length>17) for(var ix=0;ix<a.length;ix+=2) text+=((left[ix]||right[ix])+'  '+(left[ix+1]||right[ix+1])+'<br>')
+					else for(var ix=0;ix<a.length;ix++) text+=((left[ix]||right[ix])+'<br>')
 					text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#'+(chips>=tot?'73f21e':'fb5a71')+';">'+Beautify(tot)+'</span> chips</span>'+(tot>chips?'<br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>':'');
 					if(others.length) text+='<div class="line"></div>';
 				}
@@ -1132,8 +1132,8 @@ Game.Launch=function()
 					tot+=ot.getPrice();
 				}
 				if(a.length-1===i) {
-					if(a.length>17) for(var ix=0;ix<a.length;ix+=2) {text+=(left[ix]||right[ix])+'  '+(left[ix+1]||right[ix+1])+'<br>'}
-					else for(var ix=0;ix<a.length;ix++) {text+=(left[ix]||right[ix])+'<br>'}
+					if(a.length>17) for(var ix=0;ix<a.length;ix+=2) text+=((left[ix]||right[ix])+'  '+(left[ix+1]||right[ix+1])+'<br>')
+					else for(var ix=0;ix<a.length;ix++) text+=((left[ix]||right[ix])+'<br>')
 					text+='<br><span style="font-size:14px;"><b>=</b> <span style="color:#fb5a71;">'+Beautify(tot)+'</span> chips</span>'+(Beautify(tot)!==Beautify(tot-chips)?'<br><span style="font-size:12px;">(missing <b>'+Beautify(tot-chips)+'</b> chips)</span>':'');
 				}
 			});
@@ -3281,10 +3281,10 @@ Game.Launch=function()
 			if (phase>=3)
 			{
 				if (Game.lumpCurrentType!==0) str+='<div class="line"></div>';
-				if (Game.lumpCurrentType===1) str+='This sugar lump grew to be <b>bifurcated</b>; harvesting it has a 50% chance of yielding two lumps.';
-				else if (Game.lumpCurrentType===2) str+='This sugar lump grew to be <b>golden</b>; harvesting it will yield 2 to 7 lumps, your current cookies will be doubled (capped to a gain of 24 hours of your CpS), and you will find 10% more golden cookies for the next 24 hours. This is SUPER rare (0.075%), so if you haven\'t cheated then WOW! Buy a lottery ticket or something!';
-				else if (Game.lumpCurrentType===3) str+='This sugar lump was affected by the elders and grew to be <b>meaty</b>; harvesting it will yield between 0 and 2 lumps.';
-				else if (Game.lumpCurrentType===4) str+='This sugar lump is <b>caramelized</b>, its stickiness binding it to unexpected things; harvesting it will yield between 1 and 3 lumps and will refill your sugar lump cooldowns!';
+				if (Game.lumpCurrentType===1) str+='This sugar lump grew to be <b>bifurcated</b>; harvesting it has a <b>'+(Game.Has('Sucralosia Inutilis')?'52.5%':'50%')+'</b> chance of yielding two lumps.';
+				else if (Game.lumpCurrentType===2) str+='This sugar lump grew to be <b><span style="color:#b99445;">golden</span></b>; harvesting it will yield 2 to 7 lumps, your current cookies will be doubled (capped to a gain of 24 hours of your CpS), and you will find 10% more golden cookies for the next 24 hours. This is SUPER rare (0.075%), so if you haven\'t cheated then WOW! Buy a lottery ticket or something!';
+				else if (Game.lumpCurrentType===3) str+='This sugar lump was affected by the elders and grew to be <b><span style="color:#d6502c;">meaty</span></b>; harvesting it will yield between 0 and 2 lumps.';
+				else if (Game.lumpCurrentType===4) str+='This sugar lump is <b><span style="color:e4c57a#;">caramelized</span></b>, its stickiness binding it to unexpected things; harvesting it will yield between 1 and 3 lumps and will refill your sugar lump cooldowns!';
 			}
 			
 			str+='<div class="line"></div>';
