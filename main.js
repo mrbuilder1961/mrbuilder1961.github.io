@@ -3722,6 +3722,7 @@ Game.Launch=function()
 		if (!Game.touchEvents)
 		{
 			AddEvent(bigCookie,'click',Game.ClickCookie);
+			AddEvent(bigCookie,'contextmenu',Game.ClickCookie); //because right clicks suck, and im nice and cheaty
 			AddEvent(bigCookie,'mousedown',function(event){Game.BigCookieState=1;if (Game.prefs.cookiesound) {Game.playCookieClickSound();}if (event) event.preventDefault();});
 			AddEvent(bigCookie,'mouseup',function(event){Game.BigCookieState=2;if (event) event.preventDefault();});
 			AddEvent(bigCookie,'mouseout',function(event){Game.BigCookieState=0;});
@@ -5352,7 +5353,7 @@ Game.Launch=function()
 				Game.WriteButton('crates','cratesButton','Icon crates ON','Icon crates OFF')+'<label>(display boxes around upgrades and achievements in stats)</label><br>'+
 				Game.WriteButton('monospace','monospaceButton','Alt font ON','Alt font OFF')+'<label>(your cookies are displayed using a monospace font)</label><br>'+
 				Game.WriteButton('format','formatButton','Short numbers OFF','Short numbers ON','BeautifyAll();Game.RefreshStore();Game.upgradesToRebuild=1;',1)+'<label>(shorten big numbers)</label><br>'+
-				Game.WriteButton('notifs','notifsButton','Fast notes ON','Fast notes OFF')+'<label>(notifications disappear much faster)</label><br>'+
+				Game.WriteButton('notifs','notifsButton','Fast notifs ON','Fast notifs OFF')+'<label>(notifications disappear much faster)</label><br>'+
 				//Game.WriteButton('autoupdate','autoupdateButton','Offline mode OFF','Offline mode ON',0,1)+'<label>(disables update notifications)</label><br>'+
 				Game.WriteButton('warn','warnButton','Closing warning ON','Closing warning OFF')+'<label>(the game will ask you to confirm when you close the window)</label><br>'+
 				Game.WriteButton('focus','focusButton','Defocus OFF','Defocus ON',0,1)+'<label>(the game will be less resource-intensive when out of focus)</label><br>'+
@@ -5588,7 +5589,7 @@ Game.Launch=function()
 				(pledgeStr!==''?'<div class="listing"><b>Pledge :</b> '+pledgeStr+' remaining</div>':'')+
 				(Game.wrinklersPopped>0?'<div class="listing"><b>Wrinklers popped :</b> '+Beautify(Game.wrinklersPopped)+'</div>':'')+
 				((Game.canLumps() && Game.lumpsTotal>-1)?'<div class="listing"><b>Sugar lumps harvested :</b> <div class="price lump plain">'+Beautify(Game.lumpsTotal)+'</div></div>':'')+
-				//(Game.cookiesSucked>0?'<div class="listing warning"><b>Withered :</b> '+Beautify(Game.cookiesSucked)+' cookies</div>':'')+
+				(Game.cookiesSucked>0?'<div class="listing warning"><b>Cookies withered :</b> '+Beautify(Game.cookiesSucked)+' cookies</div>':'')+
 				(Game.reindeerClicked>0?'<div class="listing"><b>Reindeer found :</b> '+Beautify(Game.reindeerClicked)+'</div>':'')+
 				(santaStr!==''?'<div class="listing"><b>Santa stages unlocked :</b></div><div>'+santaStr+'</div>':'')+
 				(dragonStr!==''?'<div class="listing"><b>Dragon training :</b></div><div>'+dragonStr+'</div>':'')+
