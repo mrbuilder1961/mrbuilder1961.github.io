@@ -1111,7 +1111,7 @@ Game.Launch=function()
 				if(!(owned.includes(u)||suggestions.includes(u)||Game.Has(u.name)||others.includes(u))&&ps) others.push(u)
 			});
 			function sortPrice(u1,u2) {var p1=u1.getPrice(),p2=u2.getPrice();return p1<p2?-1:p1>p2?1:0};
-			suggestions.sort(sortPrice(u1,u2)); others.sort(sortPrice(u1,u2));
+			suggestions.sort(sortPrice); others.sort(sortPrice);
 
 			if(suggestions.length||others.length) var tot=0,left=[],right=[],tmp='';
 			suggestions.forEach(function(sg,i,a){
