@@ -7,12 +7,12 @@ Note that this version has a few modifications to the base game:
 - Sugar lump text changes color based on whether the lump is maturing, mature, or ripe
 - Remove ad section
 - Small text changes (mostly shortenings) here and there
-- Shimmer info that renders dynamically*
+- Shimmer info that renders dynamically\*
 - Error messages will be shown when the game fails to load [currently broken]
-- An ascension upgrade helper for knowing what upgrades to save up for*
+- An ascension upgrade helper for knowing what upgrades to save up for\*
 - Gambler's Fever Dream spell should cast properly (see [this](https://cookieclicker.fandom.com/wiki/Grimoire#cite_note-1).)
 
-
-Useable [here](https://mrbuilder1961.github.io), play responsibly!
+If you have any issues/problems/ideas, feel free to open an issue or create a pull request! Note that I only work on this when I have time to waste, so if something breaks it could take a few days to fix.
+**Useable [here](https://mrbuilder1961.github.io), play responsibly!**
 
 \**When certain criteria are met, may not always work properly*\*
