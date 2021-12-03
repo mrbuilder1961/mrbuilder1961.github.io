@@ -1103,8 +1103,13 @@ Game.Launch=function()
 			var owned=[],suggestions=[],others=[];
 			Game.PrestigeUpgrades.forEach(function(u){
 				var price=u.getPrice();
-				if(u.bought) owned.push(u);
-				else if(price<=chips) suggestions.push(u);
+				if(!u.bought&&/Lucky (digit|number|payout)/i.test(u.name)) {
+					var n=u.name==='Lucky number'?'777':u.name==='Lucky payout'?'777,777':'7';
+					if((chips-Game.heavenlyChips).toLocaleString('en-US').endsWith(n)) suggestions.push(u);
+				} else {
+					if(u.bought) owned.push(u);
+					else if(price<=chips) suggestions.push(u);
+				}
 			});
 			Game.PrestigeUpgrades.forEach(function(u){
 				var ps=0;owned.forEach(function(o){ps=u.parents.includes(o)||ps});
