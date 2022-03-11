@@ -8,7 +8,7 @@ M.launch=function()
 	M.init=function(div)
 	{
 		//populate div with html and initialize values
-		
+
 		M.spells={
 			'conjure baked goods':{
 				name:'Conjure Baked Goods',
@@ -21,8 +21,8 @@ M.launch=function()
 				{
 					var val=Math.max(7,Math.min(Game.cookies*0.15,Game.cookiesPs*60*30));
 					Game.Earn(val);
-					Game.Notify('Conjure baked goods!','You magic <b>'+Beautify(val)+' cookie'+(val===1?'':'s')+'</b> out of thin air.',[21,11],6);
-					Game.Popup('<div style="font-size:80%;">+'+Beautify(val)+' cookie'+(val===1?'':'s')+'!</div>',Game.mouseX,Game.mouseY);
+					Game.Notify('Conjure baked goods!','You magic <b>'+Beautify(val)+' cookie'+(val==1?'':'s')+'</b> out of thin air.',[21,11],6);
+					Game.Popup('<div style="font-size:80%;">+'+Beautify(val)+' cookie'+(val==1?'':'s')+'!</div>',Game.mouseX,Game.mouseY);
 				},
 				fail:function()
 				{
@@ -31,7 +31,7 @@ M.launch=function()
 					val=Math.min(Game.cookies,val);
 					Game.Spend(val);
 					Game.Notify(buff.name,buff.desc,buff.icon,6);
-					Game.Popup('<div style="font-size:80%;">Backfire!<br>Summoning failed! Lost '+Beautify(val)+' cookie'+(val===1?'':'s')+'!</div>',Game.mouseX,Game.mouseY);
+					Game.Popup('<div style="font-size:80%;">Backfire!<br>Summoning failed! Lost '+Beautify(val)+' cookie'+(val==1?'':'s')+'!</div>',Game.mouseX,Game.mouseY);
 				},
 			},
 			'hand of fate':{
@@ -57,7 +57,7 @@ M.launch=function()
 					if (Math.random()<0.15) choices=['cookie storm drop'];
 					if (Math.random()<0.0001) choices.push('free sugar lump');
 					newShimmer.force=choose(choices);
-					if (newShimmer.force==='cookie storm drop')
+					if (newShimmer.force=='cookie storm drop')
 					{
 						newShimmer.sizeMult=Math.random()*0.75+0.25;
 					}
@@ -93,7 +93,7 @@ M.launch=function()
 						me.time+=gain;
 						changed++;
 					}
-					if (changed===0){Game.Popup('<div style="font-size:80%;">No buffs to alter!</div>',Game.mouseX,Game.mouseY);return -1;}
+					if (changed==0){Game.Popup('<div style="font-size:80%;">No buffs to alter!</div>',Game.mouseX,Game.mouseY);return -1;}
 					Game.Popup('<div style="font-size:80%;">Zap! Buffs lengthened.</div>',Game.mouseX,Game.mouseY);
 				},
 				fail:function()
@@ -107,7 +107,7 @@ M.launch=function()
 						me.time=Math.max(me.time,0);
 						changed++;
 					}
-					if (changed===0){Game.Popup('<div style="font-size:80%;">No buffs to alter!</div>',Game.mouseX,Game.mouseY);return -1;}
+					if (changed==0){Game.Popup('<div style="font-size:80%;">No buffs to alter!</div>',Game.mouseX,Game.mouseY);return -1;}
 					Game.Popup('<div style="font-size:80%;">Backfire!<br>Fizz! Buffs shortened.</div>',Game.mouseX,Game.mouseY);
 				},
 			},
@@ -129,15 +129,15 @@ M.launch=function()
 						if (Game.Objects[i].amount>0) n++;
 					}
 					for (var i in Game.Objects)
-					{if ((Game.Objects[i].amount<max || n===1) && Game.Objects[i].getPrice()<=Game.cookies*2 && Game.Objects[i].amount<400) buildings.push(Game.Objects[i]);}
-					if (buildings.length===0){Game.Popup('<div style="font-size:80%;">No buildings to improve!</div>',Game.mouseX,Game.mouseY);return -1;}
+					{if ((Game.Objects[i].amount<max || n==1) && Game.Objects[i].getPrice()<=Game.cookies*2 && Game.Objects[i].amount<400) buildings.push(Game.Objects[i]);}
+					if (buildings.length==0){Game.Popup('<div style="font-size:80%;">No buildings to improve!</div>',Game.mouseX,Game.mouseY);return -1;}
 					var building=choose(buildings);
 					building.buyFree(1);
 					Game.Popup('<div style="font-size:80%;">A new '+building.single+'<br>bursts out of the ground.</div>',Game.mouseX,Game.mouseY);
 				},
 				fail:function()
 				{
-					if (Game.BuildingsOwned===0){Game.Popup('<div style="font-size:80%;">Backfired, but no buildings to destroy!</div>',Game.mouseX,Game.mouseY);return -1;}
+					if (Game.BuildingsOwned==0){Game.Popup('<div style="font-size:80%;">Backfired, but no buildings to destroy!</div>',Game.mouseX,Game.mouseY);return -1;}
 					var buildings=[];
 					for (var i in Game.Objects)
 					{if (Game.Objects[i].amount>0) buildings.push(Game.Objects[i]);}
@@ -196,12 +196,12 @@ M.launch=function()
 				{
 					var spells=[],selfCost=M.getSpellCost(M.spells['gambler\'s fever dream']);
 					for (var i in M.spells)
-						if (i!=='gambler\'s fever dream' && (M.magic-selfCost)>=M.getSpellCost(M.spells[i])*0.5) spells.push(M.spells[i]);
-					if (spells.length===0){Game.Popup('<div style="font-size:80%;">No eligible spells!</div>',Game.mouseX,Game.mouseY);return -1;}
+						if (i!='gambler\'s fever dream' && (M.magic-selfCost)>=M.getSpellCost(M.spells[i])*0.5) spells.push(M.spells[i]);
+					if (spells.length==0){Game.Popup('<div style="font-size:80%;">No eligible spells!</div>',Game.mouseX,Game.mouseY);return -1;}
 					var spell=choose(spells),cost=M.getSpellCost(spell)*0.5;
-					
+
 					setTimeout(function(spell,cost,seed){return function(){
-						if (Game.seed!==seed) return false;
+						if (Game.seed!=seed) return false;
 						var out=M.castSpell(spell,{cost:cost,failChanceMax:0.3,passthrough:true});
 						if (!out) {
 							M.magic+=selfCost;
@@ -254,8 +254,8 @@ M.launch=function()
 		};
 		M.spellsById=[];var n=0;
 		for (var i in M.spells){M.spells[i].id=n;M.spellsById[n]=M.spells[i];n++;}
-		
-		
+
+
 		M.computeMagicM=function()
 		{
 			var towers=Math.max(M.parent.amount,1);
@@ -281,7 +281,7 @@ M.launch=function()
 			*/
 			M.magic=Math.min(M.magicM,M.magic);
 		}
-		
+
 		M.getFailChance=function(spell)
 		{
 			var failChance=0.15;
@@ -290,24 +290,24 @@ M.launch=function()
 			if (spell.failFunc) failChance=spell.failFunc(failChance);
 			return failChance;
 		}
-		
+
 		M.castSpell=function(spell,obj)
 		{
 			var obj=obj||{};
 			var out=0;
 			var cost=0;
 			var fail=false;
-			if (typeof obj.cost!=='undefined') cost=obj.cost; else cost=M.getSpellCost(spell);
+			if (typeof obj.cost!='undefined') cost=obj.cost; else cost=M.getSpellCost(spell);
 			if (M.magic<cost) return false;
 			var failChance=M.getFailChance(spell);
-			if (typeof obj.failChanceSet!=='undefined') failChance=obj.failChanceSet;
-			if (typeof obj.failChanceAdd!=='undefined') failChance+=obj.failChanceAdd;
-			if (typeof obj.failChanceMult!=='undefined') failChance*=obj.failChanceMult;
-			if (typeof obj.failChanceMax!=='undefined') failChance=Math.max(failChance,obj.failChanceMax);
+			if (typeof obj.failChanceSet!='undefined') failChance=obj.failChanceSet;
+			if (typeof obj.failChanceAdd!='undefined') failChance+=obj.failChanceAdd;
+			if (typeof obj.failChanceMult!='undefined') failChance*=obj.failChanceMult;
+			if (typeof obj.failChanceMax!='undefined') failChance=Math.max(failChance,obj.failChanceMax);
 			Math.seedrandom(Game.seed+'/'+M.spellsCastTotal);
 			if (!spell.fail || Math.random()<(1-failChance)) {out=spell.win();} else {fail=true;out=spell.fail();}
 			Math.seedrandom();
-			if (out!==-1)
+			if (out!=-1)
 			{
 				if (!spell.passthrough && !obj.passthrough)
 				{
@@ -317,20 +317,20 @@ M.launch=function()
 					if (M.spellsCastTotal>=99) Game.Win('I\'m the wiz');
 					if (M.spellsCastTotal>=999) Game.Win('A wizard is you');
 				}
-				
+
 				M.magic-=cost;
 				M.magic=Math.max(0,M.magic);
-				
+
 				var rect=l('grimoireSpell'+spell.id).getBoundingClientRect();
 				Game.SparkleAt((rect.left+rect.right)/2,(rect.top+rect.bottom)/2-24);
-				
+
 				if (fail) PlaySound('snd/spellFail.mp3',0.75); else PlaySound('snd/spell.mp3',0.75);
 				return true;
 			}
 			PlaySound('snd/spellFail.mp3',0.75);
 			return false;
 		}
-		
+
 		M.getSpellCost=function(spell)
 		{
 			var out=spell.costMin;
@@ -344,7 +344,7 @@ M.launch=function()
 			else str+=Beautify(spell.costMin)+' magic';
 			return str;
 		}
-		
+
 		M.spellTooltip=function(id)
 		{
 			return function(){
@@ -352,7 +352,7 @@ M.launch=function()
 				me.icon=me.icon||[28,12];
 				var cost=Beautify(M.getSpellCost(me));
 				var costBreakdown=M.getSpellCostBreakdown(me);
-				if (cost!==costBreakdown) costBreakdown=' <small>('+costBreakdown+')</small>'; else costBreakdown='';
+				if (cost!=costBreakdown) costBreakdown=' <small>('+costBreakdown+')</small>'; else costBreakdown='';
 				var backfire=M.getFailChance(me);
 				var str='<div style="padding:8px 4px;min-width:350px;">'+
 				'<div class="icon" style="float:left;margin-left:-8px;margin-top:-8px;background-position:'+(-me.icon[0]*48)+'px '+(-me.icon[1]*48)+'px;"></div>'+
@@ -363,7 +363,7 @@ M.launch=function()
 				return str;
 			};
 		}
-		
+
 		var str='';
 		str+='<style>'+
 		'#grimoireBG{background:url(img/shadedBorders.png),url(img/BGgrimoire.jpg);background-size:100% 100%,auto;position:absolute;left:0px;right:0px;top:0px;bottom:16px;}'+
@@ -384,11 +384,11 @@ M.launch=function()
 		'.grimoireSpell:nth-child(4n+1){background-position:-60px 0px;} .grimoireSpell:nth-child(4n+1):hover{background-position:-60px -74px;} .grimoireSpell:nth-child(4n+1):active{background-position:-60px 74px;}'+
 		'.grimoireSpell:nth-child(4n+2){background-position:-120px 0px;} .grimoireSpell:nth-child(4n+2):hover{background-position:-120px -74px;} .grimoireSpell:nth-child(4n+2):active{background-position:-120px 74px;}'+
 		'.grimoireSpell:nth-child(4n+3){background-position:-180px 0px;} .grimoireSpell:nth-child(4n+3):hover{background-position:-180px -74px;} .grimoireSpell:nth-child(4n+3):active{background-position:-180px 74px;}'+
-		
+
 		'.grimoireSpell:hover .grimoireIcon{top:-1px;}'+
 		'.grimoireSpell.ready:hover .grimoireIcon{animation-name:bounce;animation-iteration-count:infinite;animation-duration:0.8s;}'+
 		'.noFancy .grimoireSpell.ready:hover .grimoireIcon{animation:none;}'+
-		
+
 		'#grimoireInfo{text-align:center;font-size:11px;margin-top:12px;color:rgba(255,255,255,0.75);text-shadow:-1px 1px 0px #000;}'+
 		'</style>';
 		str+='<div id="grimoireBG"></div>';
@@ -416,7 +416,7 @@ M.launch=function()
 			var me=M.spells[i];
 			AddEvent(l('grimoireSpell'+me.id),'click',function(spell){return function(){PlaySound('snd/tick.mp3');M.castSpell(spell);}}(me));
 		}
-		
+
 		M.refillTooltip=function(){
 			return '<div style="padding:8px;width:300px;font-size:11px;text-align:center;">Click to refill <b>100 units</b> of your magic meter for <span class="price lump">1 sugar lump</span>.'+
 				(Game.canRefillLump()?'<br><small>(can be done once every '+Game.sayTime(Game.getLumpRefillMax(),-1)+')</small>':('<br><small class="red">(usable again in '+Game.sayTime(Game.getLumpRefillRemaining()+Game.fps,-1)+')</small>'))+
@@ -430,12 +430,12 @@ M.launch=function()
 				PlaySound('snd/pop'+Math.floor(Math.random()*3+1)+'.mp3',0.75);
 			});}
 		});
-		
+
 		M.computeMagicM();
 		M.magic=M.magicM;
 		M.spellsCast=0;
 		M.spellsCastTotal=0;
-		
+
 		//M.parent.switchMinigame(1);
 	}
 	M.save=function()
@@ -460,7 +460,7 @@ M.launch=function()
 		M.magic=parseFloat(spl[i++]||M.magicM);
 		M.spellsCast=parseInt(spl[i++]||0);
 		M.spellsCastTotal=parseInt(spl[i++]||0);
-		var on=parseInt(spl[i++]||0);if (on && Game.ascensionMode!==1) M.parent.switchMinigame(1);
+		var on=parseInt(spl[i++]||0);if (on && Game.ascensionMode!=1) M.parent.switchMinigame(1);
 	}
 	M.reset=function()
 	{
@@ -471,11 +471,11 @@ M.launch=function()
 	M.logic=function()
 	{
 		//run each frame
-		if (Game.T%5===0) {M.computeMagicM();}
+		if (Game.T%5==0) {M.computeMagicM();}
 		M.magicPS=Math.max(0.002,Math.pow(M.magic/Math.max(M.magicM,100),0.5))*0.002;
 		M.magic+=M.magicPS;
 		M.magic=Math.min(M.magic,M.magicM);
-		if (Game.T%5===0)
+		if (Game.T%5==0)
 		{
 			for (var i in M.spells)
 			{
