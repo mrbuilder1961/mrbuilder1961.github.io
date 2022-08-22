@@ -13710,7 +13710,7 @@ Game.Launch=function()
 		{
 			var title='Cookie Calculator';
 			if (Game.season=='fools') title='Cookie Baker';
-			document.title=Game.OnAscend?'Ascending!':`${title} (${Beautify(Game.cookies)} ${Game.cookies==1?'cookie':'cookies'})`;
+			document.title=Game.OnAscend?'Ascending!':`${title} (${Beautify(Game.cookies)} calculator${Game.cookies==1?'':'s'})`;
 		}
 		if (Game.T%15==0)
 		{
