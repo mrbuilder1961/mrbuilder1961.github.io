@@ -13708,7 +13708,7 @@ Game.Launch=function()
 
 		if (Game.T%(Game.fps*2)==0)
 		{
-			var title='Cookie Clicker';
+			var title='Cookie Calculator';
 			if (Game.season=='fools') title='Cookie Baker';
 			document.title=Game.OnAscend?'Ascending!':`${title} (${Beautify(Game.cookies)} ${Game.cookies==1?'cookie':'cookies'})`;
 		}
