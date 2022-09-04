@@ -2,73 +2,68 @@
 <html>
 <head>
 <script type="text/javascript">
-    window.cookieconsent_options = {"message":"Cookies necessary, please allow?","dismiss":"Okay!","learnMore":"More info","link":"//orteil.dashnet.org/cookieconsentpolicy.html","target":"_blank","theme":"//orteil.dashnet.org/cookieconsent.css","domain":"dashnet.org"};
-</script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.js"></script>
-<script type="text/javascript">
-if (console.all===undefined){
-    console.all=[],console.alertUser=0;
-
-    console.defaultLog = console.log.bind(console);
-    console.log = function(){
-        console.all.push(Array.from(arguments));
-	if(console.alertUser) alert(Array.from(arguments))
-        console.defaultLog.apply(console, arguments);
-    }
-    console.defaultError = console.error.bind(console);
-    console.error = function(){
-        console.all.push(Array.from(arguments));
-	if(console.alertUser) alert(Array.from(arguments))
-        console.defaultError.apply(console, arguments);
-    }
-    console.defaultWarn = console.warn.bind(console);
-    console.warn = function(){
-        console.all.push(Array.from(arguments));
-	if(console.alertUser) alert(Array.from(arguments))
-        console.defaultWarn.apply(console, arguments);
-    }
-    console.defaultDebug = console.debug.bind(console);
-    console.debug = function(){
-        console.all.push(Array.from(arguments));
-	if(console.alertUser) alert(Array.from(arguments))
-        console.defaultDebug.apply(console, arguments);
-    }
-}
+    window.cookieconsent_options = {"message":"Unsurprisingly, this website uses cookies for ads and traffic analysis.","dismiss":"Got it!","learnMore":"Learn more","link":"https://orteil.dashnet.org/cookieconsentpolicy.html","target":"_blank","theme":"https://orteil.dashnet.org/cookieconsent.css","domain":"dashnet.org"};
 </script>
 
-<title>Cookie Calculator</title>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.js"></script>
+
+<title>Calculator Clicker</title> <!-- Changed to avoid basic spying and blocking by school admins -->
+<!--
+Code and graphics copyright Orteil, 2013-2021
+Feel free to alter this code to your liking, but please do not re-host it, do not profit from it and do not present it as your own.
+Altered by me (MechanicalArcane) and ozh, 95% code by me is in modifications.js, credit is of course given where due. Only rehosted for educational purposes
+-->
 
 <meta name="viewport" content="width=900, initial-scale=1">
 <link rel="shortcut icon" href="img/favicon.ico" />
-<!--<link href="//fonts.googleapis.com/css?family=Kavoon&subset=latin,latin-ext" rel="stylesheet" type="text/css">-->
-<link href='//fonts.googleapis.com/css?family=Merriweather:900&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-<script src="showads.js"></script><!-- this just detects adblockers so we can adjust the layout and play nice -->
+<!--<link href="https://fonts.googleapis.com/css?family=Kavoon&subset=latin,latin-ext" rel="stylesheet" type="text/css">-->
+<link href='https://fonts.googleapis.com/css?family=Merriweather:900&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 <script src="base64.js"></script>
-<script src="main.js?v=2.089"></script>
-<script src="updateLog.js"></script>
+<script src="main.js?v=2.091"></script>
+
+<script src="modifications.js">  </script> <!-- all the code for game mods, and used by directly referencing functions wherever needed -->
+<script type="text/javascript">
+	setTimeout(() => initializeMods(Date.now()), 7500);
+</script> <!-- initializes mod stuff -->
+
 <link href="style.css?v=2.053" rel="stylesheet" type="text/css">
 <!--[if IE]>
 <style type="text/css">
 	#ifIE9{display:block;}
 </style>
 <![endif]-->
+
+<!--[if lt IE9]><script src="excanvas.compiled.js"></script><![endif]-->
 </head>
 <body>
 
 <div id="wrapper">
-	<div id="topBar">
-		<div><b>Cookie Clicker</b>&trade; &copy; <a href="//orteil.dashnet.org" target="_blank" id="topbarOrteil">Orteil</a>, 2020 - <a href="//dashnet.org" target="_blank" id="topbarDashnet">DashNet</a></div>
-		<div><a href="//twitter.com/orteil42" target="_blank" id="topbarTwitter">twitter</a></div>
-		<div style="position:relative;"><div style="width:22px;height:32px;background:url(img/discord.png);position:absolute;left:0px;top:0px;pointer-events:none;"></div><a href="//discordapp.com/invite/cookie" target="_blank" style="padding-left:16px;" id="topbarDiscord">Discord</a></div>
-		<div style="position:relative;"><div style="width:25px;height:32px;background:url(img/weeHoodie.png);position:absolute;left:-2px;top:0px;pointer-events:none;"></div><a class="blueLink" href="http://www.redbubble.com/people/dashnet" target="_blank" style="padding-left:12px;" id="topbarMerch">Merch!</a></div>
-		<div style="position:relative;"><div style="width:22px;height:32px;background:url(img/patreon.png);position:absolute;left:0px;top:0px;pointer-events:none;"></div><a class="orangeLink" href="//www.patreon.com/dashnet" target="_blank" style="padding-left:16px;" id="topbarPatreon">Patreon</a></div>
-		<div style="position:relative;display:none;font-weight:bold;" id="heralds"><div style="position:absolute;top:-4px;width:31px;height:39px;background:url(img/heraldFlag.png);left:50%;margin-left:-15px;pointer-events:none;"></div><div id="heraldsAmount" style="position:relative;z-index:10;text-shadow:0px 1px 0px #000,0px 0px 6px #ff00e4;color:#fff;">-</div></div>
-		<div><a class="lightblueLink" href="//play.google.com/store/apps/details?id=org.dashnet.cookieclicker" target="_blank" id="topbarMobileCC">Android Version</a></div>
-		
-		<div id="hUpgradesHelp" onclick="Game.functions.loadHUpgrades(true);">Upgrades Calculator</div>
-		<div id="shimmerInfo" onclick="Game.functions.loadShimmerBar(true);">Shimmer Info</div>
 
-		<div id="githubLink"><a href="//github.com/mrbuilder1961" target="_blank" class="lightblueLink">Check out my GitHub!</a></div>
+	<div id="topBar">
+		<div><b>Calculator Clicker</b>&trade; &copy; <a href="https://orteil.dashnet.org" target="_blank" id="topbarOrteil">Orteil</a>, 2022 - <a href="https://dashnet.org" target="_blank" id="topbarDashnet">DashNet</a></div>
+		<div><a href="https://twitter.com/orteil42" target="_blank" id="topbarTwitter">twitter</a></div>
+		<div style="position:relative;"><div style="width:22px;height:32px;background:url(img/discord.png);position:absolute;left:0px;top:0px;pointer-events:none;"></div><a href="https://discordapp.com/invite/cookie" target="_blank" style="padding-left:16px;" id="topbarDiscord">Discord</a></div>
+		<div style="position:relative;"><div style="width:25px;height:32px;background:url(img/weeHoodie.png);position:absolute;left:-2px;top:0px;pointer-events:none;"></div><a class="blueLink" href="http://www.redbubble.com/people/dashnet" target="_blank" style="padding-left:12px;" id="topbarMerch">Merch!</a></div>
+		<div style="position:relative;"><div style="width:22px;height:32px;background:url(img/patreon.png);position:absolute;left:0px;top:0px;pointer-events:none;"></div><a class="orangeLink" href="https://www.patreon.com/dashnet" target="_blank" style="padding-left:16px;" id="topbarPatreon">Patreon</a></div>
+		<div style="position:relative;display:none;font-weight:bold;" id="heralds"><div style="position:absolute;top:-4px;width:31px;height:39px;background:url(img/heraldFlag.png);left:50%;margin-left:-15px;pointer-events:none;"></div><div id="heraldsAmount" style="position:relative;z-index:10;text-shadow:0px 1px 0px #000,0px 0px 6px #ff00e4;color:#fff;">-</div></div>
+		<div><a class="lightblueLink" href="https://play.google.com/store/apps/details?id=org.dashnet.cookieclicker" target="_blank" id="topbarMobileCC">Android Version</a></div>
+
+		<div id="upgradeCalc" onclick="reloadUpgradeCalc(Game, true);">Upgrade Calculator</div>
+		<div id="shimmerData" onclick="reloadShimmerData(Game, true);">Shimmer Data</div>
+
+		<div id="githubLink"><a href="https://github.com/mrbuilder1961" target="_blank" class="lightblueLink">Check out my GitHub!</a></div>
+
+		<div><a class="lightblueLink" style="font-weight:bold;" href="https://play.google.com/store/apps/details?id=org.dashnet.cookieclicker" target="_blank" id="topbarMobileCC">Android Version</a></div>
+		<div><a class="lightblueLink" style="font-weight:bold;" href="https://store.steampowered.com/app/1454400/Cookie_Clicker/" target="_blank" id="topbarSteamCC">Steam Version</a></div>
+		<div id="links" class="hoverer">
+			Other versions
+			<div class="hoverable">
+			<a href="../" target="_blank" id="linkVersionLive">Live version</a>
+			<a href="beta" target="_blank" id="linkVersionBeta">Try the beta!</a>
+			<a href="https://orteil.dashnet.org/cookieclicker/v10466" target="_blank" id="linkVersionOld">v. 1.0466</a>
+			<a href="https://orteil.dashnet.org/experiments/cookie/" target="_blank">Classic</a>
+			</div>
+		</div>
 	</div>
 
 	<div id="game">
@@ -79,17 +74,17 @@ if (console.all===undefined){
 				<div id="loading" class="title">Loading...</div>
 				<div id="failedToLoad" class="title" style="height:40px;">This is taking longer than expected.<br>
 					<div style="font-size:65%;line-height:120%;">Slow connection? If not, please make sure your JavaScript is enabled, then refresh.<br>If problems persist, this might be my fault - wait a minute or two, then hit Ctrl+F5!<br><br></div>
-					
+
 					<div style="font-size:75%;line-height:120%;" id="jsPrefix">JavaScript error:</div>
 					<div style="font-size:75%;line-height:120%;font-family:monospace;" id="jsErrorText"></div>
 				</div>
-				
-				<div id="ifIE9" class="title" style="font-size:100%;line-height:120%;">Your browser may not be recent enough to run Cookie Clicker.<br>You should probably update, or switch to a more modern browser such as Chrome or Firefox.</div>
+
+				<div id="ifIE9" class="title" style="font-size:100%;line-height:120%;">Your browser may not be recent enough to run Calculator Clicker.<br>You should probably update, or switch to a more modern browser such as Chrome or Firefox.</div>
 			</div>
 		</div>
 
 		<canvas id="backgroundCanvas"></canvas>
-		
+
 		<div id="goldenCookie" class="goldenCookie"></div>
 		<div id="seasonPopup" class="seasonPopup"></div>
 		<div id="shimmers"></div>
@@ -106,9 +101,9 @@ if (console.all===undefined){
 			<div id="ascendZoomable"><div id="ascendContent"><div id="ascendUpgrades" style="position:absolute;"></div></div></div>
 			<div id="ascendOverlay"></div>
 		</div>
-		
+
 		<div id="debug"><div id="devConsole" class="framed"></div><div id="debugLog"></div></div>
-		
+
 		<div id="sectionLeft" class="inset">
 			<canvas id="backgroundLeftCanvas" style="z-index:5;"></canvas>
 			<div class="blackFiller"></div>
@@ -145,11 +140,11 @@ if (console.all===undefined){
 				<div id="menu"></div>
 				<!--
 				<div id="donateBox">
-					<form target="_blank" action="//www.paypal.com/cgi-bin/webscr" method="post" id="donate" style="margin:0px 16px;">
+					<form target="_blank" action="https://www.paypal.com/cgi-bin/webscr" method="post" id="donate" style="margin:0px 16px;">
 					<input type="hidden" name="cmd" value="_s-xclick">
 					<input type="hidden" name="hosted_button_id" value="BBN2WL3TC6QH4">
-					<input type="image" src="//www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal — The safer, easier way to pay online.">
-					<img alt="" border="0" src="//www.paypalobjects.com/nl_NL/i/scr/pixel.gif" width="1" height="1">
+					<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal — The safer, easier way to pay online.">
+					<img alt="" border="0" src="https://www.paypalobjects.com/nl_NL/i/scr/pixel.gif" width="1" height="1">
 					</form>
 					<small>Help us keep developing the game!</small>
 				</div>
@@ -167,7 +162,7 @@ if (console.all===undefined){
 				<div id="products" class="storeSection"></div>
 			</div>
 		</div>
-		
+
 		<div id="focusButtons">
 			<div id="focusLeft" class="title">Cookie</div>
 			<div id="focusMiddle" class="title" style="font-size:80%;padding-top:18px;padding-bottom:14px;">Buildings</div>
@@ -179,7 +174,7 @@ if (console.all===undefined){
 			<div id="compactCookies"></div>
 			<div class="separatorBottom"></div>
 		</div>
-		
+
 		<div id="tooltipAnchor"><div id="tooltip" class="framed" onMouseOut="Game.tooltip.hide();"></div></div>
 
 	</div>

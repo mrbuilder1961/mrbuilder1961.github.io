@@ -194,18 +194,22 @@ M.launch=function()
 				costPercent:0.05,
 				win:function()
 				{
-					var spells=[],selfCost=M.getSpellCost(M.spells['gambler\'s fever dream']);
+					var spells=[];
+					var selfCost=M.getSpellCost(M.spells['gambler\'s fever dream']);
 					for (var i in M.spells)
-						if (i!='gambler\'s fever dream' && (M.magic-selfCost)>=M.getSpellCost(M.spells[i])*0.5) spells.push(M.spells[i]);
+					{if (i!='gambler\'s fever dream' && (M.magic-selfCost)>=M.getSpellCost(M.spells[i])*0.5) spells.push(M.spells[i]);}
 					if (spells.length==0){Game.Popup('<div style="font-size:80%;">No eligible spells!</div>',Game.mouseX,Game.mouseY);return -1;}
-					var spell=choose(spells),cost=M.getSpellCost(spell)*0.5;
-
+					var spell=choose(spells);
+					var cost=M.getSpellCost(spell)*0.5;
 					setTimeout(function(spell,cost,seed){return function(){
 						if (Game.seed!=seed) return false;
-						var out=M.castSpell(spell,{cost:cost,failChanceMax:0.3,passthrough:true});
-						if (!out) {
+						var out=M.castSpell(spell,{cost:cost,failChanceMax:0.5,passthrough:true});
+						if (!out)
+						{
 							M.magic+=selfCost;
-							setTimeout(function(){Game.Popup('<div style="font-size:80%;">That\'s too bad!<br>Magic refunded.</div>',Game.mouseX,Game.mouseY);},1500);
+							setTimeout(function(){
+								Game.Popup('<div style="font-size:80%;">That\'s too bad!<br>Magic refunded.</div>',Game.mouseX,Game.mouseY);
+							},1500);
 						}
 					}}(spell,cost,Game.seed),1000);
 					Game.Popup('<div style="font-size:80%;">Casting '+spell.name+'<br>for '+Beautify(cost)+' magic...</div>',Game.mouseX,Game.mouseY);
@@ -297,13 +301,13 @@ M.launch=function()
 			var out=0;
 			var cost=0;
 			var fail=false;
-			if (typeof obj.cost!='undefined') cost=obj.cost; else cost=M.getSpellCost(spell);
+			if (typeof obj.cost!=='undefined') cost=obj.cost; else cost=M.getSpellCost(spell);
 			if (M.magic<cost) return false;
 			var failChance=M.getFailChance(spell);
-			if (typeof obj.failChanceSet!='undefined') failChance=obj.failChanceSet;
-			if (typeof obj.failChanceAdd!='undefined') failChance+=obj.failChanceAdd;
-			if (typeof obj.failChanceMult!='undefined') failChance*=obj.failChanceMult;
-			if (typeof obj.failChanceMax!='undefined') failChance=Math.max(failChance,obj.failChanceMax);
+			if (typeof obj.failChanceSet!=='undefined') failChance=obj.failChanceSet;
+			if (typeof obj.failChanceAdd!=='undefined') failChance+=obj.failChanceAdd;
+			if (typeof obj.failChanceMult!=='undefined') failChance*=obj.failChanceMult;
+			if (typeof obj.failChanceMax!=='undefined') failChance=Math.max(failChance,obj.failChanceMax);
 			Math.seedrandom(Game.seed+'/'+M.spellsCastTotal);
 			if (!spell.fail || Math.random()<(1-failChance)) {out=spell.win();} else {fail=true;out=spell.fail();}
 			Math.seedrandom();
@@ -490,7 +494,7 @@ M.launch=function()
 	M.draw=function()
 	{
 		//run each draw frame
-		M.magicBarTextL.innerHTML=`${String(M.magic).replace(/(\d+\.\d{2}).+/, "$1")}/${Beautify(Math.floor(M.magicM))}`+(M.magic<M.magicM?(' (+'+Beautify((M.magicPS||0)*Game.fps,2)+'/s)'):'');
+		M.magicBarTextL.innerHTML = addMagicDecimals(Game, M); //! MOD
 		M.magicBarFullL.style.width=((M.magic/M.magicM)*100)+'%';
 		M.magicBarL.style.width=(M.magicM*3)+'px';
 		M.infoL.innerHTML='Spells cast : '+Beautify(M.spellsCast)+' (total : '+Beautify(M.spellsCastTotal)+')';

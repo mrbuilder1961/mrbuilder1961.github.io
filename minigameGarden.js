@@ -214,7 +214,7 @@ M.launch=function()
 				mature:70,
 				detailsStr:'Spreads easily',
 				children:['brownMold','whiteChocoroot','wardlichen','greenRot'],
-				effsStr:'<div class="green">&bull; +1% CpS</div><div class="red">&bull; may spread as brown mold</div>',
+				effsStr:'<div class="green">&bull; +1% CpS</div><div class="gray">&bull; may spread as brown mold</div>',
 				q:'A common rot that infests shady plots of earth. Grows in little creamy capsules. Smells sweet, but sadly wilts quickly.',
 			},
 			'brownMold':{
@@ -228,7 +228,7 @@ M.launch=function()
 				mature:70,
 				detailsStr:'Spreads easily',
 				children:['whiteMildew','chocoroot','keenmoss','wrinklegill'],
-				effsStr:'<div class="red">&bull; -1% CpS</div><div class="green">&bull; may spread as white mildew</div>',
+				effsStr:'<div class="red">&bull; -1% CpS</div><div class="gray">&bull; may spread as white mildew</div>',
 				q:'A common rot that infests shady plots of earth. Grows in odd reddish clumps. Smells bitter, but thankfully wilts quickly.',
 			},
 
@@ -244,7 +244,7 @@ M.launch=function()
 				contam:0.05,
 				detailsStr:'Grows in empty tiles, spreads easily',
 				children:['meddleweed','brownMold','crumbspore'],
-				effsStr:'<div class="red">&bull; useless</div><div class="red">&bull; may overtake nearby plants</div><div class="green">&bull; may sometimes drop spores when uprooted</div>',
+				effsStr:'<div class="red">&bull; useless</div><div class="red">&bull; may overtake nearby plants</div><div class="gray">&bull; may sometimes drop spores when uprooted</div>',
 				q:'The sign of a neglected farmland, this annoying weed spawns from unused dirt and may sometimes spread to other plants, killing them in the process.',
 				onKill:function(x,y,age)
 				{
@@ -587,7 +587,7 @@ M.launch=function()
 			M.plants[i].key=i;
 			M.plants[i].matureBase=M.plants[i].mature;
 			M.plantsById[n]=M.plants[i];
-			if (typeof M.plants[i].plantable=='undefined') {M.plants[i].plantable=true;}
+			if (typeof M.plants[i].plantable==='undefined') {M.plants[i].plantable=true;}
 			n++;
 		}
 		M.plantsN=M.plantsById.length;
