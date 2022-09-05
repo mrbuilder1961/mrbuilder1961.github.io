@@ -6,11 +6,11 @@
 File changes (on update look at these!) (all modified lines end in '\\ !MOD')
 * [minigameGrimoire.js:497] M.magicBarTextL.innerHTML = addMagicDecimals(Game, M);
 *
-* [main.js:3998] l('lumpsAmount').style.color = colorLumpCount(Game, age);
-* [main.js:3729-3751] (many lines, they all set str to colorLumpTooltip() with relevant types)
-* [main.js:6502] getNewsTickers(Game);
-* [main.js:8800,8812] customCovenantIcon(false);  &  customCovenantIcon(true);
-* [main.js:14296] str = addCookiesPerClick(Game, str);
+* [main.js:4677] l('lumpsAmount').style.color = colorLumpCount(Game, age);
+* [main.js:4419-4464] (many lines, they all set str to colorLumpTooltip() with relevant types)
+* [main.js:7369] getNewsTickers(Game);
+* [main.js:9768,9780] customCovenantIcon(false);  &  customCovenantIcon(true);
+* [main.js:15740] str = addCookiesPerClick(Game, str);
 */
 //<span style="font-size:9px;font-style:italic;color:#999;">psssst! you can click me to update this data!</span>
 
@@ -51,9 +51,15 @@ function addMagicDecimals(Game, M) {
 
 /** Adds the cookies gained per click next to the cookies per second text */
 function addCookiesPerClick(Game, text) {
-    return text += format('<div style="font-size:50%;">per second/click : <span${}>${}</span>/${}</div>',
-        (Game.cpsSucked > 0) ? (' style="color:#' + (Game.prefs.fancy ? '#dd4949' : '#ff9292') + ';"') : '',
-        Beautify( Game.cookiesPs * (1 - Game.cpsSucked), 1 ),
+    return text += format(
+        '<div id="cookiesPerSecond" style="font-size:50%;">per second/click : ${}/${}</div>',
+
+        format(
+            '<span style="color:${};">${}</span>',
+
+            (Game.cpsSucked > 0) ? (Game.prefs.fancy ? '#dd4949' : '#ff9292') : 'inherit',
+            Beautify( Game.cookiesPs * (1 - Game.cpsSucked), 1 )
+        ),
         Beautify( Game.computedMouseCps, 1 ),
     )
 }

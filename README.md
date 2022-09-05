@@ -8,6 +8,3 @@ Note that this version has a few modifications to the base game:
 ✅ Golden cookie and reindeer data
 ✅ An ascension upgrade helper for knowing what upgrades to save up for
 ✅ 'per second' text above big cookie now shows cookies gained per click as well
-
-If you have any issues/problems/ideas, feel free to open an issue or create a pull request! Note that I only work on this when I have time to waste, so if something breaks it could take a while to fix.
-**Useable [here](https://mrbuilder1961.github.io), play responsibly!**
