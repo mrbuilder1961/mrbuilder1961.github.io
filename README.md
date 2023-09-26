@@ -4,7 +4,7 @@ This is for "educational" purposes.
 
 [2.051 update is incoming soon!]
 
-Note that this version has a few modifications to the base game (not all changes logged yet):
+Note that this version has a few modifications to the base game. Some of these changes are noted at the top comment in [modifications.js](https://github.com/mrbuilder1961/mrbuilder1961.github.io/blob/main/mods/modifications.js). However, not all changes have been logged:
 
 - Grimoire magic bar shows decimals to the hundredths place
 - Sugar lump text changes color based on whether the lump is maturing, mature, or ripe
@@ -12,3 +12,4 @@ Note that this version has a few modifications to the base game (not all changes
 - Golden cookie and reindeer spawn data
 - An ascension upgrade helper for knowing what upgrades to save up for
 - Cookies per click shows next to CPS
+- New icons for the Elder Covenant switch upgrade

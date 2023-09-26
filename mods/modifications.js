@@ -1,9 +1,9 @@
 /*
-    created by yours truly (MechanicalArcane), with some code snippets from parts of main.js by Ortiel
-    hub file for my modifications to make future updates much easier
+created by yours truly (OBro1961), with some code snippets from parts of main.js by Ortiel
+this makes future updates much easier
 !   /!\ requires newer browsers, i'm going to use arrow functions and let because i want to. /!\
 
-File changes (on update look at these!) (all modified lines end in '\\ !MOD')
+File changes (on update look at these!) (all modified lines end in '// !MOD')
 * [minigameGrimoire.js:497] M.magicBarTextL.innerHTML = addMagicDecimals(Game, M);
 *
 * [main.js:4677] l('lumpsAmount').style.color = colorLumpCount(Game, age);
@@ -148,7 +148,11 @@ function getNewsTickers(Game) {
 
 /** Returns the icon position of the (custom) Elder Covenant icon */
 function customCovenantIcon(revoke) {
-    return [(revoke ? 6 : 5), 10];
+    let vanilla = true;
+    return vanilla
+        ? [(revoke ? 6 : 5), 10]
+        : [(revoke ? 1 : 0), 0, "https://github.com/mrbuilder1961/mrbuilder1961.github.io/blob/main/mods/elder_covenants.png"]
+    ;
 }
 
 
@@ -161,16 +165,14 @@ function initializeMods(time) {
     reloadUpgradeCalc(false);
 
     console.log(
-        format('Initialized modifications in ${}.${} seconds!', new Date(Date.now() - time).getSeconds(), new Date(Date.now() - time).getMilliseconds() )
+        format('Initialized modifications in ${} seconds!', (Date.now() - time) / 1000 )
     );
 }
 
 
 /** Creates the shimmer data tooltip */
 function shimmerTooltip() {
-    let tooltip = '';
-
-    tooltip = '&bull; This lets you see some interesting shimmer data; but note that the values shown may not be 100% accurate, so take them with a pinch of sugar. (A shimmer is a golden cookie or a reindeer)<br><br>';
+    let tooltip = '&bull; This lets you see some interesting shimmer data; but note that the values shown may not be 100% accurate, so take them with a pinch of sugar. (A shimmer is a golden cookie or a reindeer)<br><br>';
 
     const isWrath = { wrath: ((Game?.elderWrath || 0) > 0) }
     const gMn = Game.shimmerTypes.golden.getMinTime(isWrath);
