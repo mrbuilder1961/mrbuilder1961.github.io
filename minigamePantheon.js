@@ -8,7 +8,7 @@ M.launch=function()
 	M.init=function(div)
 	{
 		//populate div with html and initialize values
-
+		
 		M.gods={
 			'asceticism':{
 				name:'Holobore, Spirit of Asceticism',
@@ -121,22 +121,22 @@ M.launch=function()
 		};
 		M.godsById=[];var n=0;
 		for (var i in M.gods){var it=M.gods[i];it.id=n;it.name=loc(FindLocStringByPart('GOD '+(it.id+1)+' NAME'));it.quote=loc(FindLocStringByPart('GOD '+(it.id+1)+' QUOTE'));it.slot=-1;M.godsById[n]=it;n++;}
-
-
+		
+		
 		M.slot=[];
 		M.slot[0]=-1;//diamond socket
 		M.slot[1]=-1;//ruby socket
 		M.slot[2]=-1;//jade socket
-
+		
 		M.slotNames=[
 			'Diamond','Ruby','Jade'
 		];
-
+		
 		M.swaps=3;//swaps left
 		M.swapT=Date.now();//the last time we swapped
-
+		
 		M.lastSwapT=0;//frames since last swap
-
+		
 		M.godTooltip=function(id)
 		{
 			return function(){
@@ -156,7 +156,7 @@ M.launch=function()
 				return str;
 			};
 		}
-
+		
 		M.slotTooltip=function(id)
 		{
 			return function(){
@@ -190,14 +190,14 @@ M.launch=function()
 				return str;
 			};
 		}
-
+		
 		M.useSwap=function(n)
 		{
 			M.swapT=Date.now();
 			M.swaps-=n;
 			if (M.swaps<0) M.swaps=0;
 		}
-
+		
 		M.slotGod=function(god,slot)
 		{
 			if (slot==god.slot) return false;
@@ -211,7 +211,7 @@ M.launch=function()
 			god.slot=slot;
 			Game.recalculateGains=true;
 		}
-
+		
 		M.dragging=false;
 		M.dragGod=function(what)
 		{
@@ -243,7 +243,7 @@ M.launch=function()
 			{
 				M.useSwap(1);
 				M.lastSwapT=0;
-
+				
 				var prev=M.slot[M.slotHovered];//id of the god already in the slot
 				if (prev!=-1)
 				{
@@ -261,10 +261,10 @@ M.launch=function()
 				}
 				l('templeSlot'+M.slotHovered).appendChild(div);
 				M.slotGod(M.dragging,M.slotHovered);
-
+				
 				PlaySound('snd/tick.mp3');
 				PlaySound('snd/spirit.mp3',0.5);
-
+				
 				var rect=div.getBounds();
 				Game.SparkleAt((rect.left+rect.right)/2,(rect.top+rect.bottom)/2-24+32-TopBarOffset);
 			}
@@ -278,7 +278,7 @@ M.launch=function()
 			}
 			M.dragging=false;
 		}
-
+		
 		M.slotHovered=-1;
 		M.hoverSlot=function(what)
 		{
@@ -290,7 +290,7 @@ M.launch=function()
 				PlaySound('snd/clickb'+Math.floor(Math.random()*7+1)+'.mp3',0.75);
 			}
 		}
-
+		
 		//external
 		Game.hasGod=function(what)
 		{
@@ -317,20 +317,20 @@ M.launch=function()
 			return true;
 		}
 		Game.useSwap=M.useSwap;
-
+		
 		M.dragonBoostTooltip=function()
 		{
 			return '<div style="width:280px;padding:8px;text-align:center;" id="tooltipDragonBoost"><b>'+loc("Supreme Intellect")+'</b><div class="line"></div>'+loc("The jade slot behaves as a ruby slot and the ruby slot behaves as a diamond slot.")+'</div>';
 		}
-
+		
 		var str='';
 		str+='<style>'+
-		'#templeBG{background:url(img/shadedBorders.png),url(img/BGpantheon.jpg);background-size:100% 100%,auto;position:absolute;left:0px;right:0px;top:0px;bottom:16px;}'+
+		'#templeBG{background:url('+Game.resPath+'img/shadedBorders.png),url('+Game.resPath+'img/BGpantheon.jpg);background-size:100% 100%,auto;position:absolute;left:0px;right:0px;top:0px;bottom:16px;}'+
 		'#templeContent{position:relative;box-sizing:border-box;padding:4px 24px;text-align:center;}'+
 		'#templeGods{text-align:center;width:100%;padding:8px;box-sizing:border-box;}'+
 		'.templeIcon{pointer-events:none;margin:12px 6px 0px 6px;width:48px;height:48px;opacity:0.8;position:relative;}'+
 		'.templeSlot .templeIcon{margin:2px 6px 0px 6px;}'+
-		'.templeGod{box-shadow:4px 4px 4px #000;cursor:pointer;position:relative;color:#f33;opacity:0.8;text-shadow:0px 0px 4px #000,0px 0px 6px #000;font-weight:bold;font-size:12px;display:inline-block;width:60px;height:74px;background:url(img/spellBG.png);}'+
+		'.templeGod{box-shadow:4px 4px 4px #000;cursor:pointer;position:relative;color:#f33;opacity:0.8;text-shadow:0px 0px 4px #000,0px 0px 6px #000;font-weight:bold;font-size:12px;display:inline-block;width:60px;height:74px;background:url('+Game.resPath+'img/spellBG.png);}'+
 		'.templeGod.ready{color:rgba(255,255,255,0.8);opacity:1;}'+
 		'.templeGod.ready:hover{color:#fff;}'+
 		'.templeGod:hover,.templeDragged{box-shadow:6px 6px 6px 2px #000;z-index:1000000001;top:-1px;}'+
@@ -340,11 +340,11 @@ M.launch=function()
 		'.templeGod1{background-position:-60px 0px;} .templeGod1:hover{background-position:-60px -74px;} .templeGod1:active{background-position:-60px 74px;}'+
 		'.templeGod2{background-position:-120px 0px;} .templeGod2:hover{background-position:-120px -74px;} .templeGod2:active{background-position:-120px 74px;}'+
 		'.templeGod3{background-position:-180px 0px;} .templeGod3:hover{background-position:-180px -74px;} .templeGod3:active{background-position:-180px 74px;}'+
-
+		
 		'.templeGod:hover .templeIcon{top:-1px;}'+
 		'.templeGod.ready:hover .templeIcon{animation-name:bounce;animation-iteration-count:infinite;animation-duration:0.8s;}'+
 		'.noFancy .templeGod.ready:hover .templeIcon{animation:none;}'+
-
+		
 		'.templeGem{z-index:100;width:24px;height:24px;}'+
 		'.templeEffect{font-weight:bold;font-size:11px;position:relative;margin:0px -12px;padding:4px;padding-left:28px;}'+
 		'.description .templeEffect{border-top:1px solid rgba(255,255,255,0.15);background:linear-gradient(to top,rgba(255,255,255,0.1),rgba(255,255,255,0));}'+
@@ -354,23 +354,23 @@ M.launch=function()
 		'.templeGem1{background-position:-1104px -720px;}'+
 		'.templeGem2{background-position:-1128px -720px;}'+
 		'.templeGem3{background-position:-1104px -744px;}'+
-
+		
 		'.templeSlot .templeGod,.templeSlot .templeGod:hover,.templeSlot .templeGod:active{background:none;}'+
-
+		
 		'.templeSlotDrag{position:absolute;left:0px;top:0px;right:0px;bottom:0px;background:#999;opacity:0;cursor:pointer;}'+
-
+		
 		'#templeDrag{position:absolute;left:0px;top:0px;z-index:1000000000000;}'+
 		'.templeGod{transition:transform 0.1s;}'+
 		'#templeDrag .templeGod{position:absolute;left:0px;top:0px;}'+
 		'.templeDragged{pointer-events:none;}'+
-
+		
 		'.templeGodPlaceholder{background:red;opacity:0;display:none;width:60px;height:74px;}'+
-
+		
 		'#templeSlots{margin:4px auto;text-align:center;}'+
 		'#templeSlot0{top:-4px;}'+
 		'#templeSlot1{top:0px;}'+
 		'#templeSlot2{top:4px;}'+
-
+		
 		'#templeInfo{position:relative;display:inline-block;margin:8px auto 0px auto;padding:8px 16px;padding-left:32px;text-align:center;font-size:11px;color:rgba(255,255,255,0.75);text-shadow:-1px 1px 0px #000;background:rgba(0,0,0,0.75);border-radius:16px;}'+
 		'</style>';
 		str+='<div id="templeBG"></div>';
@@ -397,7 +397,7 @@ M.launch=function()
 		div.innerHTML=str;
 		M.swapsL=l('templeSwaps');
 		M.lumpRefill=l('templeLumpRefill');
-
+		
 		for (var i in M.gods)
 		{
 			var me=M.gods[i];
@@ -410,10 +410,10 @@ M.launch=function()
 			AddEvent(l('templeSlot'+i),'mouseover',function(what){return function(){M.hoverSlot(what);}}(i));
 			AddEvent(l('templeSlot'+i),'mouseout',function(what){return function(e){if (e.button==0){M.hoverSlot(-1);}}}(i));
 		}
-
+		
 		AddEvent(document,'mouseup',M.dropGod);
-
-
+		
+		
 		M.refillTooltip=function(){
 			return '<div style="padding:8px;width:300px;font-size:11px;text-align:center;" id="tooltipRefill">'+loc("Click to refill all your worship swaps for %1.",'<span class="price lump">'+loc("%1 sugar lump",LBeautify(1))+'</span>')+
 				(Game.canRefillLump()?'<br><small>('+loc("can be done once every %1",Game.sayTime(Game.getLumpRefillMax(),-1))+')</small>':('<br><small class="red">('+loc("usable again in %1",Game.sayTime(Game.getLumpRefillRemaining()+Game.fps,-1))+')</small>'))+
@@ -427,7 +427,7 @@ M.launch=function()
 				PlaySound('snd/pop'+Math.floor(Math.random()*3+1)+'.mp3',0.75);
 			});}
 		});
-
+		
 		//M.parent.switchMinigame(1);
 	}
 	M.save=function()

@@ -9,8 +9,8 @@ File changes (on update look at these!)
 *
 * [main.js:4677] l('lumpsAmount').style.color = colorLumpCount(Game, age);
 * [main.js:4419-4464] (many lines, they all set str to colorLumpTooltip() with relevant types)
-* [main.js:7369] getNewsTickers(Game);
-* [main.js:9768,9780] customCovenantIcon(false);  &  customCovenantIcon(true);
+* [main.js:7369] getNewsTickers(Game)
+* [main.js:9768,9780] customCovenantIcon(false)  &  customCovenantIcon(true)
 * [main.js:15740] str = addCookiesPerClick(Game, str);
 */
 //<span style="font-size:9px;font-style:italic;color:#999;">psssst! you can click me to update this data!</span>
