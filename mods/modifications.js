@@ -151,10 +151,7 @@ function getNewsTickers(Game) {
 
 /** Returns the icon position of the (custom) Elder Covenant icon */
 function customCovenantIcon(revoke) {
-    return Game.chimeType == 0
-        ? [(revoke ? 3 : 2), 0, icons]
-        : [(revoke ? 1 : 0), 0, icons]
-    ;
+    return [(revoke ? 1 : 0), 0, icons];
 }
 
 
