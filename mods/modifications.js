@@ -18,12 +18,15 @@ File changes (on update look at these!) (all modified lines end in '// !MOD')
 function l(id) { return document.getElementById(id); } // element identified by id
 function exists(o) { return o != null && o != undefined; } // true if object is defined
 function choose(arr) { return arr[ Math.floor(Math.random() * arr.length) ]; } // returns a random item from arr
+
+const icons = 'https://raw.githubusercontent.com/mrbuilder1961/mrbuilder1961.github.io/main/mods/other_icons.png';
 const red = 'color:#fb5a71;';
 const meaty = 'color:#d6502c;';
 const gold = 'color:#ffd966;';
 const lime = 'color:#73f21e;'
 const green = 'color:#43eb95;';
 const blue = 'color:#6fcfff;';
+
 
 /** Formats a string with arguments */
 function format(baseStr='', ...args) {
@@ -148,10 +151,9 @@ function getNewsTickers(Game) {
 
 /** Returns the icon position of the (custom) Elder Covenant icon */
 function customCovenantIcon(revoke) {
-    let vanilla = true;
-    return vanilla
+    return Game.chimeType == 0
         ? [(revoke ? 6 : 5), 10]
-        : [(revoke ? 1 : 0), 0, "https://github.com/mrbuilder1961/mrbuilder1961.github.io/blob/main/mods/elder_covenants.png"]
+        : [(revoke ? 1 : 0), 0, icons]
     ;
 }
 
