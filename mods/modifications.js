@@ -156,16 +156,14 @@ function getNewsTickers(Game) {
     const earned = Game.cookiesEarned;
     const bank = Game.cookies;
 
-    //TODO just for testing and revert this later
-    /*return choose([
+    return choose([
         'News : Idea of turning the multiverse into cookies has been circulating, and may be a good idea. Tune in to WGN9 News at 9PM tonight for more details.',
         'News : Local woman changes name 3 times within a month! New world record? Only Guiness will tell.',
         'News : Local man in love with Cookie Clicker, cannot get enough of it! "I just can\'t get over how many references to itself are in this game."',
         'News : աɛ ǟʀɛ ȶʀǟքքɛɖ, ʄʀօʍ ȶɦɛ ɨռֆɨɖɛ. ɦɛʟք ʊֆ.',
 		'News : Random middle schooler utilizes basic exploit to disable all internet restrictions. "We just didn\'t realize how easy it was to access," says head of administration.',
-        'News : Did you know you can put people in here?' + getCustomIcon(0, 0) + '.'
-    ]);*/
-    return choose(['NEWS HELP YOU KNOW ITS ME : ' + getCustomIcon(0, 0) + '!', 'HELPPPPPPPPPPPPPPPP AAA : ' + getCustomIcon(0, 0, true) + '.']);
+        'News : Did you know you can put people in here?' + getCustomIcon(0, 0, true) + '.'
+    ]);
 }
 
 /** Returns the icon position of the (custom) Elder Covenant icon */
