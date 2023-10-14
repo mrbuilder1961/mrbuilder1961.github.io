@@ -43,6 +43,11 @@ function format(baseStr='', ...args) {
     return baseStr;
 }
 
+/** Surrounds `str` with '<div class="clazz"></div>' and any attributes, in the format `attr="value"` */
+function div(clazz='', str='', ...attrs=['']) {
+    return format('<div class="${}"${}>${}</div>', clazz, (attrs.length > 0 ? ' '+attrs.join(' ') : ''), str);
+}
+
 /** Adds 2 decimal places to the (visible) magic level in the Grimoire minigame */
 function addMagicDecimals(Game, M) {
     return format(
@@ -298,3 +303,34 @@ function reloadUpgradeCalc(draw) {
     if(draw)
         Game.tooltip.draw(l('upgradeCalc'), upgradeCalcTooltip(), 'this');
 };
+
+/** Loads the popup menu that accepts links to then load as mods */
+function onLoadMods() {
+    const id = 'loadModsInput';
+    const buttons = [['Load mods', 'loadLinksAsMods(l('+id+').value);Game.ClosePrompt();'], 'Cancel']
+
+    // Loads each mod link contained in links, separated by the pipe character '|'
+    function loadLinksAsMods(str='') {
+        const links = str.split('|');
+
+        if(links.length == 0 || links.every((l, i, a) => l.length == 0)) {
+            console.warn('Tried to load empty mods from the (modded) button in the Options menu.');
+        } else {
+            for(const link of (links.every ? [] : links))
+                Game.LoadMod(link);
+        }
+    }
+
+    PlaySound('snd/tick.mp3');
+    //used to start with <id NameBakery>
+    Game.Prompt(format('<id ${}><h3>${}</h3><div class="block" style="text-align:center;">${}</div><div class="block"><input type="text" style="text-align:left;width:100%;" id="${}" value=""/></div>', 'LoadModsHeading', 'Load mods', 'Type the mod links you\'d like to load here. If you want to load more than one, separate them with the pipe character | and no spaces.', id), buttons);
+	l(id).focus();
+	l(id).select();
+}
+
+/** Returns an HTML string that represents a button that allows loading mods directly into Cookie Clicker */
+function makeLoadModsButton() {
+    let str = '<a class="option smallFancyButton" ${}="${};PlaySound(\'snd/tick.mp3\');">${}</a><label>(${})</label>';
+    let st = div('listing', format('', Game.clickStr, 'onLoadMods()', 'Load mod link(s)', 'directly input mod links to load them into Cookie Clicker'));
+    return str;
+}
