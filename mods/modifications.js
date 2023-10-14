@@ -330,7 +330,6 @@ function onLoadMods() {
 
 /** Returns an HTML string that represents a button that allows loading mods directly into Cookie Clicker */
 function makeLoadModsButton() {
-    let str = '<a class="option smallFancyButton" ${}="${};PlaySound(\'snd/tick.mp3\');">${}</a><label>(${})</label>';
-    let st = div('listing', format('', Game.clickStr, 'onLoadMods()', 'Load mod link(s)', 'directly input mod links to load them into Cookie Clicker'));
+    let str = div('listing', format('<a class="option smallFancyButton" ${}="${};PlaySound(\'snd/tick.mp3\');">${}</a><label>(${})</label>', Game.clickStr, 'onLoadMods()', 'Load mod link(s)', 'directly input mod links to load them into Cookie Clicker'));
     return str;
 }
