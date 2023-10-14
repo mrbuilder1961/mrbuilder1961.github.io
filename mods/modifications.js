@@ -188,6 +188,8 @@ function initializeMods(time) {
 
     //? todo do i still need this
     //AddEvent(l('loadMods'), 'click', onLoadMods);
+    window.alert('HELLO CAN ANYONE HEAR ME????');
+    window.alert('here is a div()ed str: __' + div('clazzy', 'i am a div', 'color="'+meaty+'"') + '__');
 
     console.log(
         format('Initialized modifications in ${} seconds!', (Date.now() - time) / 1000 )
@@ -330,6 +332,5 @@ function onLoadMods() {
 
 /** Returns an HTML string that represents a button that allows loading mods directly into Cookie Clicker */
 function makeLoadModsButton() {
-    let str = div('listing', format('<a class="option smallFancyButton" ${}="${};PlaySound(\'snd/tick.mp3\');">${}</a><label>(${})</label>', Game.clickStr, 'onLoadMods()', 'Load mod link(s)', 'directly input mod links to load them into Cookie Clicker'));
-    return str;
+    return div('listing', format('<a class="option smallFancyButton" ${}="${};PlaySound(\'snd/tick.mp3\');">${}</a><label>(${})</label>', Game.clickStr, 'onLoadMods()', 'Load mod link(s)', 'directly input mod links to load them into Cookie Clicker'));
 };
