@@ -323,7 +323,7 @@ function onLoadMods() {
 
     PlaySound('snd/tick.mp3');
     //used to start with <id NameBakery>
-    Game.Prompt(format('<id ${}><h3>${}</h3><div class="block" style="text-align:center;">${}</div><div class="block"><input type="text" style="text-align:left;width:100%;" id="${}" value=""/></div>', 'LoadModsHeading', 'Load mods', 'Type the mod links you\'d like to load here. If you want to load more than one, separate them with | and no spaces.', id), buttons);
+    Game.Prompt(format('<h3>${}</h3><div class="block" style="text-align:center;">${}</div><div class="block"><input type="text" style="text-align:left;width:100%;" id="${}" value=""/></div>', 'Load mods', 'Type the mod links you\'d like to load here. If you want to load more than one, separate them with | and no spaces.', id), buttons);
 	l(id).focus();
 	l(id).select();
 };

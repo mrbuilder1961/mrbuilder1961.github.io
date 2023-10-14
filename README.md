@@ -13,4 +13,4 @@ Note that this version has a few modifications to the base game. Some of these c
 - An ascension upgrade helper for knowing what upgrades to save up for
 - Cookies per click shows next to CPS
 - New icons for the Elder Covenant switch upgrade
-- [beta] Load external mods through the 'Load Mods' button in the Options menu
+//- [beta] Load external mods through the 'Load Mods' button in the Options menu
