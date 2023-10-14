@@ -9,6 +9,7 @@ File changes (on update look at these!)
 *
 * [main.js:4677] l('lumpsAmount').style.color = colorLumpCount(Game, age);
 * [main.js:4419-4464] (many lines, they all set str to colorLumpTooltip() with relevant types)
+* [main.js:6691] makeLoadModsButton() +
 * [main.js:7369] getNewsTickers(Game)
 * [main.js:9768,9780] customCovenantIcon(false)  &  customCovenantIcon(true)
 * [main.js:15740] str = addCookiesPerClick(Game, str);
@@ -184,6 +185,9 @@ function initializeMods(time) {
 
     reloadShimmerData(false);
     reloadUpgradeCalc(false);
+
+    //? todo do i still need this
+    AddEvent(l('loadMods'), 'click', onLoadMods);
 
     console.log(
         format('Initialized modifications in ${} seconds!', (Date.now() - time) / 1000 )
