@@ -9,7 +9,7 @@ File changes (on update look at these!)
 *
 * [main.js:4677] l('lumpsAmount').style.color = colorLumpCount(Game, age);
 * [main.js:4419-4464] (many lines, they all set str to colorLumpTooltip() with relevant types)
-* [main.js:6691] makeLoadModsButton() +
+* [main.js:6691] makeLoadModsButton()+
 * [main.js:7369] getNewsTickers(Game)
 * [main.js:9768,9780] customCovenantIcon(false)  &  customCovenantIcon(true)
 * [main.js:15740] str = addCookiesPerClick(Game, str);
@@ -187,7 +187,7 @@ function initializeMods(time) {
     reloadUpgradeCalc(false);
 
     //? todo do i still need this
-    AddEvent(l('loadMods'), 'click', onLoadMods);
+    //AddEvent(l('loadMods'), 'click', onLoadMods);
 
     console.log(
         format('Initialized modifications in ${} seconds!', (Date.now() - time) / 1000 )
@@ -312,7 +312,7 @@ function reloadUpgradeCalc(draw) {
 function onLoadMods() {
     const id = 'loadModsInput';
     const buttons = [
-        ['Load mods', 'for(let l of l('+id+').value.split("|")){if(l.length>0){Game.LoadMod(l);}};Game.ClosePrompt();'], 
+        ['Load mods', 'for(let l of l('+id+').value.split("|")){if(l.length>0){Game.LoadMod(l);}};Game.ClosePrompt();'], //todo: make the little notification saying "successfully added mod!" or sm
         'Cancel'
     ]
     // buttons[0][1] expanded:
@@ -323,7 +323,7 @@ function onLoadMods() {
 
     PlaySound('snd/tick.mp3');
     //used to start with <id NameBakery>
-    Game.Prompt(format('<id ${}><h3>${}</h3><div class="block" style="text-align:center;">${}</div><div class="block"><input type="text" style="text-align:left;width:100%;" id="${}" value=""/></div>', 'LoadModsHeading', 'Load mods', 'Type the mod links you\'d like to load here. If you want to load more than one, separate them with the pipe character | and no spaces.', id), buttons);
+    Game.Prompt(format('<id ${}><h3>${}</h3><div class="block" style="text-align:center;">${}</div><div class="block"><input type="text" style="text-align:left;width:100%;" id="${}" value=""/></div>', 'LoadModsHeading', 'Load mods', 'Type the mod links you\'d like to load here. If you want to load more than one, separate them with | and no spaces.', id), buttons);
 	l(id).focus();
 	l(id).select();
 };

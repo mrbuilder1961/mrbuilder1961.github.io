@@ -6688,7 +6688,7 @@ Game.Launch=function()
 						'</div>'+
 						//'<div class="listing">'+Game.WritePrefButton('autosave','autosaveButton','Autosave ON','Autosave OFF')+'</div>'+
 						(!App?'<div class="listing"><a class="option smallFancyButton" '+Game.clickStr+'="Game.CheckModData();PlaySound(\'snd/tick.mp3\');">'+loc("Check mod data")+'</a><label>('+loc("view and delete save data created by mods")+')</label></div>':'')+
-						makeLoadModsButton() + // !MOD
+						//makeLoadModsButton()+ // !MOD
 						'</div>'+
 					'</div>'+
 				'</div>';
