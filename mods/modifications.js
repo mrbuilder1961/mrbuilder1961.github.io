@@ -188,8 +188,6 @@ function initializeMods(time) {
 
     //? todo do i still need this
     //AddEvent(l('loadMods'), 'click', onLoadMods);
-    window.alert('HELLO CAN ANYONE HEAR ME????');
-    window.alert('here is a div()ed str: __' + div('clazzy', 'i am a div', 'color="'+meaty+'"') + '__');
 
     console.log(
         format('Initialized modifications in ${} seconds!', (Date.now() - time) / 1000 )
