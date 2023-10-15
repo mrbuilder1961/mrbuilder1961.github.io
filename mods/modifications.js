@@ -45,7 +45,7 @@ function format(baseStr='', ...args) {
 }
 
 /** Surrounds `str` with '<div class="clazz"></div>' and any attributes, in the format `attr="value"` */
-function div(clazz='', str='', ...attrs=['']) {
+function div(clazz='', str='', ...attrs) {
     return format('<div class="${}"${}>${}</div>', clazz, (attrs.length > 0 ? ' '+attrs.join(' ') : ''), str);
 }
 
